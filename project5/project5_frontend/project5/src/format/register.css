@@ -1,0 +1,72 @@
+#form_register {
+    height: 600px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
+    top: 52%;
+    box-shadow: -50px 0px 30px 30px rgba(0, 0, 0, 0.4);
+    left: 52%;
+    margin:0;
+    z-index: 2000;
+    
+  }
+ 
+  #form_register h2 {
+    margin-bottom: 5px;
+  }
+
+  .registerPO{
+    height: 650px !important;
+    z-index: 2000;
+  }
+  #registerPO_submit{
+    width: 40%;
+    display: table-column;
+    margin-left: 2%;
+  }
+  
+  .imgLogin{
+    font-size: 50px;
+    margin-right: 20px;
+  }
+
+  .register-header {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+
+.descriptioLabel {
+    font-weight: bold; 
+    margin-right: 15px; 
+    display: inline-block;
+}
+
+#register_typeOfUser{
+  border-radius: 5px;
+  width: 100%;
+
+}
+
+.register_elem {
+    width: 100%; 
+    padding: 8px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    box-sizing: border-box; 
+    display: flex;
+}
+#register_submit{
+    margin-top: 10px;
+    width: 92%;
+    position: relative;
+    align-items: center;
+    border: 3px solid var(--black);
+    margin-left: 8px;
+
+}
+.button-container {
+  display: flex;
+  
+}
+

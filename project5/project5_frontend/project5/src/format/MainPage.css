@@ -1,0 +1,22 @@
+#body_color {
+    z-index: -10;
+    background-color: rgb(23, 43, 76);
+    position: fixed;
+    margin: 35px 0px 0px 260px;
+    height: 100%;
+    width: 90%;
+    border-top-left-radius: 30px;
+    box-shadow: -2.5px -2.5px 2.5px 1px rgb(0, 0, 0);
+  }
+  
+  #aside_color {
+    position: fixed;
+    z-index: -11;
+    background-color: var(--white);
+    height: 100%;
+    width: 100%;
+  }
+
+
+  
+  

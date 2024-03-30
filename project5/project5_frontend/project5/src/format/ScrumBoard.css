@@ -1,0 +1,77 @@
+/*  Formatação do modal para criar uma nova tarefa*/
+
+.new-task-container {
+    position: absolute;
+    top: 57%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999; 
+    background-color: #fff; 
+    padding: 20px; 
+    border: 1px solid #ccc; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); 
+    border-radius: 15px;
+    
+}
+
+
+.task {
+    display: flex;
+    align-items: center;
+    height: 10%;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    justify-content: space-between;
+  }
+  
+  .task-title {
+    flex: 1;
+    overflow: hidden; 
+  white-space: nowrap; 
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 700;
+  max-width: 140px;
+  width: 140px;
+  
+
+  }
+  .task-header{
+    justify-content: left;
+    text-align: left;
+  }
+  
+  .priority-bar {
+    width: 30px;
+    height: 100%;
+    margin-right: 12px;
+    
+  }
+  
+  .delete_btn,
+  .task_btn {
+    margin-left: 10px;
+   
+  }
+ .task-details{
+  justify-content: flex-end;
+  width:100px;
+
+ }
+  .delete_btnS, .task_btnS{
+    border:none;
+    margin:none;
+    margin-left: 10px;
+  }
+  
+.priority-bar {
+    width: 5px;
+    height: 100%;
+    margin-right: 10px;
+  }
+
+
+  .buttons_scrum {
+    display: flex; 
+    align-items: right; 
+  }
