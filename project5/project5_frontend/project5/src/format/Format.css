@@ -1133,7 +1133,7 @@ label {
   margin-top:20px;
   position: absolute;
   top:25%;
-  left: 58%;
+  left: 50%;
   transform: translate(-50%, -50%);
   width: 40%;
   height: 150px;
@@ -1233,6 +1233,24 @@ label {
 #aside_editProfile {
   margin-top: 70px;
 }
+
+.tasksData{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); 
+  position: fixed;
+  top: 19%;
+  left:75%;
+  background-color: var(--white);
+  height: 490px;
+  width: 200px;
+  border-radius: 10px;
+  justify-items: center;
+  align-items: center;
+  padding-left: 20px;
+  
+}
+
+
 /* Página product Owner */
 
 

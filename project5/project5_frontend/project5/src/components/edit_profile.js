@@ -6,6 +6,7 @@ import 'react-notifications/lib/notifications.css';
 import { useNavigate  } from 'react-router-dom';
 import { getUserByToken } from "../endpoints/users";
 import MenuProductOwner from "./MenuProductOwner";
+import { countTasks } from "../endpoints/tasks";
 
 function EditProfile(){
 
@@ -19,6 +20,19 @@ function EditProfile(){
     const role = getRole();
     // Estado para armazenar informações do user que fez o login
     const [userLogged, setUserLogged] = useState(null);
+
+// Estado para armazenar as informações das tarefas do usuário
+const [taskSummary, setTaskSummary] = useState({
+ 
+    tasksByState: {
+        todo: 0,
+        doing: 0,
+        done: 0
+    }
+});
+
+
+
     // Hook para navegar entre rotas
     const navigate = useNavigate();
     
@@ -27,6 +41,17 @@ function EditProfile(){
         const fetchData = async()=> {
             const result = await getUserByToken(tokenUser)
             setUserLogged(result); //Define as informações do user
+
+            const tasks = await countTasks(tokenUser, result.username);
+            if (tasks) {
+                setTaskSummary(tasks);
+                
+
+            }else{
+                NotificationManager.error("Failed to fetch task data", "", 800);
+            }
+
+
            
          };
          fetchData();
@@ -148,7 +173,24 @@ function EditProfile(){
            <button className="btn_save" id="btn-save" onClick={handleSubmit}>Save</button>
            <button className="btn_cancel" id="btn_cancel" onClick={handleBack}>Back</button>
         </div>
-     </div>
+     </div>d
+     <div className='tasksData'>
+    <div>
+        <h2>Tasks Info</h2>
+        <label className="descriptioLabel">Total Tasks</label>
+        <input type='text' className='edit_element' placeholder={taskSummary.todo + taskSummary.doing + taskSummary.done} readOnly />
+    </div>
+    <div>
+        <p>Tasks by State:</p>
+        <label className="descriptioLabel">TODO</label>
+        <input type='text' className='edit_element' placeholder={taskSummary.todo} readOnly />
+        <label className="descriptioLabel">DOING</label>
+        <input type='text' className='edit_element' placeholder={taskSummary.doing} readOnly />
+        <label className="descriptioLabel">DONE</label>
+        <input type='text' className='edit_element' placeholder={taskSummary.done} readOnly />
+    </div>
+</div>
+
 
      </div> 
 

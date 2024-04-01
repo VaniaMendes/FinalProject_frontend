@@ -10,7 +10,7 @@ import { getUserByToken } from "../endpoints/users";
 import { useNavigate  } from 'react-router-dom';
 import { MdTask } from "react-icons/md";
 import { myTasks} from '../endpoints/tasks';
-import {showMyTasks, showModal} from '../stores/boardStore';
+import {showMyTasks, showModal, cleanBoardStore} from '../stores/boardStore';
 
 
 
@@ -89,10 +89,16 @@ useEffect(() => {
     const result = await logout(tokenUser);
 
     if (result === true) {
+    
       NotificationManager.success("Logout successfully");
+       // Limpa a store e o boardStore antes de redirecionar para a página de login
+       userStore.getState().clearStore();
+       cleanBoardStore();
+      
       setTimeout(() => {
         navigate("/login");
       }, 800);
+    
     } else {
       console.log("Erro ao buscar dados do usuário:", result.error);
     }
@@ -123,7 +129,7 @@ useEffect(() => {
                 <RiLogoutCircleFill /> Logout
               </li>
               <li className="item_PO" onClick={handleClick}>
-                <RiEdit2Fill /> Edit Profile
+                <RiEdit2Fill /> My Profile
               </li>
               <li className="item_PO" onClick={() =>handleMyTaks(tokenUser)}>
                 <MdTask /> My Tasks

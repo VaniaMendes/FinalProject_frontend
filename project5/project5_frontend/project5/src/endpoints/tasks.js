@@ -339,6 +339,34 @@ export async function myTasks(tokenUser) {
 
 }
 
+export async function countTasks(tokenUser, username) {
+   try {
+      const response = await fetch(`http://localhost:8080/project_backend/rest/tasks/${username}/tasksCountState`, {
+         method: "GET",
+         headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            token: tokenUser
+         }
+      });
+
+      if (response.ok) {
+         const tasksState = await response.json();
+         console.log(tasksState);
+         return tasksState;
+      } else {
+         console.error("Failed to fetch task data");
+         return null;
+      }
+   } catch (error) {
+      console.error("Error:", error);
+      return null;
+   }
+}
+
+
+
+
 
 
  

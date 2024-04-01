@@ -6,7 +6,7 @@ import {addTask, getTask, updateTask} from '../endpoints/tasks';
 import { NotificationManager } from "react-notifications";
 import '../format/tables.css'
 import {showModalNewTask, updateTasksList, modeEditTask} from '../stores/boardStore'
-import {getCategoryByTitle} from "../endpoints/categories";
+
 
 function NewTask() {
 
@@ -164,7 +164,6 @@ const task={
                   setIdCategory(selectedCategoryID);
                   setCategoryTitle(selectedCategoryTitle);
                 
-               
                 }}
 
               >
