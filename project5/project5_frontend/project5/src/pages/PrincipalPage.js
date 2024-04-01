@@ -6,14 +6,26 @@ import ScrumBoard from '../components/ScrumBoard';
 import MenuProductOwner from '../components/MenuProductOwner';
 import MenuScrum from '../components/MenuScrum';
 import {userStore} from '../stores/UserStore';
+import { navigate } from "@reach/router";
 
 
 
 function PrincipalPage(){
+    
 
    
     const { getRole } = userStore();
     const role = getRole();
+
+    
+    //Obtem o token da store
+  const tokenObject = userStore((state) => state.token);
+  const tokenUser = tokenObject.token;
+
+  if(!tokenUser){
+    navigate("/login");
+    
+  }
    
 
     return(

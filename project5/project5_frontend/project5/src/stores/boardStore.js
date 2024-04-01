@@ -85,31 +85,12 @@ export const showModal = create((set) => ({
 
 
   export const cleanBoardStore = () => {
-    tables.getState().setShowUserTable(true);
-    tables.getState().setShowCategoriesTable(false);
-    tables.getState().setShowInactiveUsersTable(false);
-    tables.getState().setShowInativeTasksTable(false);
-
-    showModal.getState().setShowModalNewCategory(false);
-    showModal.getState().setShowEditCategory(false);
-    showModal.getState().setShowNewUserModal(false);
-    showModal.getState().setShowModalEditUser(false);
+    
     showModal.getState().setFilterOn(false);
 
-    updateCategoriesTable.getState().setShowCategoriesTable(false);
-    updateUsersTable.getState().setShowUsersTable(false);
 
-    showModalNewTask.getState().setShowNewTask(false);
-
-    updateTasksList.getState().setUpdateTasks(false);
-
-    showModalEditTask.getState().setShowEditTask(false);
-
-    modeEditOn.getState().setModeEdit(false);
-
-    modeEditTask.getState().setEditTask(false);
 
     showMyTasks.getState().setShowUserTasks(false);
 
-    ViewTaskDetails.getState().setShowTaskDetails(false);
+    
 }

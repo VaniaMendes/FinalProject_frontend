@@ -176,7 +176,7 @@ const [taskSummary, setTaskSummary] = useState({
      </div>d
      <div className='tasksData'>
     <div>
-        <h2>Tasks Info</h2>
+        <h2>Task Overview</h2>
         <label className="descriptioLabel">Total Tasks</label>
         <input type='text' className='edit_element' placeholder={taskSummary.todo + taskSummary.doing + taskSummary.done} readOnly />
     </div>

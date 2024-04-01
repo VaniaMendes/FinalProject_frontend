@@ -9,12 +9,23 @@ import {tables} from '../stores/boardStore';
 import InativeTasksTable from '../components/InativeTasksTable';
 import {userStore} from '../stores/UserStore';
 import MenuScrum from '../components/MenuScrum';
+import { useNavigate } from "react-router-dom";
 
 
 function ProductOwner(){
   const { showUserTable, showCategoriesTable, showInactiveUsersTable, showInativeTasksTable } = tables();
   const { getRole } = userStore();
   const role = getRole();
+
+   //Obtem o token da store
+   const tokenObject = userStore((state) => state.token);
+   const tokenUser = tokenObject.token;
+   const navigate = useNavigate();
+ 
+   if(!tokenUser){
+     navigate("/login");
+     
+   }
   
   return (
     <div>

@@ -43,8 +43,7 @@ export const userStore = create(
                 categoryId:"",
                 username:"",
                 taskIdForEdit:"",
-                filteredTasks:[],
-                myTasks:[]
+               
             })
 
         }),

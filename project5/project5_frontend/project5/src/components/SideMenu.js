@@ -94,10 +94,7 @@ useEffect(() => {
        // Limpa a store e o boardStore antes de redirecionar para a página de login
        userStore.getState().clearStore();
        cleanBoardStore();
-      
-      setTimeout(() => {
-        navigate("/login");
-      }, 800);
+       navigate('/login');
     
     } else {
       console.log("Erro ao buscar dados do usuário:", result.error);
