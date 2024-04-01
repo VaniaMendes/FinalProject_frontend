@@ -65,6 +65,7 @@ const task={
         setEndDate(result.endDate);
         setInitialDate(result.initialDate);
         setPriority(result.priority);
+        setIdCategory(result.category.idCategory);
 
       }
 
@@ -73,17 +74,6 @@ const task={
     fetchData();
   }, [tokenUser, taskIdForEdit]);
 
-
-  //Efeito para ir buscar o id da categoria
-  useEffect(() => {
-    if (categoryTitle) {
-      const fetchData = async () => {
-        const categoryID = await getCategoryByTitle(tokenUser, categoryTitle);
-        setIdCategory(categoryID);
-      };
-      fetchData();
-    }
-  }, [tokenUser, categoryTitle]);
 
 
 

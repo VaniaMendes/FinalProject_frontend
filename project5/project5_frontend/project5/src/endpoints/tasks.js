@@ -255,7 +255,7 @@ export async function restoreTask(tokenUser, taskId) {
 
 export async function getTask(tokenUser, taskIdForEdit) {
 
-   let getTaskRequest = `http://localhost:8080/project_backend/rest/tasks/getTaskById/${taskIdForEdit}`
+   let getTaskRequest = `http://localhost:8080/project_backend/rest/tasks/${taskIdForEdit}`
 
    let response = await fetch(getTaskRequest, {
 

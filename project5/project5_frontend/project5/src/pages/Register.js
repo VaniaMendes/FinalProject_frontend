@@ -65,7 +65,7 @@ function Register(){
           imgURL: imgURL,
           typeOfUser: "developer"};
 try{
-const response = await fetch('http://localhost:8080/project_backend/rest/users/addUserDB', {         
+const response = await fetch('http://localhost:8080/project_backend/rest/users/add', {         
 method: 'POST',
   headers: {
     'Accept': 'application/json',
