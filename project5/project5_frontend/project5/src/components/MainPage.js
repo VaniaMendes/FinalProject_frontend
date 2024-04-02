@@ -1,10 +1,20 @@
 import React from 'react';
+import {userStore} from '../stores/UserStore';
+import WebSocketClient from "../components/websocket"; 
 
 function HomePage() {
+
+
+  const notifications = userStore((state) => state.notifications); 
+  WebSocketClient(); 
+   
   return (
     
     <div id="login_body">
-      <div id="body_color"></div>
+      <div id="body_color">
+      <h2>Notifications</h2> 
+<p>You have {notifications.length} notifications</p>
+      </div>
       <div id="aside_color"></div>
       <header>
         <h1 id="page-logo">

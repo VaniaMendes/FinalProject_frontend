@@ -8,12 +8,9 @@ import MenuScrum from '../components/MenuScrum';
 import {userStore} from '../stores/UserStore';
 import { navigate } from "@reach/router";
 
-
-
 function PrincipalPage(){
     
-
-   
+  
     const { getRole } = userStore();
     const role = getRole();
 
@@ -30,7 +27,7 @@ function PrincipalPage(){
 
     return(
         <div>
-            
+           
             {role === 'product_owner' && <MenuProductOwner />}
             {role === 'scrum_master' && <MenuScrum/>}
             <HomePage />
