@@ -4,9 +4,7 @@ import SideMenu from "../components/SideMenu";
 import 'react-notifications/lib/notifications.css';
 import EditProfile from "../components/edit_profile";
 import React from "react";
-import { userStore } from "../stores/UserStore";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import TotalTasks from "../components/TotalTasks";
 
 
 function EditProfilePage(){
@@ -19,6 +17,7 @@ function EditProfilePage(){
         <MainPage/>
         <SideMenu/>
         <EditProfile/>
+        <TotalTasks/>
         </div>
              
     )

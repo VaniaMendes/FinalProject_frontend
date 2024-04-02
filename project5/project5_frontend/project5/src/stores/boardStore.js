@@ -87,9 +87,6 @@ export const showModal = create((set) => ({
   export const cleanBoardStore = () => {
     
     showModal.getState().setFilterOn(false);
-
-
-
     showMyTasks.getState().setShowUserTasks(false);
 
     

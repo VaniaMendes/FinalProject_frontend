@@ -154,6 +154,35 @@ export async function registerUserByPO(tokenUser, newUser) {
   }
 }
 
+export async function registerUser(newUser) {
+  try {
+    const response = await fetch(
+      "http://localhost:8080/project_backend/rest/users/addUserDB",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          
+        },
+        body: JSON.stringify(newUser),
+      }
+    );
+
+    if (response.ok) {
+        return 200;
+   
+    } else {
+    
+          const errorData = await response.text();
+          return errorData;
+    }
+  } catch (error) {
+   
+  }
+}
+
+
 export async function getInactiveUsers(tokenUser) {
   try {
       const response = await fetch("http://localhost:8080/project_backend/rest/users/inactiveUsers", {

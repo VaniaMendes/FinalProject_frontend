@@ -6,31 +6,20 @@ import 'react-notifications/lib/notifications.css';
 import { useNavigate  } from 'react-router-dom';
 import { getUserByToken } from "../endpoints/users";
 import MenuProductOwner from "./MenuProductOwner";
-import { countTasks } from "../endpoints/tasks";
+
 
 function EditProfile(){
 
-    // Obtém o token do usuário do store
+    // Obtém o token do user
     const tokenObject = userStore(state => state.token);
     const tokenUser = tokenObject.token;
 
 
-    // Obtém a função para obter o papel do usuário do store
+    // Obtém a função para obter o papel do user
     const {  getRole } = userStore();
     const role = getRole();
     // Estado para armazenar informações do user que fez o login
     const [userLogged, setUserLogged] = useState(null);
-
-// Estado para armazenar as informações das tarefas do usuário
-const [taskSummary, setTaskSummary] = useState({
- 
-    tasksByState: {
-        todo: 0,
-        doing: 0,
-        done: 0
-    }
-});
-
 
 
     // Hook para navegar entre rotas
@@ -41,18 +30,7 @@ const [taskSummary, setTaskSummary] = useState({
         const fetchData = async()=> {
             const result = await getUserByToken(tokenUser)
             setUserLogged(result); //Define as informações do user
-
-            const tasks = await countTasks(tokenUser, result.username);
-            if (tasks) {
-                setTaskSummary(tasks);
-                
-
-            }else{
-                NotificationManager.error("Failed to fetch task data", "", 800);
-            }
-
-
-           
+ 
          };
          fetchData();
         }, [tokenUser]);
@@ -139,7 +117,7 @@ const [taskSummary, setTaskSummary] = useState({
             {role === 'product_owner' && <MenuProductOwner />}
         <div className="edit_container">
         <div className="edit_photo">
-           <img src={userLogged?.imgURL} id="user_photo" alt="User photo" />
+           <img src={userLogged?.imgURL} id="user_photo" alt="Descrição da imagem" />
            <p id="username_edit">{userLogged?.username}</p>
         </div>
         <div className="edit_profile">
@@ -173,25 +151,8 @@ const [taskSummary, setTaskSummary] = useState({
            <button className="btn_save" id="btn-save" onClick={handleSubmit}>Save</button>
            <button className="btn_cancel" id="btn_cancel" onClick={handleBack}>Back</button>
         </div>
-     </div>d
-     <div className='tasksData'>
-    <div>
-        <h2>Task Overview</h2>
-        <label className="descriptioLabel">Total Tasks</label>
-        <input type='text' className='edit_element' placeholder={taskSummary.todo + taskSummary.doing + taskSummary.done} readOnly />
-    </div>
-    <div>
-        <p>Tasks by State:</p>
-        <label className="descriptioLabel">TODO</label>
-        <input type='text' className='edit_element' placeholder={taskSummary.todo} readOnly />
-        <label className="descriptioLabel">DOING</label>
-        <input type='text' className='edit_element' placeholder={taskSummary.doing} readOnly />
-        <label className="descriptioLabel">DONE</label>
-        <input type='text' className='edit_element' placeholder={taskSummary.done} readOnly />
-    </div>
-</div>
-
-
+     </div>
+    
      </div> 
 
     )

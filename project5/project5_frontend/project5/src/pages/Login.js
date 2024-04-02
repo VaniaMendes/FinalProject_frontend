@@ -8,6 +8,7 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import {  NotificationManager } from "react-notifications";
 import '../format/login.css';
 import { useNavigate  } from 'react-router-dom';
+import { showModal } from '../stores/boardStore';
 
 
 function Login(){
@@ -16,7 +17,20 @@ function Login(){
     const [username, setUsername] = useState(''); 
     const [password, setPassword] = useState('');
     const navigate = useNavigate (); 
+
+    
+  //Estados para controlar a exibição do modal de newUser
+  const showNewUserModal = showModal(state => state.showNewUserModal);
+  const setShowNewUserModal = showModal(state => state.setShowNewUserModal);
+
+
+  //Funcao para registar novo utilizador
+  const handleNewUSer = ()=> {
+    setShowNewUserModal(true);
+   
+  };
   
+
 //Função para lidar com o envio do formulario de login
     const handleSubmit = async (event) => {
         event.preventDefault(); 
@@ -90,7 +104,10 @@ function Login(){
                         <button type="submit" id="btn_login">Login</button> 
                     </div>
                 </form>
-                <div id="signup">Don't have an account?<a className="signUp" href="/register" >REGISTER HERE</a></div>
+                <div id="signup">Don't have an account?
+        
+
+                <a className="signUp" href="/register" onClick={handleNewUSer}>REGISTER HERE</a></div>
             </div>
         </div>
     )

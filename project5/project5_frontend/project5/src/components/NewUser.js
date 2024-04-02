@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { registerUserByPO } from "../endpoints/users";
+import { registerUserByPO, registerUser } from "../endpoints/users";
 import { FaUserCircle } from "react-icons/fa";
 import { userStore } from "../stores/UserStore";
 import "../format/register.css";
 import {NotificationManager } from "react-notifications";
 import { showModal, updateUsersTable } from "../stores/boardStore";
-
+import { navigate } from "@reach/router";
 function NewUser() {
 
   //Obtem o token do user da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
+  //Obtem o tipo de utilizador da store
+  const {  getRole } = userStore();
+  const role = getRole();
 
   //Estados para controlar a exibição do modal de newUser
   const showNewUserModal = showModal((state) => state.showNewUserModal); 
@@ -30,7 +34,7 @@ function NewUser() {
   //Obtem o estado para exibir a tabela de utilizadores
   const {showUsersTable, setShowUsersTable} = updateUsersTable();
 
-//Função para fechar o modal
+  //Função para fechar o modal
   const closeModal = () => {
     setShowNewUserModal(false);
   };
@@ -45,15 +49,15 @@ function NewUser() {
     lastName: lastName,
     phoneNumber: phoneNumber,
     imgURL: imgURL,
-    typeOfUser: typeOfUser,
+    typeOfUser: role === "product_owner" ? typeOfUser : "developer"
   };
 
-//Função para lidar com o envio dos dados do novo utilizador
+  //Função para lidar com o envio dos dados do novo utilizador
   const handleSubmit = async (event) => {
     event.preventDefault(); 
 
      // Validação dos campos
-  if (!username || !password || !email || !firstName || !lastName || !phoneNumber || !imgURL || !typeOfUser) {
+  if (!username || !password || !email || !firstName || !lastName || !phoneNumber || !imgURL || (role === "product_owner" && !typeOfUser)) {
     NotificationManager.warning("Please fill in all fields", "", 800);
     return;
   }
@@ -70,6 +74,8 @@ function NewUser() {
     return;
   }
   
+
+  if(role==="product_owner"){
     const result = await registerUserByPO(tokenUser, newUser);
     if(result===200){
       NotificationManager.success("New User successfully created", "", 800);
@@ -79,8 +85,18 @@ function NewUser() {
       NotificationManager.warning(result, "", 800);
     }
    
-  };
+  }else{
+  //Logica para registo de um utilizador inicial
 
+  const result = await registerUser(newUser);
+  if(result===200){
+  NotificationManager.success("New User successfully created", "", 800);
+  
+}else{
+  NotificationManager.warning(result, "", 800);
+}
+}
+  }
 
   const isValidEmail = (email) => {
     // Expressão regular para validar o formato do e-mail
@@ -196,6 +212,9 @@ function NewUser() {
             />
           </label>
 
+          {/* Se o user logado for product owner pode escolher o role do user que está a registar, caso contrário é
+          registado como developer*/}
+  {role=== "product_owner" && (
           <label htmlFor="register_photo_amin" className="descriptioLabel">
             Role
             <select
@@ -210,6 +229,9 @@ function NewUser() {
               <option value="product_owner">Product Owner</option>
             </select>
           </label>
+          )}
+
+          
           <div className="button-container">
             <button
               className="register_elem"
@@ -233,6 +255,6 @@ function NewUser() {
       ;
     </div>
   );
-}
+  }
 
 export default NewUser;

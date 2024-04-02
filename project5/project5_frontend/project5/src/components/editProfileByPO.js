@@ -6,6 +6,7 @@ import 'react-notifications/lib/notifications.css';
 import {  getUserByUsername} from "../endpoints/users";
 import { updateProfileByPO } from "../endpoints/users";
 import {showModal, updateUsersTable} from '../stores/boardStore';
+import TotalTasks from "./TotalTasks";
 
 
 function EditProfileByPO(){
@@ -15,7 +16,7 @@ function EditProfileByPO(){
     const tokenObject = userStore(state => state.token);
     const tokenUser = tokenObject.token;
 
-    //Obtemo tipo de utilizador da store
+    //Obtem o tipo de utilizador da store
     const {  getRole } = userStore();
     const role = getRole();
 
@@ -43,7 +44,7 @@ function EditProfileByPO(){
             setUserEditPO(result); //Define as informações do user
          };
          fetchData();
-        }, [tokenUser]);
+        }, [tokenUser, username, showModalEditUser]);
 
         
 
@@ -147,9 +148,11 @@ function EditProfileByPO(){
            <button className="btn_save" id="btn-save" onClick={handleSubmit} hidden={role === "scrum_master"}>Save</button>
            <button className="btn_cancel" id="btn_cancel" onClick={handleBack}>Back</button>
         </div>
+        
      </div>
+     
 }
-
+<TotalTasks/>
      </div> 
 
     )
