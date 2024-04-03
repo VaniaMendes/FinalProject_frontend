@@ -13,7 +13,6 @@ import { myTasks} from '../endpoints/tasks';
 import {showMyTasks, showModal, cleanBoardStore} from '../stores/boardStore';
 
 
-
 function SideMenu() {
 
   //Obtem o tipo de utilizador da store
@@ -39,8 +38,14 @@ useEffect(() => {
   async function fetchData() {
     try {
       const user = await getUserByToken(tokenUser);
+      console.log(user);
+      if(user.confirmed){
       setUserData(user);
       setRole(user.typeOfUser);
+      }else{
+        navigate("/pleaseConfirmEmail");
+      }
+
      
     } catch (error) {
       console.log("Error fetching user data:", error);
@@ -51,7 +56,7 @@ useEffect(() => {
 
 //Função para navegar para a página de edição de perfil
  const handleClick = () => {
-    navigate("/editProfile");
+    navigate("/myProfile");
     setFilterOn(false);
     setShowUserTasks(false);
   };

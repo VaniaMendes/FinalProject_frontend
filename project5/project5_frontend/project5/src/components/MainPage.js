@@ -12,8 +12,9 @@ function HomePage() {
     
     <div id="login_body">
       <div id="body_color">
+        {/*   
       <h2>Notifications</h2> 
-<p>You have {notifications.length} notifications</p>
+<p>You have {notifications.length} notifications</p>*/}
       </div>
       <div id="aside_color"></div>
       <header>

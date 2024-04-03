@@ -5,17 +5,24 @@ import { userStore } from "../stores/UserStore";
 import "../format/register.css";
 import {NotificationManager } from "react-notifications";
 import { showModal, updateUsersTable } from "../stores/boardStore";
-import { navigate } from "@reach/router";
+import {useNavigate} from "react-router-dom";
+
+
 function NewUser() {
+
 
   //Obtem o token do user da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
 
+  const navigate = useNavigate();
+
   //Obtem o tipo de utilizador da store
   const {  getRole } = userStore();
   const role = getRole();
-
+  
+  
+  
   //Estados para controlar a exibição do modal de newUser
   const showNewUserModal = showModal((state) => state.showNewUserModal); 
   const setShowNewUserModal = showModal((state) => state.setShowNewUserModal); 
@@ -37,6 +44,10 @@ function NewUser() {
   //Função para fechar o modal
   const closeModal = () => {
     setShowNewUserModal(false);
+    if(role !== "product_owner"){
+      navigate("/login");
+    }
+  
   };
 
 
@@ -90,7 +101,8 @@ function NewUser() {
 
   const result = await registerUser(newUser);
   if(result===200){
-  NotificationManager.success("New User successfully created", "", 800);
+  NotificationManager.success("Please verify your email account", "", 800);
+  navigate("/login");
   
 }else{
   NotificationManager.warning(result, "", 800);

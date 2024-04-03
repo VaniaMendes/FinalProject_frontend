@@ -10,6 +10,8 @@ import ProductOwner from './pages/ProductOwner';
 import EditProfile from './pages/EditProfile';
 import { NotificationContainer } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
+import EmailConfirmation from './pages/Emailconfirmation';
+import NecessaryConfirmation from './pages/Confirmation';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,14 +20,16 @@ root.render(
 <div > <NotificationContainer className="notification-container" /></div>
     <Router>
       <Routes>
-      <Route index element={<Login/>} />
-      <Route path="/login" element={<Login/>} />
+      <Route path= "/login" index element={<Login/>} />
       <Route path="/register" element={<Register/>} />
       <Route path="/principalPage" element = {<PrincipalPage/>}/>
       <Route path="/productOwner" element = {<ProductOwner/>}/>
-      <Route path = "/editProfile" element = {<EditProfile/>}/>
+      <Route path = "/myProfile" element = {<EditProfile/>}/>
       <Route path = "/MyTasks" element = {<PrincipalPage/>}/>
-   
+      <Route path="/confirmationAccount" element = {<EmailConfirmation/>}/>
+      <Route path="/pleaseConfirmEmail" element = {<NecessaryConfirmation/>}/>
+
+         
       </Routes>
   </Router>
 

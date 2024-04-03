@@ -261,6 +261,27 @@ export async function updateProfileByPO(tokenUser,username, updatedUserData) {
   }
 }
 
+export async function validateAccount(token) {
+  try {
+    const response = await fetch(`http://localhost:8080/project_backend/rest/users/confirmationAccount?token=${token}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': '*/*'
+      },
+    });
+
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error('Ocorreu um erro ao validar a conta:', error);
+    return false;
+  }
+}
+
 export async function getUserByUsername(tokenUser, username) {
   try {
 

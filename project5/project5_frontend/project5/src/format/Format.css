@@ -1654,3 +1654,22 @@ th {
 #butoon_div{
   margin-top: 20px;
 }
+
+.verify-container{
+  top:40%;
+  left:50%;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+color: var(--white);
+}
+
+.btn_confirm{
+    
+  background-color: var(--white);
+  height: 40px;
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+
+}

@@ -12,7 +12,6 @@ import {deleteUserTasks} from '../endpoints/tasks';
 import EditProfileByPO from "./editProfileByPO";
 import ButtonsForScrum from "./buttonsForScrum";
 
-
 function UserTable() {
 //Este componente exibe a tabela de utilizadores ativos
 
@@ -43,9 +42,7 @@ function UserTable() {
   const handleEdit = async (username) => {
     setShowModalEditUser(true);//Mostra o modal de edição
     userStore.setState({ username: username });//Guarda o nome do username do utilizador a ser editado
-    
   };
-
 
   //Função para abrir o modal de criação de novo utilizador	
 const openModal= ()=>{

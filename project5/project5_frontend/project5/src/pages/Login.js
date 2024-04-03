@@ -9,6 +9,7 @@ import {  NotificationManager } from "react-notifications";
 import '../format/login.css';
 import { useNavigate  } from 'react-router-dom';
 import { showModal } from '../stores/boardStore';
+import {getUserByToken} from '../endpoints/users';
 
 
 function Login(){
@@ -16,6 +17,8 @@ function Login(){
     //Define o estado para o username e password do tutilizador
     const [username, setUsername] = useState(''); 
     const [password, setPassword] = useState('');
+
+    const [userLogged, setUserLogged] = useState(''); 
     const navigate = useNavigate (); 
 
     
@@ -36,6 +39,8 @@ function Login(){
         event.preventDefault(); 
          // Objeto com os dados de login do usuário
         const user = { username: username, password: password };
+
+        
             try {
             const response = await fetch( "http://localhost:8080/project_backend/rest/users/login", {
                 method: 'POST',
@@ -49,14 +54,14 @@ function Login(){
             //Verifica se o login foi bem sucedido
             if (response.ok) {
                const token = await response.json();
-                userStore.getState().setToken(token); 
+               userStore.getState().setToken(token); 
                
                 NotificationManager.success("Welcome to AgileUp");
                 setTimeout(() => {
                     navigate("/principalPage");
                   }, 800);
-        
-               
+                
+
             } else {
                 NotificationManager.warning("Wrong username or password", "" , 800);
             }
@@ -98,6 +103,7 @@ function Login(){
                                 onChange={(event) => setPassword(event.target.value)}
                                 required
                             />
+                             <a className="signUp" href="/register" onClick={handleNewUSer}>Forgot your password?</a>
                         </div>
                     </div>
                     <div className="form_group">
