@@ -12,6 +12,8 @@ import { NotificationContainer } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 import EmailConfirmation from './pages/Emailconfirmation';
 import NecessaryConfirmation from './pages/Confirmation';
+import PasswordRecovery from './pages/PasswordRecovery';
+import NewPassword from './pages/NewPassword';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -28,8 +30,9 @@ root.render(
       <Route path = "/MyTasks" element = {<PrincipalPage/>}/>
       <Route path="/confirmationAccount" element = {<EmailConfirmation/>}/>
       <Route path="/pleaseConfirmEmail" element = {<NecessaryConfirmation/>}/>
+      <Route path="/passwordRecovery" element = {<PasswordRecovery/>}/>
+      <Route path = "/newPassword" element = {<NewPassword/>}/>
 
-         
       </Routes>
   </Router>
 

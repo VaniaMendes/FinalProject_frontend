@@ -103,7 +103,7 @@ function Login(){
                                 onChange={(event) => setPassword(event.target.value)}
                                 required
                             />
-                             <a className="signUp" href="/register" onClick={handleNewUSer}>Forgot your password?</a>
+                             <a className="signUp" href="/passwordRecovery" onClick={handleNewUSer}>Forgot your password?</a>
                         </div>
                     </div>
                     <div className="form_group">

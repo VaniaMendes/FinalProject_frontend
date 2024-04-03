@@ -1664,8 +1664,7 @@ th {
 color: var(--white);
 }
 
-.btn_confirm{
-    
+.btn_confirm{ 
   background-color: var(--white);
   height: 40px;
   width: 200px;

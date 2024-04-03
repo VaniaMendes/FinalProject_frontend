@@ -126,6 +126,8 @@ export async function getUserByToken(tokenUser) {
   }
 }
 
+
+
 export async function registerUserByPO(tokenUser, newUser) {
   try {
     const response = await fetch(
@@ -170,7 +172,7 @@ export async function registerUser(newUser) {
     );
 
     if (response.ok) {
-        return 200;
+        return true;
    
     } else {
     
@@ -312,5 +314,59 @@ export async function getUserByUsername(tokenUser, username) {
 }
 
 
+export async function recoveryPAssword(email) {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/project_backend/rest/users/passwordRecovery?email=${email}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+         
+        }
+      }
+    );
 
+    if (response.ok) {
+     return true;
+      } else {
+        return false;
+      }
+      
+    
+  } catch (error) {
+    console.error( error);
+    return false;
+  }
+}
+
+export async function changePassword(email, password1, password2) {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/project_backend/rest/users/changePassword?password1=${password1}&password2=${password2}`,
+      {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          email:email,
+         
+        }
+      }
+    );
+
+    if (response.ok) {
+     return true;
+      } else {
+        const result = await response.text();
+        return result;
+      }
+      
+    
+  } catch (error) {
+    console.error( error);
+    return false;
+  }
+}
 

@@ -100,7 +100,7 @@ function NewUser() {
   //Logica para registo de um utilizador inicial
 
   const result = await registerUser(newUser);
-  if(result===200){
+  if(result===true){
   NotificationManager.success("Please verify your email account", "", 800);
   navigate("/login");
   
