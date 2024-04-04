@@ -370,3 +370,58 @@ export async function changePassword(email, password1, password2) {
   }
 }
 
+export async function getUsersByName(tokenUser, prefix) {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/project_backend/rest/users/filterByName?prefix=${prefix}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          token: tokenUser,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const users = await response.json();
+      console.log(users);
+      return users;
+    } else {
+      const error = await response.text();
+      return error;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+export async function getUsersByEmail(tokenUser, prefix) {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/project_backend/rest/users/filterByEmail?prefix=${prefix}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          token: tokenUser,
+        },
+      }
+    );
+
+    if (response.ok) {
+      const users = await response.json();
+      console.log(users);
+      return users;
+    } else {
+      const error = await response.text();
+      return error;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}

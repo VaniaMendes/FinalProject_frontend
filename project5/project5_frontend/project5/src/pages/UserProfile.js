@@ -2,12 +2,12 @@
 import MainPage from "../components/MainPage";
 import SideMenu from "../components/SideMenu";
 import 'react-notifications/lib/notifications.css';
-import EditProfile from "../components/edit_profile";
+import EditProfileByPO from "../components/editProfileByPO";
 import React from "react";
-import TotalTasks from "../components/MyTasksChart";
+import MenuProductOwner from "../components/MenuProductOwner";
 
 
-function EditProfilePage(){
+function UserProfile(){
 
  
             
@@ -16,11 +16,12 @@ function EditProfilePage(){
         
         <MainPage/>
         <SideMenu/>
-        <EditProfile/>
-        <TotalTasks/>
+        <EditProfileByPO/>
+        <MenuProductOwner/>
+        
         </div>
              
     )
 }
 
-export default EditProfilePage;
+export default UserProfile;

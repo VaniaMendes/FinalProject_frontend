@@ -6,12 +6,14 @@ import 'react-notifications/lib/notifications.css';
 import {  getUserByUsername} from "../endpoints/users";
 import { updateProfileByPO } from "../endpoints/users";
 import {showModal, updateUsersTable} from '../stores/boardStore';
-import TotalTasks from "./TotalTasks";
+import {useNavigate} from 'react-router-dom';
+import MyTasksChart from "./MyTasksChart";
 
 
 function EditProfileByPO(){
 
 
+   const navigate = useNavigate();
    //Obtem o token da store
     const tokenObject = userStore(state => state.token);
     const tokenUser = tokenObject.token;
@@ -27,9 +29,7 @@ function EditProfileByPO(){
     //Estado para aramzenar as informações do user a ser editado
     const [userEditPO, setUserEditPO] = useState(null);
 
-    //Estado para controlar a visibilidade do modal de edição de user
-    const { showModalEditUser, setShowModalEditUser } = showModal();
-
+    
     //Estado para aramzenar as alteraçóes feitas nos campos de edição
     const [userEdit, setUserEdit] = useState(null);
 
@@ -44,7 +44,7 @@ function EditProfileByPO(){
             setUserEditPO(result); //Define as informações do user
          };
          fetchData();
-        }, [tokenUser, username, showModalEditUser]);
+        }, [tokenUser, username]);
 
         
 
@@ -84,8 +84,7 @@ function EditProfileByPO(){
             if(result === 200){
                 NotificationManager.success("User edited successfully", "", 1000);
 
-                //Coloca o modal de edição false e mostra novamente a tabela de users
-               setShowModalEditUser(false);
+              navigate("/productOwner");
                setShowUsersTable(!showUsersTable);
             }else{
                 NotificationManager.warning(result, "", 1000);
@@ -95,65 +94,72 @@ function EditProfileByPO(){
 
         //Função para voltar quando clicamos no botao BACK - coloca a visibilidade do modal a false
         const handleBack = ()=>{
-         setShowModalEditUser(false);
+         navigate("/productOwner");
+     
         }
 
 
     return(
     
-       <div className='modal_container'> 
-       {showModalEditUser && 
+       <div>
+       
         <div className="edit_container1">
         <div className="edit_photo">
            <img src={userEditPO?.imgURL} id="user_photo" alt="User photo" />
            <p id="username_edit">{userEditPO?.username}</p>
+            <MyTasksChart/>
         </div>
         <div className="edit_profile">
+           
            <div>
-              <label  htmlFor="descriptioLabel">Password</label>
-              <input type="text" className="edit_element" id="password" placeholder="******" onChange={handleInputChange}
-              disabled={role === "scrum_master"}/>
-           </div>
-           <div>
-              <label htmlFor="descriptioLabel">Email</label>
+              <label className="descriptioLabel">Email</label>
               <input type="text" className="edit_element" id="email" placeholder={userEditPO?.email} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-              <label  htmlFor="descriptioLabel">First Name</label>
+              <label  className="descriptioLabel">First Name</label>
               <input type="text" className="edit_element" id="firstName" placeholder={userEditPO?.firstName} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-              <label  htmlFor="descriptioLabel">Last Name</label>
+              <label  className="descriptioLabel">Last Name</label>
               <input type="text" className="edit_element" id="lastName" placeholder={userEditPO?.lastName} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-              <label  htmlFor="descriptioLabel">Phone Number</label>
+              <label  className="descriptioLabel">Phone Number</label>
               <input type="text" className="edit_element" id="phoneNumber" placeholder={userEditPO?.phoneNumber} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-              <label  htmlFor="descriptioLabel">URL Image</label>
+              <label  className="descriptioLabel">URL Image</label>
               <input type="text" className="edit_element" id="imgURL" placeholder={userEditPO?.imgURL} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-                <label htmlFor="opcoes" className="descriptioLabel">User role</label>
+                <label className="descriptioLabel" >User role</label>
+                {role !== "product_owner" && (
+        <input
+            type="text"
+            value={userEditPO?.typeOfUser}
+            readOnly
+            disabled={role === "scrum_master"}
+        />
+    )}
+
+{role === "product_owner" && (
                 <select id="typeOfUser" name="opcoes" value={userEditPO?.typeOfUser}   onChange={handleInputChange} disabled={role === "scrum_master"}> 
                 <option value="developer">Developer</option>
                 <option value="scrum_master">Scrum Master</option>
                 <option value="product_owner">Product Owner</option>
                 </select>
+)}
             </div>
 
         </div>
         <div className="confirm_profile">
            <button className="btn_save" id="btn-save" onClick={handleSubmit} hidden={role === "scrum_master"}>Save</button>
-           <button className="btn_cancel" id="btn_cancel" onClick={handleBack}>Back</button>
+               <button className="btn_cancel" id="btn_cancel" onClick={handleBack}>Back</button>
         </div>
-        
+              
      </div>
-     
-}
-<TotalTasks/>
-     </div> 
+     </div>
+
 
     )
  

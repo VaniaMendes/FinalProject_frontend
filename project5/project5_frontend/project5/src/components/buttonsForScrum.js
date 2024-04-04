@@ -2,9 +2,12 @@ import React from "react";
 import { FaBookOpenReader } from "react-icons/fa6";
 import { userStore } from "../stores/UserStore";
 import { showModal } from '../stores/boardStore';
+import {useNavigate} from 'react-router-dom';
 
 
 function ButtonsForScrum({username}){
+
+  const navigate = useNavigate();
 
     const { setShowModalEditUser } = showModal();
   
@@ -15,6 +18,7 @@ function ButtonsForScrum({username}){
 
         //Coloca o modal do edit User true para aparecer
         setShowModalEditUser(true);
+        navigate('/profile/' + username);
         
       }
 

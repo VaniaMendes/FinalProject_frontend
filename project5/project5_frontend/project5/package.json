@@ -17,6 +17,7 @@
     "react-sticky": "^6.0.3",
     "react-table": "^7.8.0",
     "react-toastify": "^10.0.4",
+    "recharts": "^2.12.4",
     "web-vitals": "^2.1.4",
     "zustand": "^4.5.2"
   },

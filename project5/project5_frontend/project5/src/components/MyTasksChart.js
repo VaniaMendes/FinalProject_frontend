@@ -4,8 +4,10 @@ import { countTasks } from "../endpoints/tasks";
 import { getUserByToken } from "../endpoints/users";
 import { NotificationManager } from "react-notifications";
 import { showModal } from "../stores/boardStore";
+import { PieChart, Pie, Cell, Tooltip, Legend, Text } from 'recharts';
 
-function TotalTasks() {
+
+function MyTasksChart() {
   // Obtém o token do usuário do store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
@@ -14,7 +16,6 @@ function TotalTasks() {
    //Obtemo username guardado da store do user ao qual vamos alterar o perfil
    const { getUsername } = userStore();
    const username = getUsername();
-
 
     //Estado para controlar a visibilidade do modal de edição de user
     const { showModalEditUser } = showModal();
@@ -34,7 +35,6 @@ function TotalTasks() {
     const fetchData = async () => {
 
         if(showModalEditUser) {
-
             const tasks = await countTasks(tokenUser, username);
             setTaskSummary(tasks);
         }else{
@@ -51,44 +51,49 @@ function TotalTasks() {
     fetchData();
   }, [tokenUser, username, showModalEditUser]);
 
+// Calcular o total de tarefas
+const totalTasks = taskSummary.todo + taskSummary.done + taskSummary.doing;
+// Dados de exemplo
+const data = [
+  {name: 'TODO', value: taskSummary.todo},
+  {name: 'DOING', value: taskSummary.doing},
+  {name: 'DONE', value: taskSummary.done},
+];
+
+// Cores para cada seção do gráfico de rosca
+const COLORS = ['#007BFF', '#00B2FF', '#33C7FF'];
+
   return (
-<div>
-         <div className='tasksData'>
-        <h2>Task Overview</h2>
-        <label className="descriptioLabel">Total Tasks</label>
-        <input
-          type="text"
-          className="edit_element"
-          placeholder={taskSummary.todo + taskSummary.doing + taskSummary.done}
-          readOnly
-        />
-  
-      <p>Tasks by State:</p>
-      <label className="descriptioLabel">TODO</label>
-      <input
-        type="text"
-        className="edit_element"
-        placeholder={taskSummary.todo}
-        readOnly
-      />
-      <label className="descriptioLabel">DOING</label>
-      <input
-        type="text"
-        className="edit_element"
-        placeholder={taskSummary.doing}
-        readOnly
-      />
-      <label className="descriptioLabel">DONE</label>
-      <input
-        type="text"
-        className="edit_element"
-        placeholder={taskSummary.done}
-        readOnly
-      />
-    </div>
-    </div>
+   <div className="verify-container" >
+         <PieChart width={200} height={200}>
+        <Pie
+          data={data}
+          cx={100}
+          cy={100}
+          labelLine={false}
+          outerRadius={80}
+          innerRadius={50}
+          fill="#8884d8"
+          dataKey="value"
+         
+        >
+          {data.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Text x={200} y={100} textAnchor="middle" dominantBaseline="middle">
+          {totalTasks}
+        </Text>
+        <Tooltip />
+        <Legend layout="vertical" align="right" verticalAlign="middle" />
+        </PieChart>
+        
+        <div>
       
+        </div>
+ 
+ </div>
   );
 }
 
-export default TotalTasks;
+export default MyTasksChart;

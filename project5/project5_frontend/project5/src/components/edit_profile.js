@@ -115,7 +115,7 @@ function EditProfile(){
     return(
        <div> 
             {role === 'product_owner' && <MenuProductOwner />}
-        <div className="edit_container">
+        <div className="edit_container1">
         <div className="edit_photo">
            <img src={userLogged?.imgURL} id="user_photo" alt="Descrição da imagem" />
            <p id="username_edit">{userLogged?.username}</p>

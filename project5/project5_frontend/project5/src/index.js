@@ -14,6 +14,7 @@ import EmailConfirmation from './pages/Emailconfirmation';
 import NecessaryConfirmation from './pages/Confirmation';
 import PasswordRecovery from './pages/PasswordRecovery';
 import NewPassword from './pages/NewPassword';
+import UserProfile from './pages/UserProfile';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -32,6 +33,8 @@ root.render(
       <Route path="/pleaseConfirmEmail" element = {<NecessaryConfirmation/>}/>
       <Route path="/passwordRecovery" element = {<PasswordRecovery/>}/>
       <Route path = "/newPassword" element = {<NewPassword/>}/>
+     
+      <Route path="/profile/:username" element={<UserProfile />} />
 
       </Routes>
   </Router>

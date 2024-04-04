@@ -44,6 +44,7 @@ function NewUser() {
   //Função para fechar o modal
   const closeModal = () => {
     setShowNewUserModal(false);
+    navigate("/productOwner");
     if(role !== "product_owner"){
       navigate("/login");
     }

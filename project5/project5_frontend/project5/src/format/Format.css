@@ -1145,8 +1145,8 @@ label {
   align-items: center;
   margin-top:20px;
   position: absolute;
-  top:15%;
-  left: 40%;
+  top:25%;
+  left: 55%;
   transform: translate(-50%, -50%);
   width: 42%;
   height: 150px;
@@ -1656,12 +1656,17 @@ th {
 }
 
 .verify-container{
-  top:40%;
-  left:50%;
+  top:36%;
+  left:68%;
+  display:flex;
   position: fixed;
   align-items: center;
   justify-content: center;
-color: var(--white);
+  background-color: none;
+  border-radius: 10px;
+  width: 20%;
+  height: 33%;
+
 }
 
 .btn_confirm{ 
@@ -1672,3 +1677,5 @@ color: var(--white);
   cursor: pointer;
 
 }
+
+
