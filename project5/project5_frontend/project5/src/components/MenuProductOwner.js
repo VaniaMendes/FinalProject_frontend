@@ -8,6 +8,7 @@ import { FaUserCheck } from "react-icons/fa";
 import { FaUserAltSlash } from "react-icons/fa";
 import { useNavigate  } from 'react-router-dom';
 import {tables} from '../stores/boardStore';
+import { AiFillDashboard } from "react-icons/ai";
 
 function MenuProductOwner(){
 
@@ -62,6 +63,10 @@ function MenuProductOwner(){
         navigate('/productOwner');
     }
 
+    const handleDashboard = () => {
+        navigate('/dashboard');
+    }
+
    
 return(
 
@@ -79,6 +84,7 @@ return(
                 )}
         <li  className='item_PO'  onClick={handleInativeTasks}> <MdTask/> Deleted Tasks</li>
         <li  className='item_PO'  onClick={handleShowCategoriesTable}><BiSolidCategoryAlt/> Categories</li>
+        <li className = 'item_PO' onClick={handleDashboard}> <AiFillDashboard/> Dashboard</li>
     </ul>
 </div>
 </div>

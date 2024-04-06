@@ -6,11 +6,12 @@ import ScrumBoard from '../components/ScrumBoard';
 import MenuProductOwner from '../components/MenuProductOwner';
 import MenuScrum from '../components/MenuScrum';
 import {userStore} from '../stores/UserStore';
-import { navigate } from "@reach/router";
+import {useNavigate} from 'react-router-dom'
 
 function PrincipalPage(){
     
   
+  const navigate = useNavigate();
     const { getRole } = userStore();
     const role = getRole();
 
@@ -19,10 +20,11 @@ function PrincipalPage(){
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
 
-  if(!tokenUser){
-    navigate("/login");
-    
+  if (!tokenUser) {
+    navigate("/login"); // Redireciona para a página de login se não estiver autenticado
+    return null; // Retorna null para evitar renderização da página
   }
+
    
 
     return(

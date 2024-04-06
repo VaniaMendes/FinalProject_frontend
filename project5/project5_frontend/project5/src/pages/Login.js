@@ -9,7 +9,7 @@ import {  NotificationManager } from "react-notifications";
 import '../format/login.css';
 import { useNavigate  } from 'react-router-dom';
 import { showModal } from '../stores/boardStore';
-import {getUserByToken} from '../endpoints/users';
+
 
 
 function Login(){
@@ -18,8 +18,7 @@ function Login(){
     const [username, setUsername] = useState(''); 
     const [password, setPassword] = useState('');
 
-    const [userLogged, setUserLogged] = useState(''); 
-    const navigate = useNavigate (); 
+     const navigate = useNavigate (); 
 
     
   //Estados para controlar a exibição do modal de newUser
@@ -112,7 +111,6 @@ function Login(){
                 </form>
                 <div id="signup">Don't have an account?
         
-
                 <a className="signUp" href="/register" onClick={handleNewUSer}>REGISTER HERE</a></div>
             </div>
         </div>

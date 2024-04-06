@@ -85,7 +85,10 @@ const COLORS = ['#007BFF', '#00B2FF', '#33C7FF'];
           {totalTasks}
         </Text>
         <Tooltip />
-        <Legend layout="vertical" align="right" verticalAlign="middle" />
+        <Legend 
+          layout="vertical"
+          align="right"
+          verticalAlign="middle"/>
         </PieChart>
         
         <div>

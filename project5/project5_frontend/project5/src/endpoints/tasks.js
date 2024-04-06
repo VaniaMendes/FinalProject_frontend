@@ -341,7 +341,7 @@ export async function myTasks(tokenUser) {
 
 export async function countTasks(tokenUser, username) {
    try {
-      const response = await fetch(`http://localhost:8080/project_backend/rest/tasks/${username}/tasksCountState`, {
+      const response = await fetch(`http://localhost:8080/project_backend/rest/dashboard/${username}/tasksCountState`, {
          method: "GET",
          headers: {
             Accept: "application/json",

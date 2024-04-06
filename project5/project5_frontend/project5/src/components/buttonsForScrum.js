@@ -4,7 +4,6 @@ import { userStore } from "../stores/UserStore";
 import { showModal } from '../stores/boardStore';
 import {useNavigate} from 'react-router-dom';
 
-
 function ButtonsForScrum({username}){
 
   const navigate = useNavigate();

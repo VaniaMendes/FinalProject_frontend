@@ -38,14 +38,8 @@ useEffect(() => {
   async function fetchData() {
     try {
       const user = await getUserByToken(tokenUser);
-      console.log(user);
-      if(user.confirmed){
-      setUserData(user);
+        setUserData(user);
       setRole(user.typeOfUser);
-      }else{
-        navigate("/pleaseConfirmEmail");
-      }
-
      
     } catch (error) {
       console.log("Error fetching user data:", error);
@@ -108,7 +102,6 @@ useEffect(() => {
     console.log("Erro durante logout", error);
   }
   };
-
 
 
 

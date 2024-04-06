@@ -10,7 +10,6 @@ import {useNavigate} from "react-router-dom";
 
 function NewUser() {
 
-
   //Obtem o token do user da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
@@ -30,7 +29,6 @@ function NewUser() {
 
   //Estados para armazenar os dados do novo utilizador
   const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -55,7 +53,6 @@ function NewUser() {
   //Objeto com os dados do novo utilizador
   const newUser = {
     username: username,
-    password: password,
     email: email,
     firstName: firstName,
     lastName: lastName,
@@ -69,7 +66,7 @@ function NewUser() {
     event.preventDefault(); 
 
      // Validação dos campos
-  if (!username || !password || !email || !firstName || !lastName || !phoneNumber || !imgURL || (role === "product_owner" && !typeOfUser)) {
+  if (!username  || !email || !firstName || !lastName || !phoneNumber || !imgURL || (role === "product_owner" && !typeOfUser)) {
     NotificationManager.warning("Please fill in all fields", "", 800);
     return;
   }
@@ -146,20 +143,7 @@ function NewUser() {
               required
             />
           </label>
-
-          <label htmlFor="register_password" className="descriptioLabel">
-            Password{" "}
-            <input
-              type="text"
-              placeholder="Enter your password"
-              className="register_elem"
-              id="register_password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-              required
-            />
-          </label>
-
+         
           <label htmlFor="register_email" className="descriptioLabel">
             Email{" "}
             <input
@@ -244,7 +228,6 @@ function NewUser() {
           </label>
           )}
 
-          
           <div className="button-container">
             <button
               className="register_elem"

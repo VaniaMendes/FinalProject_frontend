@@ -1,0 +1,71 @@
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr 2fr; /* Duas linhas, a primeira com 1 parte e a segunda com 2 partes */
+    justify-content: center;
+    align-items: center;
+    height: 85%;
+    width: 68%;
+    position: fixed;
+    top:10%;
+    left: 25%;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.dashboard_container1,
+.dashboard_container2 {
+    grid-row: 1; /* Coloque esses dois containers na primeira linha */
+}
+
+.dashboard_container3,
+.dashboard_container4,
+.dashboard_container5 {
+    grid-row: 2; /* Coloque esses três containers na segunda linha */
+    column-gap: 40px;
+}
+
+.dashboard_container1,
+.dashboard_container2,
+.dashboard_container3,
+.dashboard_container4,
+.dashboard_container5 {
+    display: flex;
+    justify-content: center;
+    align-items: center;  
+    height: 100%;
+    width: 100%;
+    
+}
+
+.dashboard_container3{
+    grid-column: 1;
+    justify-content: flex-start;
+    width: 80%;
+    grid-column: 2;
+    margin-left: 40px;
+}
+.dashboard_container4{
+   justify-content: flex-start;
+
+   grid-column: 1;
+   margin-left: 60px;
+  
+}
+.dashboard_container5{
+   margin-top: 120px;
+    width: 50%;
+    display: table-column;
+    justify-content: center;
+    align-items: center;
+    grid-column: 3;
+    margin-left: 40px;
+}
+.table-title {
+    text-align: center;
+    margin-bottom: 50px;
+
+  }
+  .title{
+    font-size: 20px;
+  }

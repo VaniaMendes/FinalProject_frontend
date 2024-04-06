@@ -107,7 +107,7 @@ function EditProfileByPO(){
         <div className="edit_photo">
            <img src={userEditPO?.imgURL} id="user_photo" alt="User photo" />
            <p id="username_edit">{userEditPO?.username}</p>
-            <MyTasksChart/>
+         
         </div>
         <div className="edit_profile">
            

@@ -18,13 +18,13 @@ function UserTable() {
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
-  const [users, setUsers] = useState(null);
+  const [users, setUsers] = useState([]);
 
   //Guarda o estado do prefix a pesquisar para filtrar a lista por nome
-  const [prefix, setPrefix] = useState(null);
+  const [prefix, setPrefix] = useState("");
 
   // Estado para armazenar a última lista de usuários encontrada
-const [lastUsers, setLastUsers] = useState(null);
+const [lastUsers, setLastUsers] = useState([]);
 
   //Obtém e configura os estados do modal
   const { showNewUserModal, setShowNewUserModal } = showModal();
@@ -108,9 +108,8 @@ const handleFilterName = async (tokenUser, prefix) => {
       const filteredUsers = await getUsersByName(tokenUser, prefix);
       if (filteredUsers.length === 0) {
         // Se nenhum usuário foi encontrado, mostrar uma mensagem ao usuário
-        setUsers(lastUsers);
-        NotificationManager.warning("No users found with that name");
-       
+        setUsers(users || []);
+        
       } else {
         setUsers(filteredUsers);
         setLastUsers(filteredUsers); //Atualiza a última lista de users encontrada
@@ -133,9 +132,11 @@ const handleFilterName = async (tokenUser, prefix) => {
       const filteredUsers = await getUsersByEmail(tokenUser, prefix);
       if (filteredUsers.length === 0) {
         // Se nenhum usuário foi encontrado, mostrar uma mensagem ao usuário
-        NotificationManager.warning("No users found with that name");
+        setUsers(users || []);
+        
       } else {
         setUsers(filteredUsers);
+        setLastUsers(filteredUsers); //Atualiza a última lista de users encontrada
       }
     }
   } catch (error) {
@@ -169,7 +170,6 @@ const handleFilterName = async (tokenUser, prefix) => {
                                onChange={(e) => {
                     setPrefix(e.target.value);
                     handleFilterName(tokenUser, e.target.value);
-             
                   }}
                 ></input>
               </th>

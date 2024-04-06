@@ -26,7 +26,7 @@ function PasswordRecovery() {
   return (
     <div>
          <MainPage/>
-    <div className="verify-container">
+    <div className="password-container">
        
       <h2>Password Recovery</h2>
       <p> Enter your email:</p>

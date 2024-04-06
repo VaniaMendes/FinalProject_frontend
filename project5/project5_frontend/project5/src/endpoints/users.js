@@ -425,3 +425,58 @@ export async function getUsersByEmail(tokenUser, prefix) {
     return false;
   }
 }
+
+export async function getUsersByTokenConfirmation(tokenConfirmation) {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/project_backend/rest/users/userByTokenConfirmation?tokenConfirmation=${tokenConfirmation}`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+          
+        }
+      }
+    );
+
+    if (response.ok) {
+      const user = await response.json();
+      console.log(user);
+      return user;
+    } else {
+      const error = await response.text();
+      return error;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
+export async function getDashboard(tokenUser){
+  try{
+  const response = await fetch("http://localhost:8080/project_backend/rest/dashboard/data", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+          token: tokenUser
+      },
+    }
+  );
+
+  if (response.ok) {
+    const data = await response.json();
+   
+    return data;
+  } else {
+    return 403;
+  }
+} catch (error) {
+  console.error(error);
+  return false;
+}}
+
+
+
