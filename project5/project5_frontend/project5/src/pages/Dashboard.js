@@ -70,6 +70,7 @@ function Dashboard() {
       <MenuProductOwner />
       <div className="dashboard">
         <div className="dashboard_container1">
+        <text className = "title_dashboard"  x={250} y={20} textAnchor="middle" fontSize="20px">Registered Users/Time</text> {/* Título */}
           <LineChart
           
             width={500}
@@ -82,12 +83,14 @@ function Dashboard() {
               bottom: 5,
             }}
           >
-            
+           
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
             <YAxis />
             <Tooltip />
-            <Legend />
+            <Legend   
+            
+            />
             <Line
               type="monotone"
               dataKey="users"
@@ -97,7 +100,8 @@ function Dashboard() {
           </LineChart>
         </div>
         <div className="dashboard_container2">
-          <BarChart
+        <text className = "title_dashboard" x={250} y={20} textAnchor="middle" fontSize="20px">Tasks finished/Time</text> {/* Título */}
+          <BarChart 
             width={500}
             height={300}
             data={tasksConcluedByTime}
@@ -108,6 +112,7 @@ function Dashboard() {
               bottom: 5,
             }}
           >
+             
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="date" />
             <YAxis />
@@ -120,7 +125,7 @@ function Dashboard() {
         
         <div className="dashboard_container3">
           <PieChart width={400} height={400}>
-          <text className = "title" x={200} y={80} textAnchor="middle" fontSize="20px">Tasks by State</text> {/* Título */}
+          <text className = "title_dashboard" x={200} y={80} textAnchor="middle" fontSize="20px">Tasks by State</text> {/* Título */}
             <Pie
               data={tasksByState}
               cx={200}
@@ -156,17 +161,16 @@ function Dashboard() {
     <li>Total Users: {data.totalUsers}</li>
     <li>Confirmed Users: {data.confirmedUsers}</li>
     <li>Unconfirmed Users: {data.unconfirmedUsers}</li>
-    <li>Average Tasks Per User: {data.averageTasksPerUser}</li>
-    <li>Average Task Completion Time: {data.averageTaskCompletionTime}</li>
+    <li>Average Tasks/User: {data.averageTasksPerUser}</li>
+    <li>Average Time Conclusion/Time: {data.averageTaskCompletionTime ? data.averageTaskCompletionTime.toFixed(2) : 'N/A'}</li>
+
   </ul>
 </div>
        
 
         <div className="dashboard_container5">
-        <div className="table-title">
-    <h2>List of all categories</h2>
-  </div>
-  <table>
+        
+  <table className="tableDashboard">
     <thead>
       
       <tr>

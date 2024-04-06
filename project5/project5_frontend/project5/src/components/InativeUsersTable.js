@@ -50,6 +50,8 @@ function InactiveUsersTable() {
                 .then(result => {
                     if (result===true) {
                         NotificationManager.success("User deleted successfully", "", 1000);
+                        const updatedUsers = inativeUsers.filter((user) => user.username !== username);
+                        setInativeUsers(updatedUsers);
                     } else {
                         NotificationManager.error("Failed to delete user", "", 1000);
                     }
