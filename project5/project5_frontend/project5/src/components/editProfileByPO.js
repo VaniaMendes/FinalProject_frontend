@@ -7,7 +7,7 @@ import {  getUserByUsername} from "../endpoints/users";
 import { updateProfileByPO } from "../endpoints/users";
 import {showModal, updateUsersTable} from '../stores/boardStore';
 import {useNavigate} from 'react-router-dom';
-import MyTasksChart from "./MyTasksChart";
+import ButtonsForProfile from "./buttonsForProfile";
 
 
 function EditProfileByPO(){
@@ -95,6 +95,7 @@ function EditProfileByPO(){
         //Função para voltar quando clicamos no botao BACK - coloca a visibilidade do modal a false
         const handleBack = ()=>{
          navigate("/productOwner");
+        
      
         }
 
@@ -107,7 +108,7 @@ function EditProfileByPO(){
         <div className="edit_photo">
            <img src={userEditPO?.imgURL} id="user_photo" alt="User photo" />
            <p id="username_edit">{userEditPO?.username}</p>
-         
+           <ButtonsForProfile/>
         </div>
         <div className="edit_profile">
            

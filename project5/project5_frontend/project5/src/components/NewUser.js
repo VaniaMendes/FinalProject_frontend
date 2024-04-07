@@ -89,7 +89,7 @@ function NewUser() {
     if(result===200){
       NotificationManager.success("New User successfully created", "", 800);
       setShowUsersTable(!showUsersTable);
-      closeModal();
+      navigate("/productOwner");
     }else{
       NotificationManager.warning(result, "", 800);
     }

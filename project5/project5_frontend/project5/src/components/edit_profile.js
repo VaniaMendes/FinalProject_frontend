@@ -6,6 +6,7 @@ import 'react-notifications/lib/notifications.css';
 import { useNavigate  } from 'react-router-dom';
 import { getUserByToken } from "../endpoints/users";
 import MenuProductOwner from "./MenuProductOwner";
+import ButtonsForProfile from "./buttonsForProfile";
 
 
 function EditProfile(){
@@ -119,8 +120,10 @@ function EditProfile(){
         <div className="edit_photo">
            <img src={userLogged?.imgURL} id="user_photo" alt="Descrição da imagem" />
            <p id="username_edit">{userLogged?.username}</p>
+           <ButtonsForProfile/>
         </div>
         <div className="edit_profile">
+            
            <div>
               <label  className="descriptioLabel">Password</label>
               <input type="text" className="edit_element" id="password" placeholder="******"/>

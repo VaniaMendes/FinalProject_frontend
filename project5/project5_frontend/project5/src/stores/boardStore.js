@@ -91,3 +91,8 @@ export const showModal = create((set) => ({
 
     
 }
+
+export const showChart = create((set) => ({
+  showTaskChart: false,
+  setShowTaskChart: (value) => set({ showTaskChart: value }),
+}));

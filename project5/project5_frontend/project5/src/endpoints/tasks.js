@@ -118,7 +118,7 @@ export async function getPhotoByUsername(token, username) {
        }
 
        const data = await response.json();
-       console.log(data);
+       
        return data;
    } catch (error) {
        console.error('Error:', error.message);
@@ -212,7 +212,7 @@ export async function restoreTask(tokenUser, taskId) {
        });
  
        if (response.ok) {
-          console.log("Task state updated");
+          
        } else {
           console.error("Failed to update task state");
        }
@@ -352,7 +352,7 @@ export async function countTasks(tokenUser, username) {
 
       if (response.ok) {
          const tasksState = await response.json();
-         console.log(tasksState);
+      
          return tasksState;
       } else {
          console.error("Failed to fetch task data");

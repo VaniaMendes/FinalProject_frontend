@@ -1146,7 +1146,7 @@ label {
   margin-top:20px;
   position: absolute;
   top:25%;
-  left: 48%;
+  left: 55%;
   transform: translate(-50%, -50%);
   width: 42%;
   height: 150px;
@@ -1656,16 +1656,17 @@ th {
 }
 
 .verify-container{
-  top:36%;
-  left:68%;
+  top:30%;
+  left:15%;
   display:flex;
   position: fixed;
   align-items: center;
   justify-content: center;
-  background-color: none;
+  background-color: var(--white);
   border-radius: 10px;
-  width: 20%;
-  height: 33%;
+  width: 500px;
+  height: 500px;
+  z-index: 9999;
 
 }
 
@@ -1682,4 +1683,19 @@ th {
   position: absolute;
   top: 40%;
   left: 45%;
+}
+
+.icon_profile{
+
+  align-items: right;
+  justify-content: right;
+  display: flex;
+  margin-left: 300px;
+  
+
+}
+.icon_profile_button{
+  border: none;
+  margin-right: 20px;
+  font-size: 30px;
 }

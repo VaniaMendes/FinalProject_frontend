@@ -386,7 +386,7 @@ export async function getUsersByName(tokenUser, prefix) {
 
     if (response.ok) {
       const users = await response.json();
-      console.log(users);
+      
       return users;
     } else {
       const error = await response.text();

@@ -5,12 +5,16 @@ import { getUserByToken } from "../endpoints/users";
 import { NotificationManager } from "react-notifications";
 import { showModal } from "../stores/boardStore";
 import { PieChart, Pie, Cell, Tooltip, Legend, Text } from 'recharts';
+import {showChart} from '../stores/boardStore'
 
 
 function MyTasksChart() {
   // Obtém o token do usuário do store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
+  const {showTaskChart, setShowTaskChart} = showChart();
+
 
 
    //Obtemo username guardado da store do user ao qual vamos alterar o perfil
@@ -36,6 +40,7 @@ function MyTasksChart() {
 
         if(showModalEditUser) {
             const tasks = await countTasks(tokenUser, username);
+
             setTaskSummary(tasks);
         }else{
       const result = await getUserByToken(tokenUser);
@@ -51,6 +56,12 @@ function MyTasksChart() {
     fetchData();
   }, [tokenUser, username, showModalEditUser]);
 
+  
+
+  const handleBack = () => {
+    setShowTaskChart(false);
+  };
+
 // Calcular o total de tarefas
 const totalTasks = taskSummary.todo + taskSummary.done + taskSummary.doing;
 // Dados de exemplo
@@ -60,19 +71,21 @@ const data = [
   {name: 'DONE', value: taskSummary.done},
 ];
 
-// Cores para cada seção do gráfico de rosca
-const COLORS = ['#007BFF', '#00B2FF', '#33C7FF'];
+// Cores para cada seção do gráfico 
+const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
 
   return (
    <div className="verify-container" >
-         <PieChart width={200} height={200}>
+
+         <PieChart width={400} height={400}>
+         <text fontSize={30} x={200} y={20} textAnchor="middle" dominantBaseline="middle">Tasks for State</text>
         <Pie
           data={data}
-          cx={100}
-          cy={100}
+          cx={200}
+          cy={200}
           labelLine={false}
-          outerRadius={80}
-          innerRadius={50}
+          outerRadius={100}
+          innerRadius={60}
           fill="#8884d8"
           dataKey="value"
          
@@ -81,18 +94,27 @@ const COLORS = ['#007BFF', '#00B2FF', '#33C7FF'];
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Text x={200} y={100} textAnchor="middle" dominantBaseline="middle">
+        <Text x={100} y={150} textAnchor="left" dominantBaseline="middle">
           {totalTasks}
         </Text>
         <Tooltip />
         <Legend 
-          layout="vertical"
-          align="right"
-          verticalAlign="middle"/>
+        layout="horizontal"
+        align="left"
+        horizAdvXAlign="middle"
+       width={150}
+       height={50}
+       fontSize={5}
+       margin={{ top: 20, left: 20, right: 10, bottom: 20 }}
+        formatter={(name, entry) => {
+          return `${name} (${entry.payload.value})`; 
+          }}/> 
+        
+   
         </PieChart>
         
         <div>
-      
+      <button className="btn_back1" onClick={handleBack}>Back</button>
         </div>
  
  </div>

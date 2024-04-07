@@ -28,6 +28,7 @@ const [lastUsers, setLastUsers] = useState([]);
 
   //Obtém e configura os estados do modal
   const { showNewUserModal, setShowNewUserModal } = showModal();
+  const { setShowModalEditUser } = showModal();
 
   const { showUsersTable } = updateUsersTable();
 
@@ -49,6 +50,7 @@ const [lastUsers, setLastUsers] = useState([]);
   const handleEdit = async (username) => {
     userStore.setState({ username: username }); //Guarda o nome do username do utilizador a ser editado
     navigate("/profile/" + username);
+    setShowModalEditUser(true);
   };
 
   //Função para abrir o modal de criação de novo utilizador
