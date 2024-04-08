@@ -96,3 +96,9 @@ export const showChart = create((set) => ({
   showTaskChart: false,
   setShowTaskChart: (value) => set({ showTaskChart: value }),
 }));
+
+
+export const showMessages = create((set) => ({
+  showMessageChat: false,
+  setShowMessageChat: (value) => set({ showMessageChat: value }),
+}));

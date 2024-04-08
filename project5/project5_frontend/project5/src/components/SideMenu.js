@@ -32,6 +32,10 @@ function SideMenu() {
   //Obtem  o estado de exibição das tarefas apenas do utilizador
  const {setShowUserTasks} = showMyTasks();
 
+ //Obtem a linguagem de exibição da página
+ const locale = userStore((state) => state.locale); 
+const updateLocale = userStore((state) => state.updateLocale); 
+
  
 // Efeito para buscar os dados do usuário ao montar o componente
 useEffect(() => {
@@ -47,6 +51,13 @@ useEffect(() => {
   }
   fetchData();
 }, [tokenUser]);
+
+
+//Função para escolher a linguagem de apresentação do chat
+const handleSelect = (event) => { 
+  console.log(event.target.value); 
+  updateLocale(event.target.value); 
+  } 
 
 //Função para navegar para a página de edição de perfil
  const handleClick = () => {
@@ -112,20 +123,26 @@ useEffect(() => {
           <div className="menu_image" id="user_name">
             <div id="user_info">
             <img id="user_img" src={userData && userData.imgURL} alt="User logo" />
-              <span className="welcome">{userData && userData.firstName}</span>
+              <span className="welcome" >{userData && userData.firstName}</span>
+              <select onChange={handleSelect} defaultValue={locale}> 
+{["en", "pt", "fr"].map(language => (<option            
+key={language}>{language}</option>))} 
+</select> 
             </div>
+          
             <div className = "menuSide">
             <div className='menuPO'>
             <ul className="menu_list">
-              <li className="item_PO" onClick={homeclick}>
+              <li className="item_PO"  onClick={homeclick}>
                 <HiHome /> Home
               </li>
               <li className="item_PO" onClick={logoutClick}>
                 <RiLogoutCircleFill /> Logout
               </li>
-              <li className="item_PO" onClick={handleClick}>
+              <li className="item_PO" id= "profile" onClick={handleClick}>
                 <RiEdit2Fill /> My Profile
               </li>
+              
               <li className="item_PO" onClick={() =>handleMyTaks(tokenUser)}>
                 <MdTask /> My Tasks
               </li>

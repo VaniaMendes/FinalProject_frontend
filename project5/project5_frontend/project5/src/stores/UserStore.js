@@ -49,7 +49,12 @@ export const userStore = create(
                 username:"",
                 taskIdForEdit:"",
                
-            })
+            }),
+
+            
+            locale: "en", 
+            updateLocale : (locale) => set({locale}) 
+
 
 
 

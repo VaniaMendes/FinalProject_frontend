@@ -13,8 +13,6 @@ import {updateTaskState} from '../endpoints/tasks';
 import TaskDetails from './TaskDetails';
 
 
-
-
 function ScrumBoard(){
 
   //Este componente é responsãvel por renderizar tudo o que diz respeito ao scrum_board
@@ -160,9 +158,10 @@ const sortTasks = (tasks) => {
 };
       
 //Listas de tarefas classificadas pelo estado(state)
-const todoList = sortTasks(listTasks.filter(tasks => tasks.state ==='toDo') || []);
-const doingList = sortTasks(listTasks.filter(tasks => tasks.state ==='doing') || []);
-const doneList = sortTasks(listTasks.filter(tasks => tasks.state ==='done') || []);
+const todoList = listTasks ? sortTasks(listTasks.filter(tasks => tasks.state ==='toDo')) : [];
+const doingList = listTasks ? sortTasks(listTasks.filter(tasks => tasks.state ==='doing')) : [];
+const doneList = listTasks ? sortTasks(listTasks.filter(tasks => tasks.state ==='done')) : [];
+
 
 
 //Manipulação de eventos de arrastar e soltar

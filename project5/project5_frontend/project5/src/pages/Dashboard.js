@@ -162,7 +162,7 @@ function Dashboard() {
     <li>Confirmed Users: {data.confirmedUsers}</li>
     <li>Unconfirmed Users: {data.unconfirmedUsers}</li>
     <li>Average Tasks/User: {data.averageTasksPerUser ? data.averageTasksPerUser.toFixed(2) : 'N/A'}</li>
-    <li>Average Time Conclusion/Time: {data.averageTaskCompletionTime ? data.averageTaskCompletionTime.toFixed(2) : 'N/A'}</li>
+    <li>Average Task Conclusion/Time: {data.averageTaskCompletionTime ? data.averageTaskCompletionTime.toFixed(2) : 'N/A'}</li>
 
   </ul>
 </div>
