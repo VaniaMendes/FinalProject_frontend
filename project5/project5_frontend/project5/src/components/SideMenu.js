@@ -11,6 +11,7 @@ import { useNavigate  } from 'react-router-dom';
 import { MdTask } from "react-icons/md";
 import { myTasks} from '../endpoints/tasks';
 import {showMyTasks, showModal, cleanBoardStore} from '../stores/boardStore';
+import WebSocketClient from "./websocket";
 
 
 function SideMenu() {
@@ -36,6 +37,8 @@ function SideMenu() {
  const locale = userStore((state) => state.locale); 
 const updateLocale = userStore((state) => state.updateLocale); 
 
+const notifications = userStore((state) => state.notifications); 
+WebSocketClient(); 
  
 // Efeito para buscar os dados do usuário ao montar o componente
 useEffect(() => {
@@ -122,16 +125,33 @@ const handleSelect = (event) => {
         <div id="menu">
           <div className="menu_image" id="user_name">
             <div id="user_info">
+            <div className="notification-icon">
+      
+      {notifications.length > 0 && <div className="notification-badge" onClick={() => {
+        // Coloque aqui a ação que você quer que aconteça quando o usuário clicar no badge
+        console.log('Badge de notificação clicado!');
+      }}>{notifications.length}</div>}
+      
+</div>
             <img id="user_img" src={userData && userData.imgURL} alt="User logo" />
               <span className="welcome" >{userData && userData.firstName}</span>
-              <select onChange={handleSelect} defaultValue={locale}> 
-{["en", "pt", "fr"].map(language => (<option            
-key={language}>{language}</option>))} 
-</select> 
+             
             </div>
           
             <div className = "menuSide">
             <div className='menuPO'>
+            <div className = "location">
+
+          
+  {["en", "pt", "fr"].map((language, index) => (
+    <span key={language}>
+      <a href="#" onClick={(e) => { e.preventDefault(); handleSelect(language); }}>
+        {language}
+      </a>
+      {index < 2 ? ' | ' : ''}
+    </span>
+  ))}
+</div>
             <ul className="menu_list">
               <li className="item_PO"  onClick={homeclick}>
                 <HiHome /> Home

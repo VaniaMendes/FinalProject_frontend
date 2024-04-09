@@ -26,12 +26,12 @@ function PrincipalPage(){
   }
 
    
-
     return(
         <div>
            
             {role === 'product_owner' && <MenuProductOwner />}
-            {role === 'scrum_master' && <MenuScrum/>}
+            {(role === 'scrum_master' || role ==='developer') && <MenuScrum/>}
+         
             <HomePage />
             <SideMenu />
             {(role === 'scrum_master' || role==='product_owner') && <SearchFields />}

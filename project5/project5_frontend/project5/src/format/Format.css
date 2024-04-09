@@ -1655,6 +1655,14 @@ th {
   margin-top: 20px;
 }
 
+
+.btn_send{
+  border: none;
+}
+.chat-body{
+  width: auto;
+  height: 200px;
+}
 .verify-container{
   top:30%;
   left:15%;
@@ -1663,7 +1671,7 @@ th {
   align-items: center;
   justify-content: center;
   background-color: var(--white);
-  border-radius: 10px;
+  border-radius: 15px;
   width: 500px;
   height: 500px;
   z-index: 9999;
@@ -1698,4 +1706,142 @@ th {
   border: none;
   margin-right: 20px;
   font-size: 30px;
+}
+
+/*  formatacao do modal do chat*/
+.chat_container{
+  top:-20%;
+  left:15%;
+  display:table-row;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--white);
+    width: 400px;
+  height: 600px;
+  z-index: 9999;
+  border-radius: 15px;
+
+}
+
+.chat-header {
+  background-color:var(--blueButton);
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+
+.chat-body {
+  overflow-y: auto;
+  height: 477px;
+   /* Defina a altura máxima do contêiner de mensagens */
+}
+
+
+.chat-message {
+  clear: both;
+  margin-bottom: 10px;
+}
+
+.chat-message-info {
+  font-size: 0.8em;
+  color: #888;
+}
+
+.chat-message-info-username {
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.chat-message-content {
+  padding: 10px;
+  border-radius: 20px;
+  clear: both;
+  width: 90%;
+  font-size: 16px;
+  color: black;
+
+}
+
+
+
+.chat-footer {
+  margin-top: 20px;
+}
+
+.btn-send {
+  background-color: var(--blueButton);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.input-container {
+  display: flex;
+}
+
+.input-container input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+}
+
+.input-container button {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+
+#photo-msg {
+  width: 30px; 
+  height: 30px; 
+  border-radius: 50%; 
+  margin-right: 10px; 
+}
+
+.photo-sender{
+  align-self: flex-end;
+}
+.chat-message-sender{
+  text-align: right;
+}
+
+.close{
+  border: none;
+  background-color: var(--white);
+  font-size: 15px;
+  margin-right: 10px;
+}
+
+.notification-badge{
+  background-color: red;
+  color: white;
+  font-weight: 700;
+  font-size: 18px;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+padding-left: 10px;
+padding-bottom: 10px;
+cursor:pointer;
+position: fixed;
+transform: translate(210%, -230%);
+z-index: 9999;
+
+}
+
+.location{
+  color: var(--black);
+  font-size: 12px;
+  align-items: center;
+  margin-left: 65px;
+  cursor:pointer;
+  margin-top: -15px;
 }

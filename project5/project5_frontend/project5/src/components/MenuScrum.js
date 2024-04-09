@@ -4,11 +4,17 @@ import { FaUsers } from "react-icons/fa6";
 import { useNavigate  } from 'react-router-dom';
 import {tables} from '../stores/boardStore';
 import { MdTask } from "react-icons/md";
+import { userStore } from "../stores/UserStore";
 
 function MenuScrum(){
 
         //Este componente renderiza os botoes especificos para quando o utilizador é scrum_master
    
+
+        
+  //Obtem o tipo de utilizador da store
+  const {  getRole } = userStore();
+  const role = getRole();
    const navigate = useNavigate();
   
 
@@ -41,7 +47,8 @@ return(
         <ul>
  
         <li className='item_PO' onClick={handleShowUserTable}> <FaUsers/> Users</li>
-        <li className='item_PO' onClick={handleInativeTasks}> <MdTask/> Deleted Tasks</li>
+        {role==="scrum_master"  &&(
+        <li className='item_PO' onClick={handleInativeTasks}> <MdTask/> Deleted Tasks</li>)}
         </ul>
   
 </div>

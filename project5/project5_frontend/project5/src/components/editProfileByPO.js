@@ -8,6 +8,7 @@ import { updateProfileByPO } from "../endpoints/users";
 import {showModal, updateUsersTable} from '../stores/boardStore';
 import {useNavigate} from 'react-router-dom';
 import ButtonsForProfile from "./buttonsForProfile";
+import { useParams } from "react-router-dom";
 
 
 function EditProfileByPO(){
@@ -23,9 +24,11 @@ function EditProfileByPO(){
     const role = getRole();
 
     //Obtemo username guardado da store do user ao qual vamos alterar o perfil
-    const { getUsername } = userStore();
-    const username = getUsername();
-    
+   
+    const { username } = useParams();
+   
+
+
     //Estado para aramzenar as informações do user a ser editado
     const [userEditPO, setUserEditPO] = useState(null);
 

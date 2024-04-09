@@ -5,7 +5,9 @@ import { getUserByToken } from "../endpoints/users";
 import { NotificationManager } from "react-notifications";
 import { showModal } from "../stores/boardStore";
 import { PieChart, Pie, Cell, Tooltip, Legend, Text } from 'recharts';
-import {showChart} from '../stores/boardStore'
+import {showChart} from '../stores/boardStore';
+import {RiCloseFill} from 'react-icons/ri';
+import { useParams } from "react-router-dom";
 
 
 function MyTasksChart() {
@@ -15,11 +17,7 @@ function MyTasksChart() {
 
   const {showTaskChart, setShowTaskChart} = showChart();
 
-
-
-   //Obtemo username guardado da store do user ao qual vamos alterar o perfil
-   const { getUsername } = userStore();
-   const username = getUsername();
+const{username} = useParams();
 
     //Estado para controlar a visibilidade do modal de edição de user
     const { showModalEditUser } = showModal();
@@ -76,6 +74,8 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
 
   return (
    <div className="verify-container" >
+    <button className="close" onClick={handleBack}><RiCloseFill /></button>
+
 
          <PieChart width={400} height={400}>
          <text fontSize={30} x={200} y={20} textAnchor="middle" dominantBaseline="middle">Tasks for State</text>
@@ -113,8 +113,7 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
    
         </PieChart>
         
-        <div>
-      <button className="btn_back1" onClick={handleBack}>Back</button>
+        <div>      
         </div>
  
  </div>

@@ -29,7 +29,7 @@ function ProductOwner(){
   
   return (
     <div>
-      {role === "scrum_master" ? (
+      {(role === "scrum_master" || role==="developer") ? (
         <>
           <MenuScrum />
           {showUserTable && <UserTable />}
