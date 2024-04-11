@@ -24,7 +24,7 @@
     "email": " Email",
     "firstName": " Primeiro Nome",
     "lastName": " Sobrenome",
-    "phoneNumber": " Número de Telefone",
+    "phoneNumber": " Telefone",
     "urlImage": " URL da Imagem",
     "back": " Voltar",
     "UserRole": " Função",
@@ -85,7 +85,14 @@
 "submit": " Enviar",
 "passwordRecovery": " Recuperação de Senha",
 "recoverPassword": " Recuperar Senha",
-"newUser": " +Novo Utilizador"
+"newUser": " +Novo Utilizador",
+"categorydescription": "Descrição da Categoria",
+
+  "Edit Category": "Editar Categoria",
+  "New Category": "Nova Categoria"
+
+
+
 
   }
   

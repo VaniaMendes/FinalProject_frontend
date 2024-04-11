@@ -25,7 +25,7 @@
 "email": " Email",
 "firstName": " First Name",
 "lastName": " Last Name",
-"phoneNumber": " Phone Number",
+"phoneNumber": " Phone ",
 "urlImage": " URL Image",
 "back": " Back",
 "UserRole": " User Role",
@@ -85,7 +85,13 @@
 "submit": " Submit",
 "passwordRecovery": " Password Recovery",
 "recoverPassword": " Recover Password",
-"newUser": " +New User"
+"newUser": " +New User",
+
+"categorydescription" : "Category Description",
+"Edit Category": "Edit Category",
+"New Category": "New Category"
+
+
 
 
 } 
