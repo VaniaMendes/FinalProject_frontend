@@ -5,6 +5,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
 import {getUsersByTokenConfirmation, validateAccount} from '../endpoints/users';
 import { NotificationManager } from 'react-notifications';
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
+import {userStore} from '../stores/UserStore';
+import Language from '../components/language';
 
 
 function EmailConfirmation(){
@@ -13,6 +17,9 @@ function EmailConfirmation(){
     const queryParams = queryString.parse(location.search);
     const [tokenConfirmation, setTokenConfirmation] = useState(null);
     const navigate = useNavigate();
+
+       //Obtem a linguagem de exibição da página
+   const locale = userStore((state) => state.locale);
 
     const[email, setEmail] = useState("");
   
@@ -49,12 +56,24 @@ const handleConfirmation = async () =>{
    return( 
 
         <div>
-        <MainPage/>
+           
+            <MainPage/>
+            <div className="location1">  <Language/> </div>
+            <IntlProvider locale={locale} messages={languages[locale]}>
+       
         <div className="password-container">
-             <h2>Email Verification</h2>
-            <p>Please click the button below to confirm your email:</p>
-            <button className="btn_confirm" onClick={handleConfirmation}>Confirm Email</button>
+             <h2><FormattedMessage id="emailVerification">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></h2>
+            <p>
+            <FormattedMessage id="pleaseConfirm">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></p>
+            <button className="btn_confirm" onClick={handleConfirmation}> <FormattedMessage id="confirmEmail">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></button>
         </div>
+        </IntlProvider>
         </div>
 
     )

@@ -86,7 +86,7 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
     <IntlProvider locale={locale} messages={languages[locale]}>
 
          <PieChart width={400} height={400}>
-         <text fontSize={30} x={200} y={20} textAnchor="middle" dominantBaseline="middle"><FormattedMessage id="tasksForState">
+         <text fontSize={30} x={200} y={20} textAnchor="middle" dominantBaseline="middle"> <FormattedMessage id="tasksForState">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></text>
         <Pie

@@ -61,6 +61,31 @@
 "taskDetails": " Task Details",
 "close": " Close",
 "ativeUsers": " Ative Users",
-"deleteTasks": " Delete Tasks"
+"deleteTasks": " Delete Tasks",
+
+
+"registerUsersByTime": " Register Users by Time",
+"tasksFinished/Time": " Tasks Finished/Time",
+"totalUsers": " Total Users: ",
+"confirmedUsers": " Confirmed Users: ",
+"unconfirmedUsers": " Unconfirmed Users: ",
+"averageTasks/User": " Average tasks/User: ",
+"averageTaskConclusion/Time": "Average task conclusion/Time: ",
+"taskcount": " Task Count",
+"emailVerification": " Email Verification",
+"pleaseConfirm": " Please click the button below to confirm your email: ",
+"confirmEmail": " Confirm Email",
+"signIn": " Sign In",
+"Forgot Your Password?": " Forgot your password?",
+"login": " Login",
+"Don't you have an account?": " Don't you have an account?",
+"REGISTER HERE": " REGISTER HERE",
+"newPassword": " New Password",
+"confirmNewPassword": " Confirm New Password",
+"submit": " Submit",
+"passwordRecovery": " Password Recovery",
+"recoverPassword": " Recover Password",
+"newUser": " +New User"
+
 
 } 

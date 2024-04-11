@@ -3,6 +3,8 @@ import MainPage from '../components/MainPage';
 import NewUser from '../components/NewUser';
 import {showModal} from '../stores/boardStore';
 import { useEffect } from 'react';
+import Language from '../components/language';
+
 
 
 
@@ -22,7 +24,9 @@ function Register(){
 
         <div>
         <MainPage/>
+        <div className="location1">  <Language/> </div>
         <NewUser/>
+      
     
         </div>
 

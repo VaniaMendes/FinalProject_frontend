@@ -20,6 +20,8 @@ import {
 } from "recharts";
 
 import { userStore } from "../stores/UserStore";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 function Dashboard() {
   //Vai buscar o token à store
@@ -28,6 +30,9 @@ function Dashboard() {
   const [userBytime, setUserByTime] = useState("");
   const [tasksConcluedByTime, setTasksConcluedByTime] = useState("");
   const [tasksByState, setTasksByState] = useState([]);
+
+   //Obtem a linguagem de exibição da página
+   const locale = userStore((state) => state.locale);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -65,12 +70,15 @@ function Dashboard() {
 
   return (
     <div>
+      <IntlProvider locale={locale} messages={languages[locale]}>
       <MainPage />
       <SideMenu />
       <MenuProductOwner />
       <div className="dashboard">
         <div className="dashboard_container1">
-        <text className = "title_dashboard"  x={250} y={20} textAnchor="middle" fontSize="20px">Registered Users/Time</text> {/* Título */}
+        <text className = "title_dashboard"  x={250} y={20} textAnchor="middle" fontSize="20px"><FormattedMessage id="registerUsersByTime">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></text> {/* Título */}
           <LineChart
           
             width={500}
@@ -100,7 +108,9 @@ function Dashboard() {
           </LineChart>
         </div>
         <div className="dashboard_container2">
-        <text className = "title_dashboard" x={250} y={20} textAnchor="middle" fontSize="20px">Tasks finished/Time</text> {/* Título */}
+        <text className = "title_dashboard" x={250} y={20} textAnchor="middle" fontSize="20px"><FormattedMessage id="tasksFinished/Time">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></text> {/* Título */}
           <BarChart 
             width={500}
             height={300}
@@ -125,7 +135,9 @@ function Dashboard() {
         
         <div className="dashboard_container3">
           <PieChart width={400} height={400}>
-          <text className = "title_dashboard" x={200} y={80} textAnchor="middle" fontSize="20px">Tasks by State</text> {/* Título */}
+          <text className = "title_dashboard" x={200} y={80} textAnchor="middle" fontSize="20px"><FormattedMessage id="tasksForState">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></text> {/* Título */}
             <Pie
               data={tasksByState}
               cx={200}
@@ -158,11 +170,21 @@ function Dashboard() {
         <div className="dashboard_container4">
         <div>
   <ul>
-    <li>Total Users: {data.totalUsers}</li>
-    <li>Confirmed Users: {data.confirmedUsers}</li>
-    <li>Unconfirmed Users: {data.unconfirmedUsers}</li>
-    <li>Average Tasks/User: {data.averageTasksPerUser ? data.averageTasksPerUser.toFixed(2) : 'N/A'}</li>
-    <li>Average Task Conclusion/Time: {data.averageTaskCompletionTime ? data.averageTaskCompletionTime.toFixed(2) : 'N/A'}</li>
+    <li><FormattedMessage id="totalUsers">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> {data.totalUsers}</li>
+    <li><FormattedMessage id="confirmedUsers">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> {data.confirmedUsers}</li>
+    <li><FormattedMessage id="unconfirmedUsers">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> {data.unconfirmedUsers}</li>
+    <li><FormattedMessage id="averageTasks/User">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> {data.averageTasksPerUser ? data.averageTasksPerUser.toFixed(2) : 'N/A'}</li>
+    <li><FormattedMessage id="averageTaskConclusion/Time">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> {data.averageTaskCompletionTime ? data.averageTaskCompletionTime.toFixed(2) : 'N/A'}</li>
 
   </ul>
 </div>
@@ -173,8 +195,12 @@ function Dashboard() {
     <thead>
       
       <tr>
-        <th>Category</th>
-        <th>Task Count</th>
+        <th><FormattedMessage id="category">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
+        <th><FormattedMessage id="taskcount">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
       </tr>
     </thead>
     <tbody>
@@ -191,6 +217,7 @@ function Dashboard() {
         
       </div>
     </div>
+    </IntlProvider>
     </div>
   );
 }

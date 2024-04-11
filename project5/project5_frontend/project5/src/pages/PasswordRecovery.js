@@ -4,10 +4,17 @@ import MainPage from '../components/MainPage';
 import {recoveryPAssword} from '../endpoints/users';
 import { NotificationManager } from 'react-notifications';
 import {useNavigate} from 'react-router-dom';
+import { IntlProvider, FormattedMessage } from "react-intl";
+import languages from "../translations";
+import {userStore} from "../stores/UserStore";
+import Language from '../components/language';
 
 function PasswordRecovery() {
   const [email, setEmail] = useState('');
   const navigate = useNavigate();
+
+  //Obtem a linguagem de exibição da página
+  const locale = userStore((state) => state.locale);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,23 +33,35 @@ function PasswordRecovery() {
   return (
     <div>
          <MainPage/>
+         <div className="location1">  <Language/> </div>
+         <IntlProvider locale={locale} messages={languages[locale]}> 
     <div className="password-container">
        
-      <h2>Password Recovery</h2>
-      <p> Enter your email:</p>
+      <h2><FormattedMessage id="passwordRecovery">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></h2>
+      <p> <FormattedMessage id="enterYourEmail">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></p>
   
+                      <FormattedMessage id="enterYourEmail">
+                        {(message) =>
         <input
         
           type="email"
-          placeholder="Enter your email"
+          placeholder={message}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <button className= "btn_confirm" onClick={handleSubmit}>Recover Password</button>
+                        }</FormattedMessage>
+        <button className= "btn_confirm" onClick={handleSubmit}><FormattedMessage id="recoverPassword">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></button>
    
        
       </div>
+      </IntlProvider>
     </div>
   );
 }

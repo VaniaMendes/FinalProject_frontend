@@ -60,6 +60,31 @@
     "taskDetails": "Détails de la Tâche",
     "close": "Fermer",
     "ativeUsers": "Utilisateurs Actifs",
-    "deleteTasks": "Supprimer les Tâches"
+    "deleteTasks": "Supprimer les Tâches",
+
+    "registerUsersByTime": " Enregistrer les Utilisateurs par Temps",
+"tasksFinished/Time": " Tâches Terminées/Temps",
+"totalUsers": " Total des Utilisateurs : ",
+"confirmedUsers": " Utilisateurs Confirmés : ",
+"unconfirmedUsers": " Utilisateurs Non Confirmés : ",
+"averageTasks/User": " Moyenne de Tâches par Utilisateur : ",
+"averageTaskConclusion/Time": " Moyenne de Conclusion de Tâches/Temps : ",
+"taskcount": " Nombre de Tâches",
+"emailVerification": " Vérification de l'Email",
+"pleaseConfirm": " Veuillez cliquer sur le bouton ci-dessous pour confirmer votre e-mail : ",
+"confirmEmail": " Confirmer l'Email",
+"signIn": " Se Connecter",
+"Forgot Your Password?": " Vous avez oublié votre mot de passe ?",
+"login": " Connexion",
+"Don't you have an account?": " N'avez pas de compte?",
+"REGISTER HERE": " S'INSCRIRE ICI",
+"newPassword": " Nouveau Mot de Passe",
+"confirmNewPassword": " Confirmer le Nouveau Mot de Passe",
+"submit": " Soumettre",
+"passwordRecovery": " Récupération de Mot de Passe",
+"recoverPassword": " Récupérer le Mot de Passe",
+"newUser": " +Nouvel Utilisateur"
+
+
   }
   

@@ -14,6 +14,7 @@ import { showMyTasks, showModal, cleanBoardStore } from "../stores/boardStore";
 import WebSocketClient from "./websocket";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
+import Language from "./language";
 
 function SideMenu() {
   //Obtem o tipo de utilizador da store
@@ -35,7 +36,7 @@ function SideMenu() {
 
   //Obtem a linguagem de exibição da página
   const locale = userStore((state) => state.locale);
-  const updateLocale = userStore((state) => state.updateLocale);
+ 
 
   const notifications = userStore((state) => state.notifications);
   WebSocketClient();
@@ -54,12 +55,6 @@ function SideMenu() {
     fetchData();
   }, [tokenUser, setRole]);
 
-  //Função para escolher a linguagem de apresentação do chat
-  const handleSelect = (event) => {
-    console.log(event);
-    
-    updateLocale(event);
-  };
 
 
 
@@ -145,20 +140,7 @@ function SideMenu() {
               <div className="menuSide">
                 <div className="menuPO">
                   <div className="location">
-                    {["en", "pt", "fr"].map((language, index) => (
-                      <span key={language}>
-                        <a
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleSelect(language);
-                          }}
-                        >
-                          {language}
-                        </a>
-                        {index < 2 ? " | " : ""}
-                      </span>
-                    ))}
+                    <Language/>
                   </div>
                   <ul className="menu_list">
                     <li className="item_PO" onClick={homeclick}>
