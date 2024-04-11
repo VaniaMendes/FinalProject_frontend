@@ -7,6 +7,8 @@ import { useNavigate  } from 'react-router-dom';
 import { getUserByToken } from "../endpoints/users";
 import MenuProductOwner from "./MenuProductOwner";
 import ButtonsForProfile from "./buttonsForProfile";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 
 function EditProfile(){
@@ -14,6 +16,10 @@ function EditProfile(){
     // Obtém o token do user
     const tokenObject = userStore(state => state.token);
     const tokenUser = tokenObject.token;
+
+    
+  //Obtem a linguagem de exibição da página
+  const locale = userStore((state) => state.locale);
 
 
     // Obtém a função para obter o papel do user
@@ -115,6 +121,7 @@ function EditProfile(){
             
     return(
        <div> 
+        <IntlProvider locale={locale} messages={languages[locale]}>
             {role === 'product_owner' && <MenuProductOwner />}
         <div className="edit_container1">
         <div className="edit_photo">
@@ -125,37 +132,54 @@ function EditProfile(){
         <div className="edit_profile">
             
            <div>
-              <label  className="descriptioLabel">Password</label>
+              <label  className="descriptioLabel"> <FormattedMessage id="password">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="password" placeholder="******"/>
            </div>
            <div>
-              <label className="descriptioLabel">Email</label>
+              <label className="descriptioLabel"><FormattedMessage id="email">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
+              
               <input type="text" className="edit_element" id="email" placeholder={userLogged?.email} onChange={handleInputChange} />
            </div>
            <div>
-              <label  className="descriptioLabel">First Name</label>
+              <label  className="descriptioLabel"><FormattedMessage id="firstName">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="firstName" placeholder={userLogged?.firstName} onChange={handleInputChange} />
            </div>
            <div>
-              <label  className="descriptioLabel">Last Name</label>
+              <label  className="descriptioLabel"><FormattedMessage id="lastName">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="lastName" placeholder={userLogged?.lastName} onChange={handleInputChange}/>
            </div>
            <div>
-              <label  className="descriptioLabel">Phone Number</label>
+              <label  className="descriptioLabel"><FormattedMessage id="phoneNumber">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="phoneNumber" placeholder={userLogged?.phoneNumber} onChange={handleInputChange}/>
            </div>
            <div>
-              <label  className="descriptioLabel">URL Image</label>
+              <label  className="descriptioLabel"><FormattedMessage id="urlImage">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="imgURL" placeholder={userLogged?.imgURL} onChange={handleInputChange}/>
            </div>
 
         </div>
         <div className="confirm_profile">
-           <button className="btn_save" id="btn-save" onClick={handleSubmit}>Save</button>
-           <button className="btn_cancel" id="btn_cancel" onClick={handleBack}>Back</button>
+           <button className="btn_save" id="btn-save" onClick={handleSubmit}><FormattedMessage id="save">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></button>
+           <button className="btn_cancel" id="btn_cancel" onClick={handleBack}><FormattedMessage id="back">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></button>
         </div>
      </div>
-    
+     </IntlProvider>
      </div> 
 
     )

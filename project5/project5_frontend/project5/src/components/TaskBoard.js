@@ -5,7 +5,9 @@ import { getAllCategories } from "../endpoints/categories";
 import {addTask, getTask, updateTask} from '../endpoints/tasks';
 import { NotificationManager } from "react-notifications";
 import '../format/tables.css'
-import {showModalNewTask, updateTasksList, modeEditTask} from '../stores/boardStore'
+import {showModalNewTask, updateTasksList, modeEditTask} from '../stores/boardStore';
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 
 function NewTask() {
@@ -15,6 +17,9 @@ function NewTask() {
   //Vai buscar o valor do token ao store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
+    //Obtem a linguagem de exibição da página
+    const locale = userStore((state) => state.locale);
 
   //Controla a visibilidade do modal
   const {showNewTask,  setShowNewTask } = showModalNewTask();
@@ -36,7 +41,7 @@ function NewTask() {
   const [priority, setPriority] = useState("");
   const [categories, setCategories] = useState(null);
   const [priorityColor, setPriorityColor] = useState("");
-  const [categoryTitle, setCategoryTitle] = useState("");
+ 
   const [idCategory, setIdCategory] = useState("");
 
 //Objeto para guardar os dados da tarefa
@@ -60,7 +65,6 @@ const task={
         const result = await getTask(tokenUser, taskIdForEdit);
       
         setTitle(result.title);
-        setCategoryTitle(result.category.title);
         setDescription(result.description);
         setEndDate(result.endDate);
         setInitialDate(result.initialDate);
@@ -105,7 +109,7 @@ const task={
       setUpdateTasks(!updateTasks);
 
     }else{
-    NotificationManager.warning(result, "", 800);
+    NotificationManager.warning("Title not available", "", 800);
    }
   }
   };
@@ -126,6 +130,7 @@ const task={
 
   return (
     <div className = 'modal_container4'>
+       <IntlProvider locale={locale} messages={languages[locale]}>
       {showNewTask && (
           <div className="new-task-container">
               
@@ -133,25 +138,35 @@ const task={
               &times;
             </button>
         
-            <h2 id="task_creationTitle">{editTask? "Task Edition" : "Task Creation" }</h2>
+            <h2 id="task_creationTitle">{editTask?  <FormattedMessage id="taskEdition">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> : <FormattedMessage id="taskCreation">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> }</h2>
 
           
 
             <label htmlFor="opcoes" className="descriptioLabelTask">
-              Title:
+            <FormattedMessage id="title">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
             </label>
+            <FormattedMessage id="tasktitle">
+      {(message) =>   
             <input
               type="text"
-              placeholder="Task Title"
+              placeholder={message}
               id="title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               required
             />
-
+      }</FormattedMessage>
             <div>
               <label htmlFor="opcoes" className="descriptioLabelTask">
-                Category:
+              <FormattedMessage id="category">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
               </label>
               <select
                 id="category_element"
@@ -160,15 +175,16 @@ const task={
                 placeholder="Select a category"
                 onChange={(event) => {
                   const selectedCategoryID = event.target.value;
-                  const selectedCategoryTitle = event.target.selectedOptions[0].text;
                   setIdCategory(selectedCategoryID);
-                  setCategoryTitle(selectedCategoryTitle);
+                  
                 
                 }}
 
               >
                  <option value="" >
-      Select a category:
+                 <FormattedMessage id="selectCategory">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
     </option>
                 {categories &&
                   categories.map((category, index) => (
@@ -179,20 +195,27 @@ const task={
               </select>
             </div>
             <label htmlFor="opcoes" className="descriptioLabelTask">
-              Description:
+            <FormattedMessage id="description">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
             </label>
+            <FormattedMessage id="taskDescription">
+      {(message) =>
             <textarea
               cols="30"
               rows="14"
-              placeholder="Task Description"
+              placeholder={message}
               id="description-task"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
             ></textarea>
+      }</FormattedMessage>
 
             <div id="date_section" className="descriptioLabelTask">
               <div>
-                <p>Initial Date:</p>
+                <p><FormattedMessage id="initialDate">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></p>
                 <input
                   type="date"
                   id="initial_date"
@@ -201,7 +224,9 @@ const task={
                 />
               </div>
               <div id="end_date" className="descriptioLabelTask">
-                <p>End date:</p>
+                <p><FormattedMessage id="finalDate">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></p>
                 <input
                   type="date"
                   id="end_dates"
@@ -212,7 +237,9 @@ const task={
             </div>
 
             <div id="color_section" >
-              <label id="label_color">Priority:</label>
+              <label id="label_color"><FormattedMessage id="priority">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></label>
               <div className="priority_div">
                 <input
                   type="radio"
@@ -223,7 +250,9 @@ const task={
                   onChange={handlePriorityChange}
                   checked={priority === "100"}
                  />
-                <label htmlFor="low_priority">Low</label>
+                <label htmlFor="low_priority"><FormattedMessage id="low">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></label>
               </div>
               <div className="priority_div">
                 <input
@@ -234,7 +263,9 @@ const task={
                   onChange={handlePriorityChange}
                   checked={priority === "200"}
                 />
-                <label htmlFor="medium_priority">Medium</label>
+                <label htmlFor="medium_priority"><FormattedMessage id="medium">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></label>
               </div>
               <div className="priority_div">
                 <input
@@ -245,7 +276,9 @@ const task={
                   onChange={handlePriorityChange}
                   checked={priority === "300"}
                 />
-                <label htmlFor="high_priority">High</label>
+                <label htmlFor="high_priority"><FormattedMessage id="high">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></label>
               </div>
               <div
                 id="priority_color"
@@ -268,14 +301,20 @@ const task={
                 id="task_save"
                 onClick={()=> handleSubmit(tokenUser, taskIdForEdit, task, idCategory)}
               >
-                {editTask? "Update" : "Save" }
+                {editTask? <FormattedMessage id="update">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> : <FormattedMessage id="save">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage> }
               </button>
               <button
                 className="btns_task"
                 id="task_cancel"
                 onClick={handleClose}
               >
-                Cancel
+                <FormattedMessage id="cancel">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
               </button>
             </div>
 
@@ -283,7 +322,8 @@ const task={
           </div>
       
       )}
-      ;
+      </IntlProvider>
+     
     </div>
   );
 }

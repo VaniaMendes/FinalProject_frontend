@@ -30,7 +30,7 @@ function UserProfile(){
         <MainPage/>
         <SideMenu/>
         <EditProfileByPO/>
-        {role === "scrum_master" || role === "developer" ? <MenuScrum /> : <MenuProductOwner />}s
+        {role === "scrum_master" || role === "developer" ? <MenuScrum /> : <MenuProductOwner />}
         
         </div>
              

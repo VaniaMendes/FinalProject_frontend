@@ -3,6 +3,8 @@ import {userStore} from '../stores/UserStore';
 import { useEffect, useState } from 'react';
 import {getTask} from '../endpoints/tasks';
 import {ViewTaskDetails} from '../stores/boardStore';
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 
 function TaskDetails(){
@@ -10,6 +12,9 @@ function TaskDetails(){
      //Vai buscar o valor do token ao store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
+     //Obtem a linguagem de exibição da página
+     const locale = userStore((state) => state.locale);
 
 //Vai buscar o valor da task for edit que é guardado quando clico para ver os detalhes
     const taskIdForEdit = userStore((state) => state.taskIdForEdit);
@@ -49,14 +54,18 @@ function TaskDetails(){
 
     return(
         <div>
-
+<IntlProvider locale={locale} messages={languages[locale]}>
 {showTaskDetails && (
         <div className="new-task-container">       
-            <h2 id="task_creationTitle">Task Details</h2>
+            <h2 id="task_creationTitle"> <FormattedMessage id="taskDetails">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></h2>
 
           <div>
             <label htmlFor="opcoes" className="descriptioLabelTask" >
-              Title:
+            <FormattedMessage id="title">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
             </label>
             <input
             
@@ -68,7 +77,9 @@ function TaskDetails(){
               disabled
             />
             <label htmlFor="opcoes" className="descriptioLabelTask">
-            Category:
+            <FormattedMessage id="category">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
           </label>
           <input 
             type="text"
@@ -79,7 +90,9 @@ function TaskDetails(){
             disabled
     />
             <label htmlFor="opcoes" className="descriptioLabelTask">
-              Description:
+            <FormattedMessage id="description">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
             </label>
             <textarea
               cols="20"
@@ -93,7 +106,9 @@ function TaskDetails(){
 
             <div id="date_section" className="descriptioLabelTask">
               <div>
-                <p>Initial Date:</p>
+                <p><FormattedMessage id="initialDate">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></p>
                 <input
                   type="date"
                   id="initial_date"
@@ -102,7 +117,9 @@ function TaskDetails(){
                 />
               </div>
               <div id="end_date" className="descriptioLabelTask">
-                <p>End date:</p>
+                <p><FormattedMessage id="finalDate">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></p>
                 <input
                   type="date"
                   id="end_dates"
@@ -113,10 +130,13 @@ function TaskDetails(){
              
             </div>
             <div className="buttons" id="butoon_div">
-                <button className='button' onClick={handleClose}>Close</button>
+                <button className='button' onClick={handleClose}><FormattedMessage id="close">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></button>
               </div>
             </div>
 )}
+</IntlProvider>
             </div>
     )
 }

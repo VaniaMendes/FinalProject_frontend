@@ -7,6 +7,8 @@ import { userStore } from "../stores/UserStore";
 import { useState } from "react";
 import { getUserByUsername } from "../endpoints/users";
 import { useParams } from "react-router-dom";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 function Chat() {
   // Obtém o token do user
@@ -14,9 +16,12 @@ function Chat() {
   const tokenUser = tokenObject.token;
 
   //Obtem o username guardado da store do user ao qual vamos alterar o perfil
- const { username } = useParams();
+  const { username } = useParams();
 
   const { showMessageChat, setShowMessageChat } = showMessages();
+
+  //Obtem a linguagem de exibição da página
+  const locale = userStore((state) => state.locale);
 
   const [photo, setPhoto] = useState("");
 
@@ -30,8 +35,6 @@ function Chat() {
       const user = await getUserByUsername(tokenUser, username);
       setPhoto(user.imgURL);
       setMessages(result); //Define as informações do user
-      console.log(result);
-      console.log(user);
     };
     fetchData();
   }, [tokenUser, username]);
@@ -48,7 +51,6 @@ function Chat() {
       username: username,
     },
   };
-  
 
   const handleSendMessage = async () => {
     if (message.content.trim() !== "") {
@@ -66,50 +68,77 @@ function Chat() {
   };
 
   return (
-  
+    <IntlProvider locale={locale} messages={languages[locale]}>
       <div className="chat_container">
         <div className="chat-header">
           <div className="chat-header-title">
-            <button className="close" onClick={closeChat}><RiCloseFill /></button>
-            <h1>Chat</h1>
+            <button className="close" onClick={closeChat}>
+              <RiCloseFill />
+            </button>
+            <h1>
+              <FormattedMessage id="chat">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage>
+            </h1>
           </div>
         </div>
         <div className="chat-body">
-          {messages && messages.map((msg, index) => {
-            const isReceiver = msg.receiver.username === username;
-            console.log(message.receiver.username);
-              
-            return (
-              <div key={index} className={`chat-message ${isReceiver ? 'chat-message-sender' : 'chat-message-receiver'}`}>
-                <div className="chat-message-info">
-                  <div className="photo-receiver">
-                   <div>  <img id="photo-msg" src={isReceiver ? msg.sender.imgURL : photo} alt="user.png" /> </div>
-                     <div className="chat-message-info-username">
-                    {isReceiver ? msg.sender.username : username}
-                  </div>
-                  </div>
-                 
-                  <div className="chat-message-info-time">
-                    {msg.timestamp}
-                  </div>
-                  <div className="chat-message-content">
-                    {msg.content}
+          {messages &&
+            messages.map((msg, index) => {
+              const isReceiver = msg.receiver.username === username;
+              console.log(message.receiver.username);
+
+              return (
+                <div
+                  key={index}
+                  className={`chat-message ${
+                    isReceiver ? "chat-message-sender" : "chat-message-receiver"
+                  }`}
+                >
+                  <div className="chat-message-info">
+                    <div className="photo-receiver">
+                      <div>
+                        {" "}
+                        <img
+                          id="photo-msg"
+                          src={isReceiver ? msg.sender.imgURL : photo}
+                          alt="user.png"
+                        />{" "}
+                      </div>
+                      <div className="chat-message-info-username">
+                        {isReceiver ? msg.sender.username : username}
+                      </div>
+                    </div>
+
+                    <div className="chat-message-info-time">
+                      {msg.timestamp}
+                    </div>
+                    <div className="chat-message-content">{msg.content}</div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
         </div>
         <div className="chat-footer">
           <div className="input-container">
-            <input type="text" placeholder="Send your message" value={content} onChange={handleInputChange} />
-            <button className="btn-send" onClick={handleSendMessage}><RiSendPlaneFill /></button>
+          <FormattedMessage id="sendYourMessage">
+      {(message) => 
+        <input
+          type="text"
+          placeholder={message}
+          value={content}
+          onChange={handleInputChange}
+        />
+      }
+    </FormattedMessage>
+            <button className="btn-send" onClick={handleSendMessage}>
+              <RiSendPlaneFill />
+            </button>
           </div>
         </div>
       </div>
-    
+    </IntlProvider>
   );
-  
 }
 
 export default Chat;

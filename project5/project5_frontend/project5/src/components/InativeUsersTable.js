@@ -7,6 +7,8 @@ import { MdDeleteForever } from "react-icons/md";
 import "../format/tables.css";
 import { deleteUserForever, restoreUser} from '../endpoints/users';
 import {getInactiveUsers} from '../endpoints/users';
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 
 function InactiveUsersTable() {
@@ -14,6 +16,9 @@ function InactiveUsersTable() {
     //Obtem o token do utilizador
     const tokenObject = userStore(state => state.token);
     const tokenUser = tokenObject.token;
+
+     //Obtem a linguagem de exibição da página
+     const locale = userStore((state) => state.locale);
       
     //Estado para armazenar os users inativos
     const [inativeUsers, setInativeUsers] = useState(null);
@@ -66,12 +71,15 @@ function InactiveUsersTable() {
       
             
         <div className='table_container'>
+               <IntlProvider locale={locale} messages={languages[locale]}> 
         <table id="users_table">
-       
+     
         <thead >
             <tr >
             <th className='titleUser'><img src='user_icon.png'></img></th>
-            <th className='titleUser1'>Inactive Users</th>
+            <th className='titleUser1'><FormattedMessage id="inativeUsers">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
             <th className='titleUser'></th>
             <th className = 'titleUser'></th>
             <th className = 'titleUser'></th>
@@ -82,11 +90,21 @@ function InactiveUsersTable() {
            
                 <tr className="header">
                     <th className='image'></th>
-                    <th >Name</th>
-                    <th >Email</th>
-                    <th >Phone</th>
-                    <th >Role</th>
-                    <th>User Edition</th>
+                    <th ><FormattedMessage id="name">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+                    <th ><FormattedMessage id="email">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+                    <th ><FormattedMessage id="phoneNumver">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+                    <th ><FormattedMessage id="role">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+                    <th><FormattedMessage id="userEdition">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
 
                 </tr>
             </thead>
@@ -111,6 +129,7 @@ function InactiveUsersTable() {
                 ))}
             </tbody>
         </table>
+        </IntlProvider>
         </div>
     
     );

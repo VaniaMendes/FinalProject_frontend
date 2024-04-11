@@ -5,6 +5,8 @@ import {useState, useEffect} from 'react';
 import {userStore} from '../stores/UserStore';
 import {showModal, updateCategoriesTable, modeEditOn} from '../stores/boardStore';
 import { editCategory, getCategoryById } from "../endpoints/categories";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 function Categories(){
 
@@ -17,6 +19,9 @@ function Categories(){
  
   //Obtem o ID da categoria guardado no store para editar
   const categoryId = userStore((state) => state.getCategoryId());
+
+  //Obtem a linguagem de exibição da página
+  const locale = userStore((state) => state.locale);
 
 
   // Obtém e configura o estado de modo de edição
@@ -107,29 +112,41 @@ function Categories(){
      
     return(
   
-          
-        <div className="modal_container">             
+      <IntlProvider locale={locale} messages={languages[locale]}>
+        <div className="modal_container">            
         {showModal && (
         <div className="descricaoCategoria">
             <button className="modal_exit" id="cancel" onClick={closeModal}>&times;</button>
             <h2>{modeEdit ? 'Edit Category' : 'New Category'}</h2>
-            <label htmlFor="title">Category Title:</label>
+            <label htmlFor="title"><FormattedMessage id="categorytitle">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></label>
             <input type="text" placeholder= {modeEdit ? title : "Category Title"}  id="title" 
             value={title} onChange={(event) => setTitle(event.target.value)} required />
-            <label htmlFor="description">Description:</label>
+            <label htmlFor="description"><FormattedMessage id="description">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></label>
             <textarea cols="30" rows="5" placeholder={modeEdit ? description : "Category Description"} id="description" 
             value={description} onChange={(event) => setDescription(event.target.value)}></textarea>
                  
             <div className="buttons">
-                <button className="btns_task" id="category_save" onClick={() => handleCategory(title, description, tokenUser)}>  {modeEdit ? 'Update' : 'Save'}</button>
-                <button className="btns_task" id="category_delete" onClick={closeModal}>Cancel</button>
+                <button className="btns_task" id="category_save" onClick={() => handleCategory(title, description, tokenUser)}>  {modeEdit 
+                ? <FormattedMessage id="update">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage> : 
+              <FormattedMessage id="save">
+              {(message) => <span>{message}</span>}
+            </FormattedMessage>}</button>
+                <button className="btns_task" id="category_delete" onClick={closeModal}><FormattedMessage id="cancel">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></button>
             </div>
         </div>
    
   
     )};
      </div>
-    
+    </IntlProvider>
     )
 }
 

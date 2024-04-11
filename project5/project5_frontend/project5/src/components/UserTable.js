@@ -11,6 +11,8 @@ import { showModal, updateUsersTable } from "../stores/boardStore";
 import { deleteUserTasks } from "../endpoints/tasks";
 import ButtonsForScrum from "./buttonsForScrum";
 import { useNavigate } from "react-router-dom";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 function UserTable() {
   //Este componente exibe a tabela de utilizadores ativos
@@ -18,6 +20,11 @@ function UserTable() {
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
+   //Obtem a linguagem de exibição da página
+   const locale = userStore((state) => state.locale);
+
+   //Guarda a lista de utilizadores
   const [users, setUsers] = useState([]);
 
   //Guarda o estado do prefix a pesquisar para filtrar a lista por nome
@@ -96,7 +103,6 @@ const [lastUsers, setLastUsers] = useState([]);
     }
   };
 
-
   //Função para filtrar a tabela de utilizadores pelo nome
 const handleFilterName = async (tokenUser, prefix) => {
   try {
@@ -148,6 +154,7 @@ const handleFilterName = async (tokenUser, prefix) => {
 
   return (
     <div>
+      <IntlProvider locale={locale} messages={languages[locale]}>
       <div className="table_container">
         <table className="users_table">
           <thead>
@@ -155,12 +162,16 @@ const handleFilterName = async (tokenUser, prefix) => {
               <th className="titleUser">
                 <img src="icon-green.png"></img>
               </th>
-              <th className="titleUser2">Active Users</th>
+              <th className="titleUser2"><FormattedMessage id="ativeUsers">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
               <th className="titleUser">
                 {/* Cabeçalho da coluna de edição de usuário, visível apenas para determinados papéis de usuário */}
                 {role !== "scrum_master" && (
                   <button id="btn_user" onClick={openModal}>
-                    +New User
+                   <FormattedMessage id="newUser">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
                   </button>
                 )}
               </th>
@@ -188,14 +199,24 @@ const handleFilterName = async (tokenUser, prefix) => {
             </tr>
             <tr className="header">
               <th className="image"></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Role</th>
+              <th><FormattedMessage id="name">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
+              <th><FormattedMessage id="email">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
+              <th><FormattedMessage id="phoneNumber">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
+              <th><FormattedMessage id="role">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
               {role !== "scrum_master" ? (
-                <th>User Edition</th>
+                <th><FormattedMessage id="userEdition">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
               ) : (
-                <th>User Consult</th>
+                <th></th>
               )}
             </tr>
           </thead>
@@ -247,7 +268,9 @@ const handleFilterName = async (tokenUser, prefix) => {
                             handleDeleteTasks(tokenUser, user.username)
                           }
                         >
-                          Delete Tasks
+                         <FormattedMessage id="deleteTasks">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage>
                         </button>
                       </>
                     )}
@@ -260,6 +283,7 @@ const handleFilterName = async (tokenUser, prefix) => {
       {/* Renderiza os modais de edição e adição do utilizador */}
 
       {showNewUserModal && <NewUser />}
+      </IntlProvider>
     </div>
   );
 }

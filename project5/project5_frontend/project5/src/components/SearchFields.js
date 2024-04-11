@@ -7,12 +7,18 @@
  import {showModal} from '../stores/boardStore';
  import { LuSearchCheck } from "react-icons/lu";
  import { MdOutlineCleaningServices } from "react-icons/md";
+ import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
  
 function SearchFields(){ 
 
     //Obtem o token da store
     const tokenObject = userStore((state) => state.token);
     const tokenUser = tokenObject.token;
+
+      //Obtem a linguagem de exibição da página
+      const locale = userStore((state) => state.locale);
+
 
     //Estado para guardar a lista de users e de categorias e serem apresentadas nos campos de pesquisa
     const [categories, setCategories] = useState([]);
@@ -76,16 +82,21 @@ const handleResetFilter = () => {
 return (
  
  <div className="filter">
+    <IntlProvider locale={locale} messages={languages[locale]}>
                <div className="searchFields">
                <select id="category"  defaultValue="" onChange={handleCategoryChange}>
-               <option value="" disabled>Filter by Category</option>
+               <option value="" disabled><FormattedMessage id="filterByCategory">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></option>
                     {categories.map((category, index) => (
                         <option key={index} value={category.idCategory}>{category.title}</option>
                     ))}
                    
                </select>
                <select id="users" defaultValue="" onChange={handleUserChange}>
-               <option value="" disabled>Filter by Users</option>
+               <option value="" disabled><FormattedMessage id="filterByUser">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></option>
                     {users.map((user, index) => (
                         <option key={index} value={user.username}>{user.firstName}</option>
                     ))}
@@ -94,6 +105,7 @@ return (
                <div className="search_icon"> <p className="search-icon" onClick={() => handleFilter(tokenUser, selectedUsername, selectedCategoryId)}><LuSearchCheck className='icon-search' title='Search'/></p></div>
                <div className="reset_search_icon"> <p className="reset-filter-icon" onClick={ handleResetFilter}><MdOutlineCleaningServices className='icon-search' title="Clear Filter"/></p></div>
             </div>
+            </IntlProvider>
            </div>
 
            )

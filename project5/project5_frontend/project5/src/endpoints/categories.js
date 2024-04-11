@@ -1,11 +1,11 @@
 
-
+const url = "http://localhost:8080/project_backend/rest/categories/";
 export async function createCategory(title, description, token) {
 
-    let createCategoryRequest = "http://localhost:8080/project_backend/rest/categories/createCategory";
+    const createRequest = url + "createCategory";
 
     try {
-        const response = await fetch(createCategoryRequest, {
+        const response = await fetch(createRequest, {
             method: "POST",
             headers: {
                 'Accept': '*/*',
@@ -29,7 +29,7 @@ export async function createCategory(title, description, token) {
  export async function deleteCategory(categoryId, tokenUser) {
 
 
-    let deleteCategoryRequest = `http://localhost:8080/project_backend/rest/categories/delete/${categoryId}`;
+        let deleteCategoryRequest = `http://localhost:8080/project_backend/rest/categories/delete/${categoryId}`;
     try {
         const response = await fetch(deleteCategoryRequest, {
             method: "DELETE",

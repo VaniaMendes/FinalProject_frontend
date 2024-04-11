@@ -9,6 +9,8 @@ import {showModal, updateUsersTable} from '../stores/boardStore';
 import {useNavigate} from 'react-router-dom';
 import ButtonsForProfile from "./buttonsForProfile";
 import { useParams } from "react-router-dom";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 
 function EditProfileByPO(){
@@ -19,9 +21,14 @@ function EditProfileByPO(){
     const tokenObject = userStore(state => state.token);
     const tokenUser = tokenObject.token;
 
+      //Obtem a linguagem de exibição da página
+    const locale = userStore((state) => state.locale);
+
     //Obtem o tipo de utilizador da store
     const {  getRole } = userStore();
     const role = getRole();
+
+    
 
     //Obtemo username guardado da store do user ao qual vamos alterar o perfil
    
@@ -106,7 +113,7 @@ function EditProfileByPO(){
     return(
     
        <div>
-       
+        <IntlProvider locale={locale} messages={languages[locale]}>
         <div className="edit_container1">
         <div className="edit_photo">
            <img src={userEditPO?.imgURL} id="user_photo" alt="User photo" />
@@ -116,27 +123,39 @@ function EditProfileByPO(){
         <div className="edit_profile">
            
            <div>
-              <label className="descriptioLabel">Email</label>
+              <label className="descriptioLabel"><FormattedMessage id="email">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="email" placeholder={userEditPO?.email} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-              <label  className="descriptioLabel">First Name</label>
+              <label  className="descriptioLabel"><FormattedMessage id="firstName">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="firstName" placeholder={userEditPO?.firstName} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-              <label  className="descriptioLabel">Last Name</label>
+              <label  className="descriptioLabel"><FormattedMessage id="lastName">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="lastName" placeholder={userEditPO?.lastName} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-              <label  className="descriptioLabel">Phone Number</label>
+              <label  className="descriptioLabel"><FormattedMessage id="phoneNumber">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="phoneNumber" placeholder={userEditPO?.phoneNumber} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-              <label  className="descriptioLabel">URL Image</label>
+              <label  className="descriptioLabel"><FormattedMessage id="urlImage">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
               <input type="text" className="edit_element" id="imgURL" placeholder={userEditPO?.imgURL} onChange={handleInputChange} disabled={role === "scrum_master"}/>
            </div>
            <div>
-                <label className="descriptioLabel" >User role</label>
+                <label className="descriptioLabel" ><FormattedMessage id="UserRole">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></label>
                 {role !== "product_owner" && (
         <input
             type="text"
@@ -157,11 +176,16 @@ function EditProfileByPO(){
 
         </div>
         <div className="confirm_profile">
-           <button className="btn_save" id="btn-save" onClick={handleSubmit} hidden={role === "scrum_master"}>Save</button>
-               <button className="btn_cancel" id="btn_cancel" onClick={handleBack}>Back</button>
+           <button className="btn_save" id="btn-save" onClick={handleSubmit} hidden={role === "scrum_master"}><FormattedMessage id="UserRole">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></button>
+               <button className="btn_cancel" id="btn_cancel" onClick={handleBack}><FormattedMessage id="back">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></button>
         </div>
               
      </div>
+     </IntlProvider>
      </div>
 
 

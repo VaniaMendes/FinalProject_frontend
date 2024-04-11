@@ -11,6 +11,8 @@ import { MdDeleteForever } from "react-icons/md";
 import { NotificationManager } from "react-notifications";
 import { MdOutlineRestore } from "react-icons/md";
 import { hardDeleteTask, restoreTask } from "../endpoints/tasks";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 const InativeTasksTable = () => {
   //Obtém o token do utilizador
@@ -23,6 +25,9 @@ const InativeTasksTable = () => {
   //Obtem o tipo de utilizador
   const { getRole } = userStore();
   const role = getRole();
+
+      //Obtem a linguagem de exibição da página
+      const locale = userStore((state) => state.locale);
 
   //Função para ir buscar as tarefas inativas
   const fetchTasks = async () => {
@@ -85,13 +90,16 @@ const InativeTasksTable = () => {
 
   return (
     <div className="table_container">
+      <IntlProvider locale={locale} messages={languages[locale]}>
       <table className="users_table">
         <thead>
           <tr>
             <th className="titleUser">
               <MdTask className="task_icon" />
             </th>
-            <th className="titleUser3">Deleted Tasks</th>
+            <th className="titleUser3"><FormattedMessage id="deletedTasks">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
             <th className="titleUser"></th>
             <th className="titleUser"></th>
             <th className="titleUser"></th>
@@ -106,14 +114,28 @@ const InativeTasksTable = () => {
             )}
           </tr>
           <tr>
-            <th>Author</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Initial Date</th>
-            <th>Final Date</th>
-            <th>Priority</th>
+            <th><FormattedMessage id="author">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+            <th><FormattedMessage id="title">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+            <th><FormattedMessage id="description">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+            <th><FormattedMessage id="initialDate">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+            <th><FormattedMessage id="finalDate">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
+            <th><FormattedMessage id="priority">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></th>
             {role !== "scrum_master" ? (
-              <th>Task Edition</th>
+              <th><FormattedMessage id="taskEdition">
+              {(message) => <span>{message}</span>}
+            </FormattedMessage></th>
             ) : (
               <th ></th>
             )}
@@ -165,6 +187,7 @@ const InativeTasksTable = () => {
             })}
         </tbody>
       </table>
+      </IntlProvider>
     </div>
   );
 };

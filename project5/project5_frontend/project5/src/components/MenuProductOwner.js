@@ -9,12 +9,18 @@ import { FaUserAltSlash } from "react-icons/fa";
 import { useNavigate  } from 'react-router-dom';
 import {tables} from '../stores/boardStore';
 import { AiFillDashboard } from "react-icons/ai";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
+import { userStore } from '../stores/UserStore';
 
 function MenuProductOwner(){
 
     //Este componente renderiza os botoes especificos para quando o utilizador é product_owner
    
    const navigate = useNavigate();
+
+   //Obtem a linguagem de exibição da página
+  const locale = userStore((state) => state.locale);
 
     //Estado para controlar a exibição dos botões
     const [showButtons, setShowButtons] = useState(false);
@@ -71,22 +77,43 @@ function MenuProductOwner(){
 return(
 
     <div className="menuPO1">
+        <IntlProvider locale={locale} messages={languages[locale]}> 
 
     <div className='menuPO'>
         
     <ul>
-        <li className='item_PO' onClick={seeButtons}> <FaUsers/> Users</li>
+        <li className='item_PO' onClick={seeButtons}> <FaUsers/><FormattedMessage id="users">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></li>
         {showButtons && (
                     <ul>
-                        <li className='item_PO' id='active' onClick={handleShowUserTable}><FaUserCheck className='icon'/>Active</li>
-                        <li className='item_PO' id='active' onClick={handleInativeUsers}><FaUserAltSlash className='icon'/>Inactive</li>
+                        <li className='item_PO' id='active' onClick={handleShowUserTable}><FaUserCheck className='icon'/>
+                        
+                        <FormattedMessage id="active">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
+                        
+                        </li>
+                        <li className='item_PO' id='active' onClick={handleInativeUsers}><FaUserAltSlash className='icon'/>
+                        
+                        <FormattedMessage id="inactive">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
+                        </li>
                     </ul>
                 )}
-        <li  className='item_PO'  onClick={handleInativeTasks}> <MdTask/> Deleted Tasks</li>
-        <li  className='item_PO'  onClick={handleShowCategoriesTable}><BiSolidCategoryAlt/> Categories</li>
-        <li className = 'item_PO' onClick={handleDashboard}> <AiFillDashboard/> Dashboard</li>
+        <li  className='item_PO'  onClick={handleInativeTasks}> <MdTask/><FormattedMessage id="deletedTasks">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></li>
+        <li  className='item_PO'  onClick={handleShowCategoriesTable}><BiSolidCategoryAlt/> <FormattedMessage id="categories">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></li>
+        <li className = 'item_PO' onClick={handleDashboard}> <AiFillDashboard/> <FormattedMessage id="dashboard">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></li>
     </ul>
 </div>
+</IntlProvider>
 </div>
 )
 

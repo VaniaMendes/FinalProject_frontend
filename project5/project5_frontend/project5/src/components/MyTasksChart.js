@@ -8,6 +8,8 @@ import { PieChart, Pie, Cell, Tooltip, Legend, Text } from 'recharts';
 import {showChart} from '../stores/boardStore';
 import {RiCloseFill} from 'react-icons/ri';
 import { useParams } from "react-router-dom";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 
 function MyTasksChart() {
@@ -15,7 +17,12 @@ function MyTasksChart() {
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
 
-  const {showTaskChart, setShowTaskChart} = showChart();
+  
+
+     //Obtem a linguagem de exibição da página
+     const locale = userStore((state) => state.locale);
+
+  const { setShowTaskChart} = showChart();
 
 const{username} = useParams();
 
@@ -26,7 +33,7 @@ const{username} = useParams();
   // Estado para armazenar as informações das tarefas do usuário
   const [taskSummary, setTaskSummary] = useState({
     tasksByState: {
-      todo: 0,
+      toDo: 0,
       doing: 0,
       done: 0,
     },
@@ -36,11 +43,13 @@ const{username} = useParams();
   useEffect(() => {
     const fetchData = async () => {
 
+      //Se for no modal da tabela de utilizadores temos de ir buscra o user pelo username
         if(showModalEditUser) {
             const tasks = await countTasks(tokenUser, username);
-
             setTaskSummary(tasks);
         }else{
+
+          //Se estiver na pagina de perfil do proprio vai buscar o total de tasks do proprio pelo token
       const result = await getUserByToken(tokenUser);
 
       const tasks = await countTasks(tokenUser, result.username);
@@ -60,11 +69,10 @@ const{username} = useParams();
     setShowTaskChart(false);
   };
 
-// Calcular o total de tarefas
-const totalTasks = taskSummary.todo + taskSummary.done + taskSummary.doing;
+
 // Dados de exemplo
 const data = [
-  {name: 'TODO', value: taskSummary.todo},
+  {name: 'TODO', value: taskSummary.toDo},
   {name: 'DOING', value: taskSummary.doing},
   {name: 'DONE', value: taskSummary.done},
 ];
@@ -75,10 +83,12 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
   return (
    <div className="verify-container" >
     <button className="close" onClick={handleBack}><RiCloseFill /></button>
-
+    <IntlProvider locale={locale} messages={languages[locale]}>
 
          <PieChart width={400} height={400}>
-         <text fontSize={30} x={200} y={20} textAnchor="middle" dominantBaseline="middle">Tasks for State</text>
+         <text fontSize={30} x={200} y={20} textAnchor="middle" dominantBaseline="middle"><FormattedMessage id="tasksForState">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></text>
         <Pie
           data={data}
           cx={200}
@@ -94,9 +104,7 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
           ))}
         </Pie>
-        <Text x={100} y={150} textAnchor="left" dominantBaseline="middle">
-          {totalTasks}
-        </Text>
+        
         <Tooltip />
         <Legend 
         layout="horizontal"
@@ -115,7 +123,7 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
         
         <div>      
         </div>
- 
+ </IntlProvider>
  </div>
   );
 }

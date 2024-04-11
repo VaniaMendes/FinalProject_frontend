@@ -11,6 +11,8 @@ import {NotificationManager } from "react-notifications";
 import {showModalNewTask, showModal, modeEditTask, showMyTasks, ViewTaskDetails} from '../stores/boardStore';
 import {updateTaskState} from '../endpoints/tasks';
 import TaskDetails from './TaskDetails';
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 
 function ScrumBoard(){
@@ -20,6 +22,9 @@ function ScrumBoard(){
   //Obtem o token da store
    const tokenObject = userStore((state) => state.token);
    const tokenUser = tokenObject.token;
+
+      //Obtem a linguagem de exibição da página
+      const locale = userStore((state) => state.locale);
   
    //Obtem o estado de exibição do modal de NewTaks
    const {showNewTask,  setShowNewTask } = showModalNewTask();
@@ -205,7 +210,7 @@ const allowDrop = (event) => {
      return(
       <div>
         {showTaskDetails && <TaskDetails />}
-       
+        <IntlProvider locale={locale} messages={languages[locale]}>
       <div className="scrum_section" id="scrum_section">
         <div className="column" id="column1" >
           <div className="title">To Do</div>
@@ -242,7 +247,9 @@ const allowDrop = (event) => {
             </div>
           ))}
           </section>
-          <button id="btn_task" onClick={handleNewTaskClick}>+ New Task</button>
+          <button id="btn_task" onClick={handleNewTaskClick}><FormattedMessage id="newTasks">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></button>
           {showNewTask && <TaskBoard />}
         </div>
         <div className="column" id="column2" onDrop={(event) => handleDrop(event, tokenUser, taskId, "doing")} onDragOver={allowDrop}>
@@ -311,7 +318,7 @@ const allowDrop = (event) => {
           </section>
         </div>
       </div>
-  
+  </IntlProvider>
     </div>
  
      )

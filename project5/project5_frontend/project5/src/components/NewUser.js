@@ -6,6 +6,8 @@ import "../format/register.css";
 import {NotificationManager } from "react-notifications";
 import { showModal, updateUsersTable } from "../stores/boardStore";
 import {useNavigate} from "react-router-dom";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 
 function NewUser() {
@@ -16,12 +18,14 @@ function NewUser() {
 
   const navigate = useNavigate();
 
+       //Obtem a linguagem de exibição da página
+       const locale = userStore((state) => state.locale);
+
   //Obtem o tipo de utilizador da store
   const {  getRole } = userStore();
   const role = getRole();
   
-  
-  
+    
   //Estados para controlar a exibição do modal de newUser
   const showNewUserModal = showModal((state) => state.showNewUserModal); 
   const setShowNewUserModal = showModal((state) => state.setShowNewUserModal); 
@@ -88,7 +92,8 @@ function NewUser() {
     const result = await registerUserByPO(tokenUser, newUser);
     if(result===200){
       NotificationManager.success("New User successfully created", "", 800);
-      setShowUsersTable(!showUsersTable);
+      setShowNewUserModal(false);
+      setShowUsersTable(true);
       navigate("/productOwner");
     }else{
       NotificationManager.warning(result, "", 800);
@@ -121,7 +126,7 @@ function NewUser() {
   };
 
   return (
-
+<IntlProvider locale={locale} messages={languages[locale]}>
     
         <div className="modal_container">  
       {showNewUserModal && (
@@ -129,98 +134,137 @@ function NewUser() {
         <form className="registerPO" id="form_register">
           <h2 className="register-header">
             <FaUserCircle className="imgLogin" />
-            Account Creation
+            <FormattedMessage id="accountCreation">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
           </h2>
           <label htmlFor="register_username" className="descriptioLabel">
-            Username{" "}
+          <FormattedMessage id="username">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>{" "}
+                      <FormattedMessage id="enterYourUsername">
+      {(message) => 
             <input
               type="text"
-              placeholder="Enter your username"
+              placeholder={message}
               className="register_elem"
               id="register_username"
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               required
             />
+      }</FormattedMessage>
           </label>
          
-          <label htmlFor="register_email" className="descriptioLabel">
-            Email{" "}
+          <label htmlFor="register_email" className="email">
+          <FormattedMessage id="username">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>{" "}
+
+                   
+                      <FormattedMessage id="enterYourEmail">
+      {(message) => 
             <input
               type="text"
-              placeholder="Enter your email"
+              placeholder={message}
               className="register_elem"
               id="register_email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
               required
             />
+}</FormattedMessage>
           </label>
 
           <label htmlFor="register_firstName" className="descriptioLabel">
-            First Name{" "}
+          <FormattedMessage id="firstName">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>{" "}
+                      <FormattedMessage id="enterYourFirstName">
+      {(message) => 
             <input
               type="text"
-              placeholder="Enter your first name"
+              placeholder={message}
               className="register_elem"
               id="register_firstName"
               value={firstName}
               onChange={(event) => setFirstName(event.target.value)}
               required
             />
+      }</FormattedMessage>
           </label>
 
           <label htmlFor="register_lastName" className="descriptioLabel">
-            Last Name{" "}
+          <FormattedMessage id="lastName">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>{" "}
+
+                      <FormattedMessage id="enterYourLastName">
+      {(message) =>      
             <input
               type="text"
-              placeholder="Enter your last name"
+              placeholder={message}
               className="register_elem"
               id="register_lastName"
               value={lastName}
               onChange={(event) => setLastName(event.target.value)}
               required
             />
+            }</FormattedMessage>
           </label>
 
           <label htmlFor="register_phone" className="descriptioLabel">
-            Phone Number{" "}
+          <FormattedMessage id="phoneNumber">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>{" "}
+                      <FormattedMessage id="enterYourPhoneNumber">
+      {(message) =>   
             <input
               type="text"
-              placeholder="Enter your phone number"
+              placeholder={message}
               className="register_elem"
               id="register_phone"
               value={phoneNumber}
               onChange={(event) => setPhoneNumber(event.target.value)}
               required
             />
+            }</FormattedMessage>
           </label>
 
           <label htmlFor="register_photo_amin" className="descriptioLabel">
-            URL Image{" "}
+          <FormattedMessage id="urlImage">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>{" "}
+                      <FormattedMessage id="EnterURofyourimage">
+      {(message) =>   
             <input
               type="url"
-              placeholder="Enter the URL of your image"
+              placeholder={message}
               className="register_elem"
               id="register_photo_main"
               value={imgURL}
               onChange={(event) => setImageURL(event.target.value)}
               required
             />
+            }</FormattedMessage>
           </label>
 
           {/* Se o user logado for product owner pode escolher o role do user que está a registar, caso contrário é
           registado como developer*/}
   {role=== "product_owner" && (
           <label htmlFor="register_photo_amin" className="descriptioLabel">
-            Role
+             <FormattedMessage id="role">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
             <select
               id="register_typeOfUser"
               name="opcoes"
               defaultValue={typeOfUser}
               onChange={(event) => setTypeOfUser(event.target.value)}
             >
-              <option value="" >Select a role</option>
+              <option value="" ><FormattedMessage id="selectArole">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></option>
               <option value="developer">Developer</option>
               <option value="scrum_master">Scrum Master</option>
               <option value="product_owner">Product Owner</option>
@@ -234,14 +278,18 @@ function NewUser() {
               id="registerPO_submit"
               onClick={handleSubmit}
             >
-              Save
+              <FormattedMessage id="save">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
             </button>
             <button
               className="register_elem"
               id="registerPO_submit"
               onClick={closeModal}
             >
-              Cancel
+             <FormattedMessage id="cancel">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
             </button>
           </div>
         </form>
@@ -250,6 +298,7 @@ function NewUser() {
       )}
       ;
     </div>
+    </IntlProvider>
   );
   }
 

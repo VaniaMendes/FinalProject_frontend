@@ -10,6 +10,8 @@ import "react-notifications/lib/notifications.css";
 import { userStore } from "../stores/UserStore";
 import { getAllCategories } from "../endpoints/categories";
 import { BiSolidCategoryAlt } from "react-icons/bi";
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
 
 import {
   showModal,
@@ -20,6 +22,9 @@ import {
 function Categories() {
   //State para armazenar a lista de ctaegorias
   const [categories, setCategories] = useState(null);
+
+   //Obtem a linguagem de exibição da página
+   const locale = userStore((state) => state.locale);
 
   //Obtém o token do user que efetuou o login
   const tokenObject = userStore((state) => state.token);
@@ -73,6 +78,7 @@ function Categories() {
 
   return (
     <div>
+       <IntlProvider locale={locale} messages={languages[locale]}>
       <div className="table_container">
         <table id="users_table">
           <thead>
@@ -80,22 +86,34 @@ function Categories() {
               <th className="titleUser">
                 <BiSolidCategoryAlt className="task_icon" />
               </th>
-              <th className="titleUser3"> Categories</th>
+              <th className="titleUser3"> <FormattedMessage id="categories">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
               <th>
                 <button
                   id="btn_user"
                   onClick={() => setShowModalNewCategory(true)}
                 >
-                  +New Category
+                  <FormattedMessage id="newCategory">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
                 </button>
               </th>
               <th className="titleUser"></th>
             </tr>
             <tr className="header">
-              <th>Author</th>
-              <th>Title</th>
-              <th>Description</th>
-              <th>Category Edition</th>
+              <th> <FormattedMessage id="author">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
+              <th><FormattedMessage id="title">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
+              <th><FormattedMessage id="description">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
+              <th><FormattedMessage id="categoryEdition">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage></th>
             </tr>
           </thead>
           <tbody className="body">
@@ -130,6 +148,7 @@ function Categories() {
         </table>
       </div>
       {showModalNewCategory && <CategoryBoard />}
+      </IntlProvider>
     </div>
   );
 }

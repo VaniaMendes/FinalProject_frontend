@@ -1,10 +1,15 @@
 import React from 'react';
+import languages from "../translations";
+import { IntlProvider, FormattedMessage } from "react-intl";
+import { userStore } from '../stores/UserStore';
 
 function HomePage() {
 
-   
+        //Obtem a linguagem de exibição da página
+        const locale = userStore((state) => state.locale);
+
   return (
-    
+    <IntlProvider locale={locale} messages={languages[locale]}> 
     <div id="login_body">
       <div id="body_color">
          
@@ -17,7 +22,9 @@ function HomePage() {
       </header>
       
       <div className="footer">
-        <div>Powered by:</div>
+        <div><FormattedMessage id="poweredBy">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage></div>
         <ul>
           <li>Vânia Mendes</li>
         </ul>
@@ -25,6 +32,7 @@ function HomePage() {
         <p>© Acertar o Rumo 2024</p>
       </div>
     </div>
+    </IntlProvider>
   );
 }
 
