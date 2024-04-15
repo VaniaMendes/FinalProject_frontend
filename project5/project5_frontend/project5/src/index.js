@@ -16,6 +16,7 @@ import PasswordRecovery from './pages/PasswordRecovery';
 import NewPassword from './pages/NewPassword';
 import UserProfile from './pages/UserProfile';
 import Dashboard from './pages/Dashboard';
+import Authentication from './pages/AuthenticationRequired';
 
 
 
@@ -35,9 +36,10 @@ root.render(
       <Route path="/confirmationAccount" element = {<EmailConfirmation/>}/>
       <Route path="/passwordRecovery" element = {<PasswordRecovery/>}/>
       <Route path = "/newPassword" element = {<NewPassword/>}/>
-      <Route path = "dashboard" element = {<Dashboard/>}/>
+      <Route path = "/dashboard" element = {<Dashboard/>}/>
 
       <Route path="/profile/:username" element={<UserProfile />} />
+      <Route path = "/authentication" element={<Authentication />} />
     
 
       </Routes>

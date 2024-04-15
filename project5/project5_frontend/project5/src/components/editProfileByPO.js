@@ -5,7 +5,7 @@ import { NotificationManager } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 import {  getUserByUsername} from "../endpoints/users";
 import { updateProfileByPO } from "../endpoints/users";
-import {showModal, updateUsersTable} from '../stores/boardStore';
+import { updateUsersTable} from '../stores/boardStore';
 import {useNavigate} from 'react-router-dom';
 import ButtonsForProfile from "./buttonsForProfile";
 import { useParams } from "react-router-dom";
@@ -34,7 +34,6 @@ function EditProfileByPO(){
    
     const { username } = useParams();
    
-
 
     //Estado para aramzenar as informações do user a ser editado
     const [userEditPO, setUserEditPO] = useState(null);
@@ -176,7 +175,7 @@ function EditProfileByPO(){
 
         </div>
         <div className="confirm_profile">
-           <button className="btn_save" id="btn-save" onClick={handleSubmit} hidden={role === "scrum_master"}><FormattedMessage id="UserRole">
+           <button className="btn_save" id="btn-save" onClick={handleSubmit} hidden={role === "scrum_master"}><FormattedMessage id="save">
                 {(message) => <span>{message}</span>}
               </FormattedMessage></button>
                <button className="btn_cancel" id="btn_cancel" onClick={handleBack}><FormattedMessage id="back">

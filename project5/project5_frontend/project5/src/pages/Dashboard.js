@@ -22,6 +22,7 @@ import {
 import { userStore } from "../stores/UserStore";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
+import {useNavigate} from 'react-router-dom';
 
 function Dashboard() {
   //Vai buscar o token à store
@@ -31,40 +32,51 @@ function Dashboard() {
   const [tasksConcluedByTime, setTasksConcluedByTime] = useState("");
   const [tasksByState, setTasksByState] = useState([]);
 
+  const navigate = useNavigate();
+
    //Obtem a linguagem de exibição da página
    const locale = userStore((state) => state.locale);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await getDashboard(tokenUser);
-        setData(result);
 
-        // Transforma os dados em um array de objetos com chave 'date' e 'users'
-        const userByTimeData = Object.entries(
-          result.countUsersByRegistrationDate
-        ).map(([date, users]) => ({ date, users }));
-        setUserByTime(userByTimeData);
-
-        // Transforma os dados em um array de objetos com chave 'date' e 'tasks'
-        const tasksConcluedByTimeData = Object.entries(
-          result.countTaksByConclusionDate
-        ).map(([date, tasks]) => ({ date, tasks }));
-        setTasksConcluedByTime(tasksConcluedByTimeData);
-
-        let tasksByState = [];
-        if (result.countTasksByState) {
-          tasksByState = Object.entries(result.countTasksByState).map(
-            ([state, tasks]) => ({ state, tasks })
-          );
+   
+   useEffect(() => {
+    // Verifica se o token é nulo e redireciona para a página de autenticação
+    if(!tokenUser){
+      navigate("/authentication");
+    } else {
+      const fetchData = async () => {
+        try {
+          const result = await getDashboard(tokenUser);
+          setData(result);
+  
+          // Transforma os dados em um array de objetos com chave 'date' e 'users'
+          const userByTimeData = Object.entries(
+            result.countUsersByRegistrationDate
+          ).map(([date, users]) => ({ date, users }));
+          setUserByTime(userByTimeData);
+  
+          // Transforma os dados em um array de objetos com chave 'date' e 'tasks'
+          const tasksConcluedByTimeData = Object.entries(
+            result.countTaksByConclusionDate
+          ).map(([date, tasks]) => ({ date, tasks }));
+          setTasksConcluedByTime(tasksConcluedByTimeData);
+  
+          let tasksByState = [];
+          if (result.countTasksByState) {
+            tasksByState = Object.entries(result.countTasksByState).map(
+              ([state, tasks]) => ({ state, tasks })
+            );
+          }
+          setTasksByState(tasksByState);
+        } catch (error) {
+          console.error("Erro ao buscar dados do dashboard:", error);
         }
-        setTasksByState(tasksByState);
-      } catch (error) {
-        console.error("Erro ao buscar dados do dashboard:", error);
-      }
-    };
-    fetchData();
-  }, [tokenUser]);
+      };
+  
+      fetchData();
+    }
+  }, [tokenUser, navigate]);
+  
 
   const COLORS = ["#0088FE", "#00C49F", "#FF8042"];
 

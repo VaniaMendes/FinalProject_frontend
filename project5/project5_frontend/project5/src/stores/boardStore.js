@@ -102,3 +102,10 @@ export const showMessages = create((set) => ({
   showMessageChat: false,
   setShowMessageChat: (value) => set({ showMessageChat: value }),
 }));
+
+
+
+export const showNotificationsPainel = create((set) => ({
+  showNotifications: false,
+  setShowNotifications: (value) => set({ showNotifications: value }),
+}));

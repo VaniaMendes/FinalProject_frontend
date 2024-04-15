@@ -15,6 +15,9 @@ import WebSocketClient from "./websocket";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
 import Language from "./language";
+import { showNotificationsPainel } from "../stores/boardStore";
+import Notification from './Notification';
+import {notificationStore} from '../stores/NotificationStore';
 
 function SideMenu() {
   //Obtem o tipo de utilizador da store
@@ -27,6 +30,8 @@ function SideMenu() {
   //Obtem o estado de ativação do filtro
   const { setFilterOn } = showModal();
 
+  const {showNotifications, setShowNotifications} = showNotificationsPainel();
+
   //Estado para guardar os dados do utilizador
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
@@ -38,7 +43,7 @@ function SideMenu() {
   const locale = userStore((state) => state.locale);
  
 
-  const notifications = userStore((state) => state.notifications);
+  const notifications = notificationStore((state) => state.notifications);
   WebSocketClient();
 
   // Efeito para buscar os dados do usuário ao montar o componente
@@ -119,8 +124,7 @@ function SideMenu() {
                     <div
                       className="notification-badge"
                       onClick={() => {
-                        // Coloque aqui a ação que você quer que aconteça quando o usuário clicar no badge
-                        console.log("Badge de notificação clicado!");
+                        setShowNotifications(true);
                       }}
                     >
                       {notifications.length}
@@ -175,6 +179,7 @@ function SideMenu() {
           </div>
         </div>
       </IntlProvider>
+      {showNotifications && <Notification/>}
     </div>
   );
 }

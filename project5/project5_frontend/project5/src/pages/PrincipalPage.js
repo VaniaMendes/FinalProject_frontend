@@ -21,7 +21,7 @@ function PrincipalPage(){
   const tokenUser = tokenObject.token;
 
   if (!tokenUser) {
-    navigate("/login"); // Redireciona para a página de login se não estiver autenticado
+    navigate("/authentication"); // Redireciona para a página de login se não estiver autenticado
     return null; // Retorna null para evitar renderização da página
   }
 

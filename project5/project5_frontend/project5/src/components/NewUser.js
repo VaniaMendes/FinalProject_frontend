@@ -156,8 +156,8 @@ function NewUser() {
       }</FormattedMessage>
           </label>
          
-          <label htmlFor="register_email" className="email">
-          <FormattedMessage id="username">
+          <label htmlFor="register_email" className="descriptioLabel">
+          <FormattedMessage id="email">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage>{" "}
 

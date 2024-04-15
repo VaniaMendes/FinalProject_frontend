@@ -23,7 +23,8 @@ function ProductOwner(){
    const navigate = useNavigate();
  
    if(!tokenUser){
-     navigate("/login");
+     navigate("/authentication");
+     return null;
      
    }
   

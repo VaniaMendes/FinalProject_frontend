@@ -35,11 +35,7 @@ export const userStore = create(
             myTasks:[],
             setMyTasks: (myTasks) => set({ myTasks }),
             getMytasks: () => userStore.getState().myTasks,
-
-
-            notifications: [], 
-            updateNotifications: (notifications) => set({ notifications }), // Alterando aqui para setar diretamente o estado de notifications
-            addNotification: (newNotification) => set((state) => ({ notifications: [...state.notifications, newNotification] })),
+    
            
              // Função para limpar completamente o store
              clearStore: () => set({

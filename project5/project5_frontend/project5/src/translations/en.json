@@ -63,7 +63,6 @@
 "ativeUsers": " Ative Users",
 "deleteTasks": " Delete Tasks",
 
-
 "registerUsersByTime": " Register Users by Time",
 "tasksFinished/Time": " Tasks Finished/Time",
 "totalUsers": " Total Users: ",
@@ -89,7 +88,8 @@
 
 "categorydescription" : "Category Description",
 "Edit Category": "Edit Category",
-"New Category": "New Category"
+"New Category": "New Category",
+"EnterURofyourimage": "Enter your URL image"
 
 
 

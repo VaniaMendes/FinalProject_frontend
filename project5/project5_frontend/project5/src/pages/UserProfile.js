@@ -20,7 +20,7 @@ function UserProfile(){
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
   if (!tokenUser) {
-    navigate("/login"); // Redireciona para a página de login se não estiver autenticado
+    navigate("/authentication");// Redireciona para a página de login aviso
     return null; // Retorna null para evitar renderização da página
   }
             

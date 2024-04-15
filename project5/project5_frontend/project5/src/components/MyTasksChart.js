@@ -82,13 +82,19 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
 
   return (
    <div className="verify-container" >
-    <button className="close" onClick={handleBack}><RiCloseFill /></button>
     <IntlProvider locale={locale} messages={languages[locale]}>
+    <div className = "tasks-header">
+    <button className="close" onClick={handleBack}><RiCloseFill /></button>
+    
 
-         <PieChart width={400} height={400}>
-         <text fontSize={30} x={200} y={20} textAnchor="middle" dominantBaseline="middle"> <FormattedMessage id="tasksForState">
+    <FormattedMessage id="tasksForState">
                         {(message) => <span>{message}</span>}
-                      </FormattedMessage></text>
+                      </FormattedMessage>
+                      </div>
+
+                      <div className="chat-body">
+         <PieChart width={400} height={400}>
+         <text fontSize={30} x={200} y={20} textAnchor="middle" dominantBaseline="middle"> </text>
         <Pie
           data={data}
           cx={200}
@@ -120,7 +126,7 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
         
    
         </PieChart>
-        
+        </div>
         <div>      
         </div>
  </IntlProvider>

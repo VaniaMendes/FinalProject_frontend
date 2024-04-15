@@ -1667,18 +1667,24 @@ th {
   top:30%;
   left:15%;
   display:flex;
+  flex-direction: column;
   position: fixed;
   align-items: center;
   justify-content: center;
   background-color: var(--white);
   border-radius: 15px;
-  width: 500px;
+  width: 400px;
   height: 500px;
   z-index: 9999;
 
 }
-
-.btn_confirm{ 
+.tasks-header{
+ display: flex;
+ justify-content: space-between;
+  font-size: 22px;
+  align-items: center;
+}
+_confirm{ 
   background-color: var(--white);
   height: 40px;
   width: 200px;
@@ -1855,4 +1861,30 @@ z-index: 9999;
   top:15%;
   width: 150px;
   left: 3%;
+}
+.notification_container {
+  position: fixed;
+  top: 40%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 400px;
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  z-index: 2000;
+  overflow-y: auto;
+  align-items: center;
+  border-radius: 10px;
+}
+.notification_modal{
+  display: flex;
+  align-items: center;
+ 
+}
+.notification_body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
