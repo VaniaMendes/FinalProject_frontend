@@ -96,7 +96,7 @@ function InactiveUsersTable() {
                     <th ><FormattedMessage id="email">
                 {(message) => <span>{message}</span>}
               </FormattedMessage></th>
-                    <th ><FormattedMessage id="phoneNumver">
+                    <th ><FormattedMessage id="phoneNumber">
                 {(message) => <span>{message}</span>}
               </FormattedMessage></th>
                     <th ><FormattedMessage id="role">

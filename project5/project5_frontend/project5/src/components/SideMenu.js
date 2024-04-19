@@ -3,21 +3,21 @@ import { userStore } from "../stores/UserStore";
 import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import { HiHome } from "react-icons/hi2";
-import { RiLogoutCircleFill } from "react-icons/ri";
 import { RiEdit2Fill } from "react-icons/ri";
-import { logout } from "../endpoints/users";
+
 import { getUserByToken } from "../endpoints/users";
 import { useNavigate } from "react-router-dom";
 import { MdTask } from "react-icons/md";
 import { myTasks } from "../endpoints/tasks";
-import { showMyTasks, showModal, cleanBoardStore } from "../stores/boardStore";
+import { showMyTasks, showModal } from "../stores/boardStore";
 import WebSocketClient from "./websocket";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
-import Language from "./language";
-import { showNotificationsPainel } from "../stores/boardStore";
-import Notification from './Notification';
+import { showNotificationsPainel} from "../stores/boardStore";
+
 import {notificationStore} from '../stores/NotificationStore';
+import {getNotificationsUnRead} from '../endpoints/messages';
+
 
 function SideMenu() {
   //Obtem o tipo de utilizador da store
@@ -26,6 +26,7 @@ function SideMenu() {
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
 
   //Obtem o estado de ativação do filtro
   const { setFilterOn } = showModal();
@@ -42,9 +43,10 @@ function SideMenu() {
   //Obtem a linguagem de exibição da página
   const locale = userStore((state) => state.locale);
  
-
+  const { clearNotifications, setNotifications } = notificationStore();
   const notifications = notificationStore((state) => state.notifications);
   WebSocketClient();
+  console.log(notifications);
 
   // Efeito para buscar os dados do usuário ao montar o componente
   useEffect(() => {
@@ -53,14 +55,19 @@ function SideMenu() {
         const user = await getUserByToken(tokenUser);
         setUserData(user);
         setRole(user.typeOfUser);
+
+        //Quando cria o componente vai buscar a lista de mensagens não lidas do utilizador e coloca-as na store
+        const unreadNotifications = await getNotificationsUnRead(tokenUser);
+        console.log(unreadNotifications);
+
+        setNotifications(unreadNotifications);
+        
       } catch (error) {
         console.log("Error fetching user data:", error);
       }
     }
     fetchData();
   }, [tokenUser, setRole]);
-
-
 
 
   //Função para navegar para a página de edição de perfil
@@ -92,25 +99,7 @@ function SideMenu() {
     }
   };
 
-  //Função para efetuar o logout
-  const logoutClick = async (event) => {
-    event.preventDefault();
-    try {
-      const result = await logout(tokenUser);
-
-      if (result === true) {
-        NotificationManager.success("Logout successfully");
-        // Limpa a store e o boardStore antes de redirecionar para a página de login
-        userStore.getState().clearStore();
-        cleanBoardStore();
-        navigate("/login");
-      } else {
-        console.log("Erro ao buscar dados do usuário:", result.error);
-      }
-    } catch (error) {
-      console.log("Erro durante logout", error);
-    }
-  };
+   
 
   return (
     <div>
@@ -119,18 +108,8 @@ function SideMenu() {
           <div id="menu">
             <div className="menu_image" id="user_name">
               <div id="user_info">
-                <div className="notification-icon">
-                  {notifications.length > 0 && (
-                    <div
-                      className="notification-badge"
-                      onClick={() => {
-                        setShowNotifications(true);
-                      }}
-                    >
-                      {notifications.length}
-                    </div>
-                  )}
-                </div>
+               
+               
                 <img
                   id="user_img"
                   src={userData && userData.imgURL}
@@ -143,18 +122,11 @@ function SideMenu() {
 
               <div className="menuSide">
                 <div className="menuPO">
-                  <div className="location">
-                    <Language/>
-                  </div>
+                 
                   <ul className="menu_list">
                     <li className="item_PO" onClick={homeclick}>
                       <HiHome />
                       <FormattedMessage id="home">
-                        {(message) => <span>{message}</span>}
-                      </FormattedMessage>
-                    </li>
-                    <li className="item_PO" onClick={logoutClick}>
-                      <RiLogoutCircleFill /> <FormattedMessage id="logout">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage>
                     </li>
@@ -179,7 +151,7 @@ function SideMenu() {
           </div>
         </div>
       </IntlProvider>
-      {showNotifications && <Notification/>}
+    
     </div>
   );
 }

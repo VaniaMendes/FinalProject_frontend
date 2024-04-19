@@ -4,7 +4,7 @@ import { countTasks } from "../endpoints/tasks";
 import { getUserByToken } from "../endpoints/users";
 import { NotificationManager } from "react-notifications";
 import { showModal } from "../stores/boardStore";
-import { PieChart, Pie, Cell, Tooltip, Legend, Text } from 'recharts';
+import { PieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import {showChart} from '../stores/boardStore';
 import {RiCloseFill} from 'react-icons/ri';
 import { useParams } from "react-router-dom";
@@ -16,8 +16,6 @@ function MyTasksChart() {
   // Obtém o token do usuário do store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
-
-  
 
      //Obtem a linguagem de exibição da página
      const locale = userStore((state) => state.locale);
@@ -69,13 +67,14 @@ const{username} = useParams();
     setShowTaskChart(false);
   };
 
-
-// Dados de exemplo
-const data = [
-  {name: 'TODO', value: taskSummary.toDo},
-  {name: 'DOING', value: taskSummary.doing},
-  {name: 'DONE', value: taskSummary.done},
-];
+  let data = [];
+ // Verifica se taskSummary é diferente de null e se suas propriedades não são null
+ if (taskSummary !== null && taskSummary.toDo !== null && taskSummary.doing !== null && taskSummary.done !== null) {
+  data = [
+    {name: 'TODO', value: taskSummary.toDo},
+    {name: 'DOING', value: taskSummary.doing},
+    {name: 'DONE', value: taskSummary.done},
+  ];
 
 // Cores para cada seção do gráfico 
 const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
@@ -131,7 +130,8 @@ const COLORS = ['#8FBC8F', '#ADD8E6', '#FFB6C1'];
         </div>
  </IntlProvider>
  </div>
-  );
+  )
+}
 }
 
 export default MyTasksChart;

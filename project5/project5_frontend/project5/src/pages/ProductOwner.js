@@ -22,7 +22,7 @@ function ProductOwner(){
    const tokenUser = tokenObject.token;
    const navigate = useNavigate();
  
-   if(!tokenUser){
+   if(tokenUser===undefined){
      navigate("/authentication");
      return null;
      

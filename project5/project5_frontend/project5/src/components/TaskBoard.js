@@ -79,8 +79,6 @@ const task={
   }, [tokenUser, taskIdForEdit]);
 
 
-
-
   //Função para lidar com o envio do formulário
   const handleSubmit = async ( tokenUser, taskIdForEdit, task, idCategory) => {
      
@@ -91,6 +89,8 @@ const task={
       const result =  await updateTask(task, tokenUser, taskIdForEdit, idCategory)
 
     if(result === true){
+
+      
       NotificationManager.success("Task updated successfully", "", 1000);
       setShowNewTask(false);
 
@@ -106,7 +106,7 @@ const task={
       NotificationManager.success("Task added successfully", "", 800);
     
       setShowNewTask(false);
-      setUpdateTasks(!updateTasks);
+   
 
     }else{
     NotificationManager.warning("Title not available", "", 800);

@@ -41,7 +41,7 @@ function Dashboard() {
    
    useEffect(() => {
     // Verifica se o token é nulo e redireciona para a página de autenticação
-    if(!tokenUser){
+    if(tokenUser===undefined){
       navigate("/authentication");
     } else {
       const fetchData = async () => {
@@ -76,6 +76,26 @@ function Dashboard() {
       fetchData();
     }
   }, [tokenUser, navigate]);
+
+
+  useEffect(() => {
+    const WS_URL = "ws://localhost:8080/project_backend/websocket/updateTask/";
+    const websocket = new WebSocket(WS_URL + tokenUser);
+    websocket.onopen = () => {
+      console.log("WebSocket connection for tasks is open");
+
+    };
+
+    websocket.onmessage = (event) => {
+      const updatedData = JSON.parse(event.data);
+      console.log("A new message is received!");
+      console.log(updatedData);
+
+      setData(updatedData);
+    
+    };
+    
+  }, [tokenUser]);
   
 
   const COLORS = ["#0088FE", "#00C49F", "#FF8042"];

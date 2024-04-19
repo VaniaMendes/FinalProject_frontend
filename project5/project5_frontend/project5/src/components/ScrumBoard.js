@@ -19,6 +19,8 @@ import { updateTaskState } from "../endpoints/tasks";
 import TaskDetails from "./TaskDetails";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
+import WebSocketClient from "./websocket";
+
 
 function ScrumBoard() {
   //Este componente é responsãvel por renderizar tudo o que diz respeito ao scrum_board
@@ -57,6 +59,7 @@ function ScrumBoard() {
   //Estado para guardar o estado de edição da tarefa
   const { editTask, setEditTask } = modeEditTask();
 
+
   //Função para exibir o modal de nova tarefa
   const handleNewTaskClick = () => {
     setShowNewTask(true);
@@ -82,6 +85,8 @@ function ScrumBoard() {
   //Função para obter as tarefas ativas a serem mostradas no scrum_board
   useEffect(() => {
     const fetchData = async () => {
+
+      console.log("renderixou");
       //Se o filtro estiver ativado vai aparecer a lista de tarefas filtradas por categoria e/ou utilizador
       if (filterOn) {
         if (filteredTasks.length > 0) {
@@ -106,18 +111,34 @@ function ScrumBoard() {
         const tasks = await getActiveTasks(tokenUser);
         setListTasks(tasks);
       }
+      
     };
 
     fetchData();
-  }, [
-    tokenUser,
-    filterOn,
-    filteredTasks,
-    showNewTask,
-    showUserTasks,
-    myTasks,
-    editTask,
-  ]);
+  }, [tokenUser, filteredTasks, myTasks, filterOn, showUserTasks]);
+
+  useEffect(() => {
+    const WS_URL = "ws://localhost:8080/project_backend/websocket/updateTask/";
+    const websocket = new WebSocket(WS_URL + tokenUser);
+    websocket.onopen = () => {
+      console.log("WebSocket connection for tasks is open");
+
+    };
+
+    websocket.onmessage = (event) => {
+      const updatedTask = JSON.parse(event.data);
+      console.log("A new message is received!");
+      console.log(updatedTask);
+
+      setListTasks(prevTasks => prevTasks.map((task) => {
+        if (task.id === updatedTask.id) {
+          return updatedTask;
+        }
+        return task;
+      }));
+    };
+    
+  }, [tokenUser]);
 
   // Função para obter a cor com base na prioridade da tarefa
   function getColorForPriority(priority) {
@@ -189,17 +210,7 @@ function ScrumBoard() {
     try {
       // Atualiza o estado da tarefa no servidor
       await updateTaskState(tokenUser, taskId, newState);
-
-      // Atualiza o estado local das tarefas após a mudança
-      const updatedTasks = listTasks.map((task) => {
-        if (task.id === taskId) {
-          return { ...task, state: newState };
-        }
-        return task;
-      });
-
-      //Atualiza a lista de tarefas a ser exibida no scrum_board
-      setListTasks(updatedTasks);
+      //A atualização no srcumboard é feita através do task enviada pelo websocket
     } catch (error) {
       console.error("Failed to update task state:", error);
     }

@@ -36,16 +36,7 @@ export const userStore = create(
             setMyTasks: (myTasks) => set({ myTasks }),
             getMytasks: () => userStore.getState().myTasks,
     
-           
-             // Função para limpar completamente o store
-             clearStore: () => set({
-                token: "", 
-                role: "",
-                categoryId:"",
-                username:"",
-                taskIdForEdit:"",
-               
-            }),
+        
 
             
             locale: "en", 
@@ -55,7 +46,7 @@ export const userStore = create(
         }),
         {
             name: 'mystore',
-            storage: createJSONStorage(() => sessionStorage)
+            storage: createJSONStorage(() => localStorage)
         }
     )
 );

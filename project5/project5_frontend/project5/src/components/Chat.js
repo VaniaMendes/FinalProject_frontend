@@ -1,14 +1,16 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { showMessages } from "../stores/boardStore";
 import { RiSendPlaneFill, RiCloseFill } from "react-icons/ri";
-import { getMessagesBetweenUsers, sendMessage } from "../endpoints/messages";
+import { getMessagesBetweenUsers, sendMessage, markedAsRead } from "../endpoints/messages";
 import { userStore } from "../stores/UserStore";
 import { useState } from "react";
 import { getUserByUsername } from "../endpoints/users";
 import { useParams } from "react-router-dom";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
+import { IoEye } from "react-icons/io5";
+
 
 function Chat() {
   // Obtém o token do user
@@ -20,21 +22,16 @@ function Chat() {
 
   const { showMessageChat, setShowMessageChat } = showMessages();
 
-  //Adicionar uma nova instancia do websocket
-  const [ws, setWs] = useState(null);
-  const [receivedMessage, setReceivedMessage] = useState("");
-
   //Obtem a linguagem de exibição da página
   const locale = userStore((state) => state.locale);
 
   const [photo, setPhoto] = useState("");
+  const endOfPageRef = useRef(null);
 
 
   const [content, setContent] = useState(""); // Estado para armazenar o valor do input
   const [messages, setMessages] = useState([]); // Estado para armazenar as mensagens
 
-
-  const { addNotification } = userStore.getState();
 
   const message = {
     content: content,
@@ -49,29 +46,46 @@ function Chat() {
       const result = await getMessagesBetweenUsers(tokenUser, username);
       const user = await getUserByUsername(tokenUser, username);
       setPhoto(user.imgURL);
-      setMessages(result); // Define as informações do user
+
+      // Formatar o timestamp de cada mensagem
+  const formattedResult = result.map(msg => {
+    const date = new Date(msg.timestamp);
+    msg.timestamp = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    return msg;
+  });
+      setMessages(formattedResult); // Define as informações do user
     } catch (error) {
       console.error("Erro ao buscar mensagens:", error);
     }
   };
 
+  
+    
   useEffect(() => {
     const WS_URL = "ws://localhost:8080/project_backend/websocket/message/";
     const websocket = new WebSocket(WS_URL + tokenUser);
     websocket.onopen = () => {
       console.log("WebSocket connection for chat messages is open");
+
+        // Após a conexão WebSocket ser aberta, chama a função fetchData
+        fetchData();
       
-      // Após a conexão WebSocket ser aberta, chama a função fetchData
-      fetchData();
     };
 
     websocket.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log("A new message is received!");
       console.log(message);
+
+      // Formatar o timestamp para ser adicionado ao chat
+const [year, month, day, hour, minute] = message.timestamp;
+const date = new Date(year, month - 1, day, hour, minute);
+message.timestamp = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
       setMessages(prevMessages => [...prevMessages, message]);
      
     };
+
+    endOfPageRef.current?.scrollIntoView({ behavior: 'auto' });
 
     return () => {
       websocket.close();
@@ -80,7 +94,7 @@ function Chat() {
    
 }, [tokenUser, username]);
 
-  // Função para lidar com a alteração do input
+  // Função para lidar com a alteração do input da mensagem
   const handleInputChange = (event) => {
     setContent(event.target.value); // Atualiza o estado 'content' com o valor digitado no input
   };
@@ -101,6 +115,16 @@ function Chat() {
     setShowMessageChat(false);
   };
 
+  const handleReadMessage = async (tokenUser, id, username) => {
+    const result = await markedAsRead(tokenUser, id, username);
+    if(result){
+      fetchData();
+    }
+  
+  }
+
+  
+
   return (
     <IntlProvider locale={locale} messages={languages[locale]}>
       <div className="chat_container">
@@ -111,7 +135,7 @@ function Chat() {
             </button>
             <h1>
               <FormattedMessage id="chat">
-                {(message) => <span>{message}</span>}
+                {(message) => <span>{message + " " + username}</span>}
               </FormattedMessage>
             </h1>
           </div>
@@ -146,11 +170,15 @@ function Chat() {
                     <div className="chat-message-info-time">
                       {msg.timestamp}
                     </div>
-                    <div className="chat-message-content">{msg.content}</div>
+                    <div className="message">
+                    <div className="chat-message-content"  style={{ fontWeight: msg.messageRead ? 'normal' : 'bold' }}>{msg.content}</div>
+                    <div className="button-eye">{!isReceiver && <button className = "eye" onClick={() =>handleReadMessage(tokenUser, msg.id, username)}><IoEye/></button>}</div>
+                    </div>
                   </div>
                 </div>
               );
             })}
+            <div ref={endOfPageRef} />
         </div>
         <div className="chat-footer">
           <div className="input-container">

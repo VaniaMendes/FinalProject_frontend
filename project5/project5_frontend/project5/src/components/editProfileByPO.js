@@ -26,9 +26,7 @@ function EditProfileByPO(){
 
     //Obtem o tipo de utilizador da store
     const {  getRole } = userStore();
-    const role = getRole();
-
-    
+    const role = getRole();    
 
     //Obtemo username guardado da store do user ao qual vamos alterar o perfil
    
@@ -104,8 +102,7 @@ function EditProfileByPO(){
         //Função para voltar quando clicamos no botao BACK - coloca a visibilidade do modal a false
         const handleBack = ()=>{
          navigate("/productOwner");
-        
-     
+      
         }
 
 

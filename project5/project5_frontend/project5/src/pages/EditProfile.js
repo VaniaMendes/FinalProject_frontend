@@ -8,6 +8,7 @@ import {userStore} from '../stores/UserStore';
 import MenuScrum from "../components/MenuScrum";
 import MenuProductOwner from "../components/MenuProductOwner";
 import {useNavigate} from 'react-router-dom';
+import { useEffect } from "react";
 
 
 
@@ -20,10 +21,14 @@ function EditProfilePage(){
 
     const navigate = useNavigate();
     const role = getRole();
-    if (!tokenUser) {
-        navigate("/authentication"); // Redireciona para a página de login se não estiver autenticado
-        return null; // Retorna null para evitar renderização da página
+
+
+    useEffect(() => {
+      if (!tokenUser) {
+          navigate("/authentication");
       }
+  }, [tokenUser, navigate]);
+  
             
     return(
        <div> 

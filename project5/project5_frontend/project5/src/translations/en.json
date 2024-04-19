@@ -19,7 +19,7 @@
 "cancel": " Cancel",
 "update": " Update",
 "save": " Save",
-"chat": " Chat",
+"chat": " Chat with  ",
 "sendYourMessage": " Send your message",
 "password": " Password",
 "email": " Email",
@@ -89,9 +89,8 @@
 "categorydescription" : "Category Description",
 "Edit Category": "Edit Category",
 "New Category": "New Category",
-"EnterURofyourimage": "Enter your URL image"
-
-
+"EnterURofyourimage": "Enter your URL image",
+"notification": "You received a new message from  "
 
 
 } 

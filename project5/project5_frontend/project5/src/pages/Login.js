@@ -58,7 +58,8 @@ function Login(){
             //Verifica se o login foi bem sucedido
             if (response.ok) {
                const token = await response.json();
-               userStore.getState().setToken(token); 
+               userStore.getState().setToken(token);
+              
                
                 NotificationManager.success("Welcome to AgileUp");
                 setTimeout(() => {

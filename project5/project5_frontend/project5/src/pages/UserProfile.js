@@ -8,6 +8,7 @@ import MenuProductOwner from "../components/MenuProductOwner";
 import {useNavigate} from 'react-router-dom';
 import {userStore} from '../stores/UserStore';
 import MenuScrum from "../components/MenuScrum";
+import { useEffect } from "react";
 
 function UserProfile(){
 
@@ -19,10 +20,14 @@ function UserProfile(){
     //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
-  if (!tokenUser) {
-    navigate("/authentication");// Redireciona para a página de login aviso
-    return null; // Retorna null para evitar renderização da página
-  }
+ 
+
+  useEffect(() => {
+    if (!tokenUser) {
+        navigate("/authentication");
+    }
+}, [tokenUser, navigate]);
+
             
     return(
        <div> 

@@ -1,5 +1,6 @@
 import React from 'react';
 import {userStore} from '../stores/UserStore';
+import Flag from 'react-world-flags';
 
 
 function Language() {
@@ -14,6 +15,12 @@ function Language() {
     updateLocale(event);
   };
 
+  const languageToFlag = {
+    en: "gb",
+    pt: "pt",
+    fr: "fr"
+  };
+
     return (
         <div>
              <div className="location">
@@ -26,9 +33,9 @@ function Language() {
                             handleSelect(language);
                           }}
                         >
-                          {language}
+                           <Flag className = "flag" code={languageToFlag[language]}/>
                         </a>
-                        {index < 2 ? " | " : ""}
+                        {index < 2 ? "   " : "  "}
                       </span>
                     ))}
                   </div>
