@@ -16,16 +16,8 @@ function PrincipalPage(){
     const { getRole } = userStore();
     const role = getRole();
 //Obtem o token da store
-const tokenObject = userStore((state) => state.token);
-const tokenUser = tokenObject.token;
+const tokenUser = userStore((state) => state.token.token);
 const navigate = useNavigate();
-
-
-useEffect(() => {
-    if (!tokenUser) {
-        navigate("/authentication");
-    }
-}, [tokenUser, navigate]);
 
 
    

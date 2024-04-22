@@ -138,13 +138,6 @@ function Login(){
                       </FormattedMessage></button> 
                     </div>
                 </form>
-                <div id="signup"><FormattedMessage id="Don't you have an account?">
-                        {(message) => <span>{message}</span>}
-                      </FormattedMessage>
-        
-                <a className="signUp" href="/register" onClick={handleNewUSer}><FormattedMessage id="REGISTER HERE">
-                        {(message) => <span>{message}</span>}
-                      </FormattedMessage></a></div>
             </div>
             </IntlProvider>
         </div>

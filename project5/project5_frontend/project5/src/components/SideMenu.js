@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 import { userStore } from "../stores/UserStore";
 import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
-import { HiHome } from "react-icons/hi2";
 import { RiEdit2Fill } from "react-icons/ri";
 
 import { getUserByToken } from "../endpoints/users";
 import { useNavigate } from "react-router-dom";
-import { MdTask } from "react-icons/md";
+import { BiTask } from "react-icons/bi";
 import { myTasks } from "../endpoints/tasks";
 import { showMyTasks, showModal } from "../stores/boardStore";
 import WebSocketClient from "./websocket";
@@ -17,11 +16,12 @@ import { showNotificationsPainel} from "../stores/boardStore";
 
 import {notificationStore} from '../stores/NotificationStore';
 import {getNotificationsUnRead} from '../endpoints/messages';
+import { DiScrum } from "react-icons/di";
 
 
 function SideMenu() {
   //Obtem o tipo de utilizador da store
-  const { setRole } = userStore();
+  const { role, setRole } = userStore();
 
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
@@ -31,7 +31,6 @@ function SideMenu() {
   //Obtem o estado de ativação do filtro
   const { setFilterOn } = showModal();
 
-  const {showNotifications, setShowNotifications} = showNotificationsPainel();
 
   //Estado para guardar os dados do utilizador
   const [userData, setUserData] = useState({});
@@ -43,10 +42,9 @@ function SideMenu() {
   //Obtem a linguagem de exibição da página
   const locale = userStore((state) => state.locale);
  
-  const { clearNotifications, setNotifications } = notificationStore();
-  const notifications = notificationStore((state) => state.notifications);
+  const { setNotifications } = notificationStore();
   WebSocketClient();
-  console.log(notifications);
+
 
   // Efeito para buscar os dados do usuário ao montar o componente
   useEffect(() => {
@@ -58,7 +56,7 @@ function SideMenu() {
 
         //Quando cria o componente vai buscar a lista de mensagens não lidas do utilizador e coloca-as na store
         const unreadNotifications = await getNotificationsUnRead(tokenUser);
-        console.log(unreadNotifications);
+       
 
         setNotifications(unreadNotifications);
         
@@ -67,7 +65,7 @@ function SideMenu() {
       }
     }
     fetchData();
-  }, [tokenUser, setRole]);
+  }, [tokenUser, setRole, setNotifications]);
 
 
   //Função para navegar para a página de edição de perfil
@@ -77,12 +75,10 @@ function SideMenu() {
     setShowUserTasks(false);
   };
 
-  //Função para navegar para a página principal
-  const homeclick = () => {
-    setShowUserTasks(false);
-    setFilterOn(false);
+  const homeClick = () => {
     navigate("/principalPage");
   };
+
 
   //Função para consultar apenas as tarefas do próprio utilizador
   const handleMyTaks = async (tokenUser) => {
@@ -124,23 +120,21 @@ function SideMenu() {
                 <div className="menuPO">
                  
                   <ul className="menu_list">
-                    <li className="item_PO" onClick={homeclick}>
-                      <HiHome />
-                      <FormattedMessage id="home">
-                        {(message) => <span>{message}</span>}
-                      </FormattedMessage>
-                    </li>
+                    
                     <li className="item_PO" id="profile" onClick={handleClick}>
                       <RiEdit2Fill /> <FormattedMessage id="myProfile">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage>
+                    </li>
+                    <li className="item_PO" id="profile" onClick={homeClick}>
+                      <DiScrum />  Srum Board
                     </li>
 
                     <li
                       className="item_PO"
                       onClick={() => handleMyTaks(tokenUser)}
                     >
-                      <MdTask /> <FormattedMessage id="myTasks">
+                      <BiTask /> <FormattedMessage id="myTasks">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage>
                     </li>

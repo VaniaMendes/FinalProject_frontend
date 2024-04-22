@@ -33,11 +33,8 @@ function UserTable() {
   // Estado para armazenar a última lista de usuários encontrada
 const [lastUsers, setLastUsers] = useState([]);
 
-  //Obtém e configura os estados do modal
-  const { showNewUserModal, setShowNewUserModal } = showModal();
-  const { setShowModalEditUser } = showModal();
 
-  const { showUsersTable } = updateUsersTable();
+  const { setShowModalEditUser } = showModal();
 
   const navigate = useNavigate();
   //Vai buscar o role guardado na userStore quando o user faz login
@@ -51,7 +48,7 @@ const [lastUsers, setLastUsers] = useState([]);
       setUsers(users);
     };
     fetchData();
-  }, [tokenUser, showUsersTable]);
+  }, [tokenUser]);
 
   //Funçao para editar um utilizador
   const handleEdit = async (username) => {
@@ -62,7 +59,6 @@ const [lastUsers, setLastUsers] = useState([]);
 
   //Função para abrir o modal de criação de novo utilizador
   const openModal = () => {
-    setShowNewUserModal(true);
     navigate("/register");
   };
 
@@ -280,9 +276,6 @@ const handleFilterName = async (tokenUser, prefix) => {
           </tbody>
         </table>
       </div>
-      {/* Renderiza os modais de edição e adição do utilizador */}
-
-      {showNewUserModal && <NewUser />}
       </IntlProvider>
     </div>
   );

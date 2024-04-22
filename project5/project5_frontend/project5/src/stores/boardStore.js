@@ -1,19 +1,6 @@
 import { create } from 'zustand';
 
 
-
-//controla o aparecimento das tabelas na pagina do scrum master
-export const tables = create((set) => ({
-    showUserTable: true,
-    showCategoriesTable: false,
-    showInactiveUsersTable: false,
-    showInativeTasksTable:false,
-    setShowUserTable: (value) => set({ showUserTable: value }),
-    setShowCategoriesTable: (value) => set({ showCategoriesTable: value }),
-    setShowInactiveUsersTable: (value) => set({ showInactiveUsersTable: value }),
-    setInativeTasksTable: (value) => set({ showInativeTasksTable: value}),
-}));
-
 //Controla o aparecimento dos modals
 export const showModal = create((set) => ({
     showModalNewCategory: false,

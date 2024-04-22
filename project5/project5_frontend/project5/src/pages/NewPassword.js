@@ -21,7 +21,6 @@ function NewPassword(){
       //Obtem a linguagem de exibição da página
    const locale = userStore((state) => state.locale);
 
-
     const[password1, setPassword1] = useState(null);
     const[password2, setPassword2] = useState(null);
   
@@ -29,7 +28,7 @@ function NewPassword(){
     useEffect(() => {
         const email1 = queryParams.email; 
         setEmail(email1); 
-    }, [location.search]);
+    }, [location.search, queryParams.email]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

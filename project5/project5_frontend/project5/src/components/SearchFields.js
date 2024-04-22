@@ -88,7 +88,7 @@ return (
                <option value="" disabled><FormattedMessage id="filterByCategory">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></option>
-                    {categories.map((category, index) => (
+                    {categories && categories.map((category, index) => (
                         <option key={index} value={category.idCategory}>{category.title}</option>
                     ))}
                    
@@ -97,7 +97,7 @@ return (
                <option value="" disabled><FormattedMessage id="filterByUser">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></option>
-                    {users.map((user, index) => (
+                    {users && users.map((user, index) => (
                         <option key={index} value={user.username}>{user.firstName}</option>
                     ))}
                

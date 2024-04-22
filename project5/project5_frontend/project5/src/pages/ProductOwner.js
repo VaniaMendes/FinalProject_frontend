@@ -10,6 +10,7 @@ import InativeTasksTable from '../components/InativeTasksTable';
 import {userStore} from '../stores/UserStore';
 import MenuScrum from '../components/MenuScrum';
 import { useNavigate } from "react-router-dom";
+import { useEffect } from 'react';
 
 
 function ProductOwner(){
@@ -18,16 +19,12 @@ function ProductOwner(){
   const role = getRole();
 
    //Obtem o token da store
-   const tokenObject = userStore((state) => state.token);
-   const tokenUser = tokenObject.token;
+   
    const navigate = useNavigate();
- 
-   if(tokenUser===undefined){
-     navigate("/authentication");
-     return null;
-     
-   }
-  
+   const tokenUser = userStore((state) => state.token.token);
+
+
+
   return (
     <div>
       {(role === "scrum_master" || role==="developer") ? (

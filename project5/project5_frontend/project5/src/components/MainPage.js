@@ -13,13 +13,17 @@ import {useNavigate} from 'react-router-dom';
 import {logout} from '../endpoints/users';
 import { NotificationManager } from "react-notifications";
 import {cleanBoardStore } from "../stores/boardStore";
+import { HiHome } from "react-icons/hi2";
+import { MdOutlineAccessTimeFilled } from "react-icons/md";
 
 function HomePage() {
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
 
-  const [userLogged, setUserLogged] = useState("");
+
+
+   const [showTimerSettings, setShowTimerSettings] = useState(false);
   
 
   const navigate = useNavigate();
@@ -82,6 +86,17 @@ function HomePage() {
     }
   };
 
+    //Função para navegar para a página principal
+    const homeclick = () => {
+
+      navigate("/principalPage");
+    };
+
+    const toggleTimerSettings = () => {
+      setShowTimerSettings(!showTimerSettings);
+    };
+  
+
   console.log(showNotifications);
 
   return (
@@ -98,14 +113,18 @@ function HomePage() {
           >
             <IoNotifications />
           </div>
+          <div className = "home_button" onClick={homeclick}><HiHome/></div>
           <div className="logout_buttoon" title= "Logout" onClick={logoutClick}>
             <FaPowerOff />
+           
           </div>
+          <div className="timer_button" onClick={toggleTimerSettings}><MdOutlineAccessTimeFilled/></div>
           </>
           )}
           <div className="location">
             <Language />
           </div>
+          
           <div className="notification-icon">
             {notifications && notifications.length > 0 && (
               <div
@@ -126,6 +145,33 @@ function HomePage() {
             &nbsp;AgileUp
           </h1>
         </header>
+
+        {showTimerSettings && (
+        <div className="timer_settings">
+          <div className="timer_settings_title">
+            <FormattedMessage id="timerSettings">
+              {(message) => <span>{message}</span>}
+            </FormattedMessage>
+          </div>
+          <div className="timer_settings_body">
+            <div className="timer_settings_option">
+              <FormattedMessage id="timerPomodoro">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage>
+            </div>
+            <div className="timer_settings_option">
+              <FormattedMessage id="timerShortBreak">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage>
+            </div>
+            <div className="timer_settings_option">
+              <FormattedMessage id="timerLongBreak">
+                {(message) => <span>{message}</span>}
+              </FormattedMessage>
+            </div>
+          </div>
+        </div>
+        )}
 
         <div className="footer">
           <div>

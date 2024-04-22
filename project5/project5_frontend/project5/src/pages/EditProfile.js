@@ -14,20 +14,13 @@ import { useEffect } from "react";
 
 function EditProfilePage(){
 
-       //Obtem o token da store
-  const tokenObject = userStore((state) => state.token);
-  const tokenUser = tokenObject.token;
+  const tokenUser = localStorage.getItem("tokenUser");
     const { getRole } = userStore();
 
     const navigate = useNavigate();
     const role = getRole();
 
 
-    useEffect(() => {
-      if (!tokenUser) {
-          navigate("/authentication");
-      }
-  }, [tokenUser, navigate]);
   
             
     return(

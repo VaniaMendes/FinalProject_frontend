@@ -5,7 +5,7 @@ import { NotificationManager } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 import {  getUserByUsername} from "../endpoints/users";
 import { updateProfileByPO } from "../endpoints/users";
-import { updateUsersTable} from '../stores/boardStore';
+import { updateUsersTable, showMessages} from '../stores/boardStore';
 import {useNavigate} from 'react-router-dom';
 import ButtonsForProfile from "./buttonsForProfile";
 import { useParams } from "react-router-dom";
@@ -35,6 +35,9 @@ function EditProfileByPO(){
 
     //Estado para aramzenar as informações do user a ser editado
     const [userEditPO, setUserEditPO] = useState(null);
+
+        //Estado para mostrar o comoponente do chat
+        const { showMessageChat, setShowMessageChat } = showMessages();
 
     
     //Estado para aramzenar as alteraçóes feitas nos campos de edição
@@ -91,7 +94,7 @@ function EditProfileByPO(){
             if(result === 200){
                 NotificationManager.success("User edited successfully", "", 1000);
 
-              navigate("/productOwner");
+              navigate("/activeUsers");
                setShowUsersTable(!showUsersTable);
             }else{
                 NotificationManager.warning(result, "", 1000);
@@ -101,7 +104,7 @@ function EditProfileByPO(){
 
         //Função para voltar quando clicamos no botao BACK - coloca a visibilidade do modal a false
         const handleBack = ()=>{
-         navigate("/productOwner");
+         navigate("/activeUsers");
       
         }
 
@@ -109,8 +112,9 @@ function EditProfileByPO(){
     return(
     
        <div>
+         
         <IntlProvider locale={locale} messages={languages[locale]}>
-        <div className="edit_container1">
+        <div className={`edit_container1 ${showMessageChat ? 'edit-container-moved' : 'edit_container1'}`}>
         <div className="edit_photo">
            <img src={userEditPO?.imgURL} id="user_photo" alt="User photo" />
            <p id="username_edit">{userEditPO?.username}</p>

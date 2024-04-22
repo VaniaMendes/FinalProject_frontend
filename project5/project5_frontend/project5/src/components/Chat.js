@@ -12,10 +12,13 @@ import { IntlProvider, FormattedMessage } from "react-intl";
 import { IoEye } from "react-icons/io5";
 
 
+
 function Chat() {
   // Obtém o token do user
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
+
 
   //Obtem o username guardado da store do user ao qual vamos alterar o perfil
   const { username } = useParams();

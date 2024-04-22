@@ -7,7 +7,6 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Routes, Route } from'react-router-dom';
 import Register from './pages/Register';
 import PrincipalPage from './pages/PrincipalPage';
-import ProductOwner from './pages/ProductOwner';
 import EditProfile from './pages/EditProfile';
 import { NotificationContainer } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
@@ -17,7 +16,10 @@ import NewPassword from './pages/NewPassword';
 import UserProfile from './pages/UserProfile';
 import Dashboard from './pages/Dashboard';
 import Authentication from './pages/AuthenticationRequired';
-
+import ActiveUsers from './pages/ActiveUsers';
+import CategoriesPage from './pages/Categories';
+import DeletedTasks from './pages/DeletedTasks';
+import InativeUsersPage from './pages/InativeUsers';
 
 
 
@@ -30,7 +32,7 @@ root.render(
       <Route path= "/login" index element={<Login/>} />
       <Route path="/register" element={<Register/>} />
       <Route path="/principalPage" element = {<PrincipalPage/>}/>
-      <Route path="/productOwner" element = {<ProductOwner/>}/>
+
       <Route path = "/myProfile" element = {<EditProfile/>}/>
       <Route path = "/MyTasks" element = {<PrincipalPage/>}/>
       <Route path="/confirmationAccount" element = {<EmailConfirmation/>}/>
@@ -40,6 +42,10 @@ root.render(
 
       <Route path="/profile/:username" element={<UserProfile />} />
       <Route path = "/authentication" element={<Authentication />} />
+      <Route path="/activeUsers" element={<ActiveUsers />} />
+      <Route path="/categories" element={<CategoriesPage />} />
+      <Route path="/deletedTasks" element={<DeletedTasks />} />
+      <Route path ="/inactiveUsers" element={<InativeUsersPage />} />
     
 
       </Routes>

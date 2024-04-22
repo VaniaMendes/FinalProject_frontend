@@ -28,6 +28,8 @@ export const userStore = create(
             setTaskIdForEdit: (taskIdForEdit) => set({ taskIdForEdit }), 
             getTaskIdForEdit: () => userStore.getState().taskIdForEdit,
 
+
+            //Esta lista de tarefa é guardada aqui porque esta em componentes dieferentes, ou seja é criada no SeacrhFields e apresentada no ScrumBoard
             filteredTasks:[],
             setFilteredTasks: (filteredTasks) => set({ filteredTasks }),
             getFilteredTasks: () => userStore.getState().filteredTasks,
@@ -36,8 +38,7 @@ export const userStore = create(
             setMyTasks: (myTasks) => set({ myTasks }),
             getMytasks: () => userStore.getState().myTasks,
     
-        
-
+    
             
             locale: "en", 
             updateLocale : (locale) => set({locale}) 
@@ -46,7 +47,7 @@ export const userStore = create(
         }),
         {
             name: 'mystore',
-            storage: createJSONStorage(() => localStorage)
+            storage: createJSONStorage(() => sessionStorage)
         }
     )
 );

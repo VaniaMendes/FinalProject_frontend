@@ -4,7 +4,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { userStore } from "../stores/UserStore";
 import "../format/register.css";
 import { NotificationManager } from "react-notifications";
-import { showModal, updateUsersTable } from "../stores/boardStore";
+import { showModal } from "../stores/boardStore";
 import { useNavigate } from "react-router-dom";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
@@ -23,10 +23,7 @@ function NewUser() {
   const { getRole } = userStore();
   const role = getRole();
 
-  //Estados para controlar a exibição do modal de newUser
-  const showNewUserModal = showModal((state) => state.showNewUserModal);
-  const setShowNewUserModal = showModal((state) => state.setShowNewUserModal);
-
+  
   //Estados para armazenar os dados do novo utilizador
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -36,16 +33,11 @@ function NewUser() {
   const [imgURL, setImageURL] = useState("");
   const [typeOfUser, setTypeOfUser] = useState("");
 
-  //Obtem o estado para exibir a tabela de utilizadores
-  const { showUsersTable, setShowUsersTable } = updateUsersTable();
+
 
   //Função para fechar o modal
   const closeModal = () => {
-    setShowNewUserModal(false);
-    navigate("/productOwner");
-    if (role !== "product_owner") {
-      navigate("/login");
-    }
+    navigate("/activeUsers");
   };
 
   //Objeto com os dados do novo utilizador
@@ -93,31 +85,17 @@ function NewUser() {
       return;
     }
 
-    if (role === "product_owner") {
+
       const result = await registerUserByPO(tokenUser, newUser);
       if (result === 200) {
         NotificationManager.success("New User successfully created", "", 800);
-        setShowNewUserModal(false);
-        setShowUsersTable(true);
-        navigate("/productOwner");
+        
+        navigate("/activeUsers");
       } else {
         NotificationManager.warning(result, "", 800);
       }
-    } else {
-      //Logica para registo de um utilizador inicial
-
-      const result = await registerUser(newUser);
-      if (result === true) {
-        NotificationManager.success(
-          "Please verify your email account",
-          "",
-          800
-        );
-        navigate("/login");
-      } else {
-        NotificationManager.warning(result, "", 800);
-      }
-    }
+   
+    
   };
 
   const isValidEmail = (email) => {
@@ -135,7 +113,7 @@ function NewUser() {
   return (
     <IntlProvider locale={locale} messages={languages[locale]}>
       <div className="modal_container">
-        {showNewUserModal && (
+      
           <div className="form_register">
             <form className="registerPO" id="form_register">
               <h2 className="register-header">
@@ -308,8 +286,8 @@ function NewUser() {
               </div>
             </form>
           </div>
-        )}
-        ;
+      
+        
       </div>
     </IntlProvider>
   );

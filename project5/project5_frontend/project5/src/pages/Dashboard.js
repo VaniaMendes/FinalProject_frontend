@@ -40,10 +40,8 @@ function Dashboard() {
 
    
    useEffect(() => {
-    // Verifica se o token é nulo e redireciona para a página de autenticação
-    if(tokenUser===undefined){
-      navigate("/authentication");
-    } else {
+    
+
       const fetchData = async () => {
         try {
           const result = await getDashboard(tokenUser);
@@ -74,29 +72,59 @@ function Dashboard() {
       };
   
       fetchData();
-    }
+    
   }, [tokenUser, navigate]);
 
-
   useEffect(() => {
-    const WS_URL = "ws://localhost:8080/project_backend/websocket/updateTask/";
+    const WS_URL = "ws://localhost:8080/project_backend/websocket/dashboard/";
     const websocket = new WebSocket(WS_URL + tokenUser);
     websocket.onopen = () => {
-      console.log("WebSocket connection for tasks is open");
+      console.log("WebSocket connection for dashboard is open");
 
     };
 
     websocket.onmessage = (event) => {
-      const updatedData = JSON.parse(event.data);
-      console.log("A new message is received!");
-      console.log(updatedData);
+      const newDashboardData = JSON.parse(event.data);
+      console.log("A new dashboard is received!");
 
-      setData(updatedData);
+      if(newDashboardData){
+      setData(newDashboardData);
+
+      // Transform the new data and update the states
+    const userByTimeData = newDashboardData.countUsersByRegistrationDate
+    ? Object.entries(newDashboardData.countUsersByRegistrationDate).map(
+        ([date, users]) => ({ date, users })
+      )
+    : [];
+  setUserByTime(userByTimeData);
+
+  const tasksConcluedByTimeData = newDashboardData.countTaksByConclusionDate
+    ? Object.entries(newDashboardData.countTaksByConclusionDate).map(
+        ([date, tasks]) => ({ date, tasks })
+      )
+    : [];
+  setTasksConcluedByTime(tasksConcluedByTimeData);
+
+  let tasksByStateData = [];
+  if (newDashboardData.countTasksByState) {
+    tasksByStateData = Object.entries(newDashboardData.countTasksByState).map(
+      ([state, tasks]) => ({ state, tasks })
+    );
+  }
+  setTasksByState(tasksByStateData);
+
+      }
+
+  console.log(newDashboardData);
     
+    };
+    websocket.onclose = () => {
+      console.log("WebSocket connection for dashboard is closed");
     };
     
   }, [tokenUser]);
-  
+
+
 
   const COLORS = ["#0088FE", "#00C49F", "#FF8042"];
 

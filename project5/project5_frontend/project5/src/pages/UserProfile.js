@@ -16,17 +16,7 @@ function UserProfile(){
 
     const { getRole } = userStore();
   const role = getRole();
-  
-    //Obtem o token da store
-  const tokenObject = userStore((state) => state.token);
-  const tokenUser = tokenObject.token;
- 
-
-  useEffect(() => {
-    if (!tokenUser) {
-        navigate("/authentication");
-    }
-}, [tokenUser, navigate]);
+  const tokenUser = userStore((state) => state.token.token);
 
             
     return(

@@ -20,27 +20,16 @@ function MenuScrum(){
   const {  getRole } = userStore();
   const role = getRole();
    const navigate = useNavigate();
-  
 
-   //Obtem os estado para exibir as tabelas da store
-    const { setShowUserTable, setShowCategoriesTable, setShowInactiveUsersTable, setInativeTasksTable } = tables();
 
     // Função para lidar com a exibição da tabela de utilizadores
     const handleShowUserTable = () => {
-       setShowUserTable(true);
-       setShowCategoriesTable(false);
-       setShowInactiveUsersTable(false);
-       setInativeTasksTable(false);
-       navigate('/productOwner');
+       navigate('/activeUsers');
     }
 
     // Função para lidar com a exibição da tabela de tarefas inativas
     const handleInativeTasks = () => {
-        setShowInactiveUsersTable(false);
-        setShowUserTable(false);
-        setShowCategoriesTable(false);
-        setInativeTasksTable(true);
-        navigate('/productOwner');
+        navigate('/deletedTasks');
     }
   
 return(
