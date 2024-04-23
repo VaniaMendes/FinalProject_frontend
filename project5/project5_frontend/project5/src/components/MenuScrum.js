@@ -2,7 +2,6 @@
 
 import { FaUsers } from "react-icons/fa6";
 import { useNavigate  } from 'react-router-dom';
-import {tables} from '../stores/boardStore';
 import { MdTask } from "react-icons/md";
 import { userStore } from "../stores/UserStore";
 import languages from "../translations";

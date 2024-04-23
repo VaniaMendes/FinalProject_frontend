@@ -78,7 +78,6 @@ const handleResetFilter = () => {
     setFilterOn(false);//Desativa o estado para exibir a lista filtrada
 }
 
-
 return (
  
  <div className="filter">

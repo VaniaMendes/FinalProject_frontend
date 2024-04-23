@@ -62,6 +62,9 @@ function Chat() {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [tokenUser, username]);
   
     
   useEffect(() => {
@@ -69,17 +72,12 @@ function Chat() {
     const websocket = new WebSocket(WS_URL + tokenUser);
     websocket.onopen = () => {
       console.log("WebSocket connection for chat messages is open");
-
-        // Após a conexão WebSocket ser aberta, chama a função fetchData
-        fetchData();
       
     };
 
     websocket.onmessage = (event) => {
       const message = JSON.parse(event.data);
-      console.log("A new message is received!");
-      console.log(message);
-
+      
       // Formatar o timestamp para ser adicionado ao chat
 const [year, month, day, hour, minute] = message.timestamp;
 const date = new Date(year, month - 1, day, hour, minute);
@@ -95,7 +93,7 @@ message.timestamp = date.toLocaleDateString() + ' ' + date.toLocaleTimeString([]
     };
 
    
-}, [tokenUser, username]);
+}, [tokenUser, username, messages]);
 
   // Função para lidar com a alteração do input da mensagem
   const handleInputChange = (event) => {

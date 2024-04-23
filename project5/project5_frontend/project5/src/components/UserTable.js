@@ -4,15 +4,15 @@ import { MdAutoDelete } from "react-icons/md";
 import { userStore } from "../stores/UserStore";
 import "../format/tables.css";
 import { deleteUser, getUsersByName, getUsersByEmail } from "../endpoints/users";
-import NewUser from "./NewUser";
 import { NotificationManager } from "react-notifications";
 import { getActiveUsers } from "../endpoints/users";
-import { showModal, updateUsersTable } from "../stores/boardStore";
+import { showModal } from "../stores/boardStore";
 import { deleteUserTasks } from "../endpoints/tasks";
 import ButtonsForScrum from "./buttonsForScrum";
 import { useNavigate } from "react-router-dom";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
+import MediaType from "./media";
 
 function UserTable() {
   //Este componente exibe a tabela de utilizadores ativos
@@ -20,6 +20,13 @@ function UserTable() {
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
+  //Obtem o tipo de media da store
+  const mediatype = userStore((state) => state.mediatype); 
+  MediaType();
+
+
+  const {showModalEditUser, setShowModalEditUser} = showModal();
 
    //Obtem a linguagem de exibição da página
    const locale = userStore((state) => state.locale);
@@ -34,7 +41,6 @@ function UserTable() {
 const [lastUsers, setLastUsers] = useState([]);
 
 
-  const { setShowModalEditUser } = showModal();
 
   const navigate = useNavigate();
   //Vai buscar o role guardado na userStore quando o user faz login
@@ -201,10 +207,10 @@ const handleFilterName = async (tokenUser, prefix) => {
               <th><FormattedMessage id="email">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></th>
-              <th><FormattedMessage id="phoneNumber">
+              <th className="hideOnMobile"><FormattedMessage id="phoneNumber">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></th>
-              <th><FormattedMessage id="role">
+              <th className="hideOnMobile"><FormattedMessage id="role">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></th>
               {role !== "scrum_master" ? (
@@ -231,8 +237,8 @@ const handleFilterName = async (tokenUser, prefix) => {
                   </td>
                   <td>{user.firstName + "  " + user.lastName}</td>
                   <td>{user.email}</td>
-                  <td>{user.phoneNumber}</td>
-                  <td>
+                  <td className="hideOnMobile">{user.phoneNumber}</td>
+                  <td className="hideOnMobile">
                     {user.typeOfUser === "developer"
                       ? "Developer"
                       : user.typeOfUser === "scrum_master"

@@ -23,7 +23,7 @@ function NewTask() {
 
   //Controla a visibilidade do modal
   const {showNewTask,  setShowNewTask } = showModalNewTask();
-  const {updateTasks, setUpdateTasks} = updateTasksList();
+
 
   //Controla o estado do modo de edit
   const {editTask, setEditTask} = modeEditTask();
@@ -59,6 +59,7 @@ const task={
     const fetchData = async () => {
       const categoriesData = await getAllCategories(tokenUser);
       setCategories(categoriesData);
+      
 
       //Se o modo edição estiver ativo guardar os detalhes da tarefa
       if (editTask && taskIdForEdit) {
@@ -93,6 +94,7 @@ const task={
       
       NotificationManager.success("Task updated successfully", "", 1000);
       setShowNewTask(false);
+      setEditTask(false);
 
       
       }else{
@@ -106,6 +108,8 @@ const task={
       NotificationManager.success("Task added successfully", "", 800);
     
       setShowNewTask(false);
+       // Limpar os estados dos campos do formulário
+  
    
 
     }else{
@@ -120,6 +124,14 @@ const task={
     event.preventDefault();
     setShowNewTask(false);
     setEditTask(false);
+    // Limpar os estados dos campos do formulário
+  setTitle("");
+  setDescription("");
+  setEndDate("");
+  setInitialDate("");
+  setPriority("");
+  setPriorityColor("");
+  setIdCategory("");
   };
 
   //Função para mudar a cor da prioridade

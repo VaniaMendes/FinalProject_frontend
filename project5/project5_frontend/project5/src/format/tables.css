@@ -13,9 +13,18 @@
     
   }
 
+  /* Estilos para telas pequenas (por exemplo, telefones) */
+@media (max-width: 600px) {
+  .users_table th.hideOnMobile,
+  .users_table td.hideOnMobile {
+    display: none;
+  }
+}
+
+
 .table_container{
   position: absolute;
-    top: 50%;
+    top: 51%;
     left: 57%;
     transform: translate(-50%, -50%);
     width: 71%; 

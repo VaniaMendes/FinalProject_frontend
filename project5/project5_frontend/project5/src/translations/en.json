@@ -90,7 +90,10 @@
 "Edit Category": "Edit Category",
 "New Category": "New Category",
 "EnterURofyourimage": "Enter your URL image",
-"notification": "You received a new message from  "
+"notification": "You received a new message from  ",
+"timerSettings": "Define timer session",
+"scrumBoard": "Scrum Board",
+"categoryDeletedSuceffuly": "Category deleted successfully"
 
 
 } 

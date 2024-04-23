@@ -24,8 +24,9 @@ function MyTasksChart() {
 
 const{username} = useParams();
 
-    //Estado para controlar a visibilidade do modal de edição de user
-    const { showModalEditUser } = showModal();
+  //Estado para controlar a visibilidade do modal de edição de user
+  const { showModalEditUser, setShowModalEditUser } = showModal();
+
 
 
   // Estado para armazenar as informações das tarefas do usuário
@@ -65,6 +66,8 @@ const{username} = useParams();
 
   const handleBack = () => {
     setShowTaskChart(false);
+    setShowModalEditUser(false);
+    
   };
 
   let data = [];

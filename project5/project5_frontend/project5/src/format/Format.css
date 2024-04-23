@@ -126,6 +126,7 @@ textarea {
   position:absolute;
   margin-top: 40px;
   border: none;
+  z-index: -10;
 }
 
 #side_menu{
@@ -1583,8 +1584,8 @@ th {
 .filter {
   position: fixed; 
   top: 74px; 
-  left: 700px;
-  width: 500px;
+  left: 600px;
+  width: auto;
   display: inline;
   display: flex;
   align-items: center;
@@ -1866,7 +1867,7 @@ z-index: 9999;
   cursor:pointer;
   z-index: 9999;
   position: fixed;
-  left: 83%;
+  left: 81%;
   top:14px;
   width: 80px;
   height: 40px;
@@ -1962,4 +1963,14 @@ cursor: pointer;
   background-color: #f4f4f4; /* Cor de fundo do chat */
   padding: 20px; /* Espaçamento interno do chat */
   box-sizing: border-box;
+}
+.timer_settings{
+display:fixed;
+top:-2%;
+  left:81%;
+  background-color: var(--white);
+  border-radius: 10px;
+width: 219px;
+  height: 60px;
+  z-index: 1000000000;
 }

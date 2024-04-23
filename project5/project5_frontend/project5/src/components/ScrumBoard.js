@@ -19,7 +19,7 @@ import { updateTaskState } from "../endpoints/tasks";
 import TaskDetails from "./TaskDetails";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
-import WebSocketClient from "./websocket";
+
 
 
 function ScrumBoard() {
@@ -41,6 +41,7 @@ function ScrumBoard() {
   //Obtem o estado para com 2 cliques abrir o modal de detalhes de uma tarefa
   const { showTaskDetails, setShowTaskDetails } = ViewTaskDetails();
 
+
   //Obtem o role do user
   const role = userStore((state) => state.role);
   //Obtem a lista de tarefas filtradas por categoria e/ou username guardado na store
@@ -57,8 +58,7 @@ function ScrumBoard() {
   //Estado para guardar o id da tarefa para editar
   const [taskId, setTaskId] = useState(null);
   //Estado para guardar o estado de edição da tarefa
-  const { editTask, setEditTask } = modeEditTask();
-
+  const { setEditTask } = modeEditTask();
 
   //Função para exibir o modal de nova tarefa
   const handleNewTaskClick = () => {
@@ -82,11 +82,30 @@ function ScrumBoard() {
     }
   };
 
+
+   // Função para apagar temporariamente uma tarefa (passa o estado de ativo para inativo)
+   const handleDeleteTask = async (tokenUser, taskId) => {
+
+    try {
+      const result = await softDeleteTask(tokenUser, taskId);
+
+      if (result === 200) {
+        NotificationManager.success("Task deleted successfully", "", 800);
+  
+       
+      } else {
+        NotificationManager.warning("Error deleting task " + taskId.title);
+      }
+    } catch (error) {
+      console.error("Erro ao excluir a tarefa:", error);
+    }
+  };
+
+
   //Função para obter as tarefas ativas a serem mostradas no scrum_board
   useEffect(() => {
     const fetchData = async () => {
 
-      console.log("renderixou");
       //Se o filtro estiver ativado vai aparecer a lista de tarefas filtradas por categoria e/ou utilizador
       if (filterOn) {
         if (filteredTasks.length > 0) {
@@ -95,6 +114,7 @@ function ScrumBoard() {
           //Se o filtro não estiver ativo serão exibidas todas as tarefas ativas da app
           const tasks = await getActiveTasks(tokenUser);
           setListTasks(tasks);
+          
         }
       } else if (showUserTasks) {
         if (myTasks.length > 0) {
@@ -117,6 +137,8 @@ function ScrumBoard() {
     fetchData();
   }, [tokenUser, filteredTasks, myTasks, filterOn, showUserTasks]);
 
+
+
   useEffect(() => {
     const WS_URL = "ws://localhost:8080/project_backend/websocket/updateTask/";
     const websocket = new WebSocket(WS_URL + tokenUser);
@@ -130,15 +152,29 @@ function ScrumBoard() {
       console.log("A new message is received!");
       console.log(updatedTask);
 
-      setListTasks(prevTasks => prevTasks.map((task) => {
-        if (task.id === updatedTask.id) {
-          return updatedTask;
+  
+      setListTasks(prevTasks => {
+        // Se a tarefa que vier do backend tiver estado ativo false,entao a tarefa será removida da lista
+        if (updatedTask.active===false) {
+          console.log("chegou ao ponto 1");
+          return prevTasks.filter(task => task.id !== updatedTask.id);  
+       
         }
-        return task;
-      }));
+       
+        // Verifica se a tarefa já existe
+        const taskExists = prevTasks.some(task => task.id === updatedTask.id);
+        console.log("chegou ao ponto 2");
+  
+        if (taskExists) {
+          // Se a tarefa existir, substitua-a
+          return prevTasks.map(task => task.id === updatedTask.id ? updatedTask : task);
+        } else {
+          // Se a tarefa não existir, adicione-a à lista
+          return [...prevTasks, updatedTask];
+        }
+      });
     };
-    
-  }, [tokenUser]);
+  }, [listTasks, tokenUser]);
 
   // Função para obter a cor com base na prioridade da tarefa
   function getColorForPriority(priority) {
@@ -153,23 +189,7 @@ function ScrumBoard() {
     }
   }
 
-  // Função para apagar temporariamente uma tarefa (passa o estado de ativo para inativo)
-  const handleDeleteTask = async (tokenUser, taskId) => {
-    try {
-      const result = await softDeleteTask(tokenUser, taskId);
-
-      if (result === 200) {
-        NotificationManager.success("Task deleted successfully", "", 800);
-        const updatedTasks = listTasks.filter((task) => task.id !== taskId);
-        setListTasks(updatedTasks);
-      } else {
-        NotificationManager.warning("Error deleting task " + taskId.title);
-      }
-    } catch (error) {
-      console.error("Erro ao excluir a tarefa:", error);
-    }
-  };
-
+ 
   // Função para ordenar as tarefas
   const sortTasks = (tasks) => {
     return tasks.sort((b, a) => {

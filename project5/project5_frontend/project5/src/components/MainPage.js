@@ -22,6 +22,7 @@ function HomePage() {
   const tokenUser = tokenObject.token;
 
 
+  const [timerValue, setTimerValue] = useState("");
 
    const [showTimerSettings, setShowTimerSettings] = useState(false);
   
@@ -41,7 +42,7 @@ function HomePage() {
       try {
         //Quando cria o componente vai buscar a lista de mensagens não lidas do utilizador e coloca-as na store
         const unreadNotifications = await getNotificationsUnRead(tokenUser);
-        console.log(unreadNotifications);
+      
 
         setNotifications(unreadNotifications);
       } catch (error) {
@@ -58,7 +59,7 @@ function HomePage() {
 
   const handleViewNotifications = () => {
     setShowNotifications(true);
-    console.log("clicou no botao");
+   
   }
 
 
@@ -93,11 +94,13 @@ function HomePage() {
     };
 
     const toggleTimerSettings = () => {
-      setShowTimerSettings(!showTimerSettings);
+      setShowTimerSettings(true);
     };
-  
 
-  console.log(showNotifications);
+    const handleSessionTimeOut = () => {
+      setShowTimerSettings(false);
+    }
+  
 
   return (
     <IntlProvider locale={locale} messages={languages[locale]}>
@@ -118,7 +121,7 @@ function HomePage() {
             <FaPowerOff />
            
           </div>
-          <div className="timer_button" onClick={toggleTimerSettings}><MdOutlineAccessTimeFilled/></div>
+          <div className="timer_button" title= "Time Out" onClick={toggleTimerSettings}><MdOutlineAccessTimeFilled/></div>
           </>
           )}
           <div className="location">
@@ -137,6 +140,22 @@ function HomePage() {
               </div>
             )}
           </div>
+          {/* Html para o div para definir o sessiont time out*/}
+          {showTimerSettings && (
+        <aside className="timer_settings">
+      
+          <div className="timer_settings_title">
+            <FormattedMessage id="timerSettings">
+              {(message) => <span>{message}</span>}
+            </FormattedMessage>
+         
+          <input type="number" min="0" placeholder="Time in minutes" value={timerValue} onChange={(e) =>setTimerValue(e.target.value)}></input>
+          <button type="button" onClick={handleSessionTimeOut}>OK</button>
+          </div>
+      
+        </aside>
+      )}
+   
         </div>
         <div id="aside_color"></div>
         <header>
@@ -146,33 +165,7 @@ function HomePage() {
           </h1>
         </header>
 
-        {showTimerSettings && (
-        <div className="timer_settings">
-          <div className="timer_settings_title">
-            <FormattedMessage id="timerSettings">
-              {(message) => <span>{message}</span>}
-            </FormattedMessage>
-          </div>
-          <div className="timer_settings_body">
-            <div className="timer_settings_option">
-              <FormattedMessage id="timerPomodoro">
-                {(message) => <span>{message}</span>}
-              </FormattedMessage>
-            </div>
-            <div className="timer_settings_option">
-              <FormattedMessage id="timerShortBreak">
-                {(message) => <span>{message}</span>}
-              </FormattedMessage>
-            </div>
-            <div className="timer_settings_option">
-              <FormattedMessage id="timerLongBreak">
-                {(message) => <span>{message}</span>}
-              </FormattedMessage>
-            </div>
-          </div>
-        </div>
-        )}
-
+  
         <div className="footer">
           <div>
             <FormattedMessage id="poweredBy">

@@ -34,10 +34,10 @@ export const userStore = create(
             setFilteredTasks: (filteredTasks) => set({ filteredTasks }),
             getFilteredTasks: () => userStore.getState().filteredTasks,
 
+            //Esta lista de tarefas é quardada porque ele é pedida quando abro a aplicacao no MainMenu e depois é so consultada no ScrumBoard
             myTasks:[],
             setMyTasks: (myTasks) => set({ myTasks }),
             getMytasks: () => userStore.getState().myTasks,
-    
     
             
             locale: "en", 

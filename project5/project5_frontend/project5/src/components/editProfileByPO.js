@@ -5,7 +5,7 @@ import { NotificationManager } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 import {  getUserByUsername} from "../endpoints/users";
 import { updateProfileByPO } from "../endpoints/users";
-import { updateUsersTable, showMessages} from '../stores/boardStore';
+import { showMessages, showModal} from '../stores/boardStore';
 import {useNavigate} from 'react-router-dom';
 import ButtonsForProfile from "./buttonsForProfile";
 import { useParams } from "react-router-dom";
@@ -43,8 +43,8 @@ function EditProfileByPO(){
     //Estado para aramzenar as alteraçóes feitas nos campos de edição
     const [userEdit, setUserEdit] = useState(null);
 
-    //Estado para controlar a visibilidade da tabela de utilizadores
-    const {showUsersTable, setShowUsersTable} = updateUsersTable();
+  //Estado para controlar a visibilidade do modal de edição de user
+  const { showModalEditUser, setShowModalEditUser } = showModal();
 
 
     //Efeito para ir buscar os dados do user a ser editado
@@ -95,7 +95,7 @@ function EditProfileByPO(){
                 NotificationManager.success("User edited successfully", "", 1000);
 
               navigate("/activeUsers");
-               setShowUsersTable(!showUsersTable);
+               setShowMessageChat(false);
             }else{
                 NotificationManager.warning(result, "", 1000);
 
@@ -105,6 +105,8 @@ function EditProfileByPO(){
         //Função para voltar quando clicamos no botao BACK - coloca a visibilidade do modal a false
         const handleBack = ()=>{
          navigate("/activeUsers");
+         setShowMessageChat(false);
+         setShowModalEditUser(false);
       
         }
 

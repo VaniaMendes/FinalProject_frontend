@@ -3,17 +3,14 @@ import { userStore } from "../stores/UserStore";
 import { NotificationManager } from "react-notifications";
 import "react-notifications/lib/notifications.css";
 import { RiEdit2Fill } from "react-icons/ri";
-
 import { getUserByToken } from "../endpoints/users";
 import { useNavigate } from "react-router-dom";
 import { BiTask } from "react-icons/bi";
 import { myTasks } from "../endpoints/tasks";
-import { showMyTasks, showModal } from "../stores/boardStore";
+import { showMyTasks, showModal, showMessages } from "../stores/boardStore";
 import WebSocketClient from "./websocket";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
-import { showNotificationsPainel} from "../stores/boardStore";
-
 import {notificationStore} from '../stores/NotificationStore';
 import {getNotificationsUnRead} from '../endpoints/messages';
 import { DiScrum } from "react-icons/di";
@@ -27,17 +24,23 @@ function SideMenu() {
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
 
+  //Estado para mostrar o comoponente do chat
+  const { setShowMessageChat } = showMessages();
+
 
   //Obtem o estado de ativação do filtro
   const { setFilterOn } = showModal();
+    //Obtem  o estado de exibição das tarefas apenas do utilizador
+    const { setShowUserTasks } = showMyTasks();
 
 
   //Estado para guardar os dados do utilizador
   const [userData, setUserData] = useState({});
   const navigate = useNavigate();
 
-  //Obtem  o estado de exibição das tarefas apenas do utilizador
-  const { setShowUserTasks } = showMyTasks();
+
+
+ 
 
   //Obtem a linguagem de exibição da página
   const locale = userStore((state) => state.locale);
@@ -59,6 +62,7 @@ function SideMenu() {
        
 
         setNotifications(unreadNotifications);
+       
         
       } catch (error) {
         console.log("Error fetching user data:", error);
@@ -73,10 +77,14 @@ function SideMenu() {
     navigate("/myProfile");
     setFilterOn(false);
     setShowUserTasks(false);
+    setShowMessageChat(false);
   };
 
   const homeClick = () => {
     navigate("/principalPage");
+    setFilterOn(false);
+    setShowUserTasks(false);
+    setShowMessageChat(false);
   };
 
 
@@ -96,7 +104,6 @@ function SideMenu() {
   };
 
    
-
   return (
     <div>
       <IntlProvider locale={locale} messages={languages[locale]}>
@@ -104,8 +111,7 @@ function SideMenu() {
           <div id="menu">
             <div className="menu_image" id="user_name">
               <div id="user_info">
-               
-               
+                              
                 <img
                   id="user_img"
                   src={userData && userData.imgURL}
@@ -119,15 +125,18 @@ function SideMenu() {
               <div className="menuSide">
                 <div className="menuPO">
                  
-                  <ul className="menu_list">
+                  <ul className="menu_list">  
                     
+                   
+                    <li className="item_PO" id="profile" onClick={homeClick}><DiScrum />
+                    <FormattedMessage id="scrumBoard">
+                        {(message) => <span>{message}</span>}
+                      </FormattedMessage>
+                    </li>
                     <li className="item_PO" id="profile" onClick={handleClick}>
                       <RiEdit2Fill /> <FormattedMessage id="myProfile">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage>
-                    </li>
-                    <li className="item_PO" id="profile" onClick={homeClick}>
-                      <DiScrum />  Srum Board
                     </li>
 
                     <li
