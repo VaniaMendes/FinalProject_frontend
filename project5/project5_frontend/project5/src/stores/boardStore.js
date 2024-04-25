@@ -96,3 +96,8 @@ export const showNotificationsPainel = create((set) => ({
   showNotifications: false,
   setShowNotifications: (value) => set({ showNotifications: value }),
 }));
+
+export const showMenuForPhone = create((set) => ({
+  showMenu: false,
+  setShowMenu: (value) => set({ showNotifications: value }),
+}));

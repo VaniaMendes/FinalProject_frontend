@@ -24,6 +24,157 @@
   border-top-left-radius: 30px;
   box-shadow: -2.5px -2.5px 2.5px 1px rgb(0, 0, 0);
 }
+.headerscrum{
+  width: 50%;
+}
+#login_body{
+  width: 100%;
+}
+
+
+/*  Ecra para telemoveis  */
+@media screen and (max-width: 768px) {
+  .menuForTablet {
+    display: none;
+  }
+  #body_color {
+    display: none !important;
+  }
+  .menuSide{
+    background-color: #ffffff ;
+    position: absolute;
+    top:190px;
+    width: 300px;
+    height: 500px;
+    z-index: 9999;
+    border-radius: 10px;
+
+    margin-left: 20px;
+  }
+  
+  .menu_list{
+position: absolute;
+top: -250px;
+width: 300px
+
+  }
+
+  
+}
+
+@media screen and (max-width: 768px) {
+
+  .edit_container1{
+    width: 300px !important;
+     z-index: 1000;
+     border-radius: 10px;
+     border: 3px solid black;
+     height: 500px !important;
+     top:47% !important;
+  }
+  #user_photo{
+    width: 50px !important;
+     border-radius: 50%;
+     height: 50px !important;
+  
+  }
+
+     
+       .edit_profile {
+      gap: 0px ;
+   
+  }
+  .buttonsProfile{
+    position: fixed;
+    top: 5%;
+    left: -18%;
+  }
+  .verify-container{
+    position:fixed;
+    top:-2% !important;
+    left:-16% !important;
+    border: 3px solid black;
+    border-radius: 10px;
+    width: 350px !important;
+  }
+  .recharts-default-legend{
+    position: fixed;
+  
+    left: -10%;
+  }
+
+  #scrum_section {
+    flex-direction: column; /* Coloca as colunas uma abaixo da outra */
+    margin-top: 90px !important; /* Remove a margem superior */
+    position: fixed; /* Volta à posição normal no fluxo do documento */
+    left:5%;
+    
+   
+}
+#column1 {
+  margin-left: 5px!important;
+}
+.filter{
+ position: relative !important;
+  top: 120px !important;
+  left:0% !important;
+  display: flex !important;
+}
+.icon-search{
+  color: var(--blue)!important;
+}
+
+#column1 {
+
+    margin-bottom: 5px!important; 
+    margin-top: -100px;
+}
+#side_menu{
+  margin-top: 10px!important;
+}
+.column{
+  margin:20px 10px 0px 10px !important;
+  
+}
+
+#column3{
+  margin-bottom: 100px!important;
+}
+#page-logo{
+  position: relative !important;
+}
+.modal_container{
+  background-color: rgba(255, 255, 255, 0.5)!important;
+  width: 300px !important;
+  max-height: 200px !important;
+}
+
+.descricaoCategoria{
+  top:10%;
+  left:37%!important;
+  width: 300px!important;
+}
+.registerPO{
+  width: 290px!important;
+  height: 350px !important;
+  left: 30%!important;
+}
+#category, #users{
+  width: 150px!important;
+}
+
+
+}
+
+@media screen and (max-width: 1224) {
+  .menuForPhone {
+    display: none !important;
+  }
+
+
+}
+
+
 
 #aside_color {
   position: fixed;
@@ -124,7 +275,7 @@ textarea {
 #scrum_section {
   display: flex;
   position:absolute;
-  margin-top: 40px;
+  top: 20%;
   border: none;
   z-index: -10;
 }
@@ -136,6 +287,10 @@ textarea {
   border: none;
 
 }
+
+
+
+
 
 aside {
   position: fixed;
@@ -171,7 +326,7 @@ img {
 }
 
 .column {
-  margin: 130px 10px 0px 10px;
+  margin: 30px 10px 0px 10px;
   flex-shrink: 0;
   width: 330px;
   height: 552px;
@@ -1147,7 +1302,7 @@ label {
   margin-top:20px;
   position: absolute;
   top:28%;
-  left: 55%;
+  left: 54%;
   transform: translate(-50%, -50%);
   width: 42%;
   height: 150px;

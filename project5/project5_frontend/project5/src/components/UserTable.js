@@ -207,10 +207,10 @@ const handleFilterName = async (tokenUser, prefix) => {
               <th><FormattedMessage id="email">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></th>
-              <th className="hideOnMobile"><FormattedMessage id="phoneNumber">
+              <th><FormattedMessage id="phoneNumber">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></th>
-              <th className="hideOnMobile"><FormattedMessage id="role">
+              <th><FormattedMessage id="role">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></th>
               {role !== "scrum_master" ? (
@@ -237,8 +237,8 @@ const handleFilterName = async (tokenUser, prefix) => {
                   </td>
                   <td>{user.firstName + "  " + user.lastName}</td>
                   <td>{user.email}</td>
-                  <td className="hideOnMobile">{user.phoneNumber}</td>
-                  <td className="hideOnMobile">
+                  <td >{user.phoneNumber}</td>
+                  <td >
                     {user.typeOfUser === "developer"
                       ? "Developer"
                       : user.typeOfUser === "scrum_master"

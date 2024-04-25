@@ -13,13 +13,7 @@
     
   }
 
-  /* Estilos para telas pequenas (por exemplo, telefones) */
-@media (max-width: 600px) {
-  .users_table th.hideOnMobile,
-  .users_table td.hideOnMobile {
-    display: none;
-  }
-}
+
 
 
 .table_container{
@@ -30,14 +24,44 @@
     width: 71%; 
     height: auto; 
     max-height: 600px;
-    max-height: 600px;
     background-color: var(--white);
     border-radius: 15px;
     overflow-y: auto;
     align-items: center;
-
-    
+       
 }
+
+/* Media query para dispositivos com largura máxima de 768px (tablets e dispositivos móveis em modo paisagem) */
+@media screen and (max-width: 768px) {
+  /* Oculta a coluna de número de telefone */
+  .table_container {
+    top: 54%;
+    margin-bottom: -10px;
+    font-size: 12px;
+    max-height: 600px;
+    width: 80%;
+    margin-left: -20px;
+  }
+  .titleUser1, .titleUser2, .titleUser3, .titleUser4, .titleUser5, .titleUser{
+    font-size: 14px!important;
+  }
+  .task_icon {
+    width: 20px;
+    height: 20px;
+}
+#btn_user{
+  font-size: 12px;
+}
+#login_form {
+  left:200px;
+}
+.column{
+  border: 3px solid black;
+  top: 100px !important;;
+  left:-10%;
+}
+}
+
   
   .image{
     width: 100px;
@@ -187,3 +211,5 @@
   width: 10px;
   border-radius: 15%;
 }
+
+

@@ -186,7 +186,7 @@ function Categories() {
             </div>
           </div>
         )}
-        ;
+        
       </div>
     </IntlProvider>
   );

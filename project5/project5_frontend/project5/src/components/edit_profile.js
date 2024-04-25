@@ -5,7 +5,6 @@ import { NotificationManager } from "react-notifications";
 import 'react-notifications/lib/notifications.css';
 import { useNavigate  } from 'react-router-dom';
 import { getUserByToken } from "../endpoints/users";
-import MenuProductOwner from "./MenuProductOwner";
 import ButtonsForProfile from "./buttonsForProfile";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
@@ -122,12 +121,11 @@ function EditProfile(){
     return(
        <div> 
         <IntlProvider locale={locale} messages={languages[locale]}>
-            {role === 'product_owner' && <MenuProductOwner />}
         <div className="edit_container1">
         <div className="edit_photo">
            <img src={userLogged?.imgURL} id="user_photo" alt="Descrição da imagem" />
            <p id="username_edit">{userLogged?.username}</p>
-           <ButtonsForProfile/>
+           <div className="buttonsProfile"><ButtonsForProfile/></div>
         </div>
         <div className="edit_profile">
             

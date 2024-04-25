@@ -4,11 +4,9 @@ import SideMenu from "../components/SideMenu";
 import 'react-notifications/lib/notifications.css';
 import EditProfileByPO from "../components/editProfileByPO";
 import React from "react";
-import MenuProductOwner from "../components/MenuProductOwner";
 import {useNavigate} from 'react-router-dom';
 import {userStore} from '../stores/UserStore';
-import MenuScrum from "../components/MenuScrum";
-import { showModal } from "../stores/boardStore";
+
 
 
 function UserProfile(){
@@ -28,7 +26,7 @@ function UserProfile(){
         <MainPage/>
         <SideMenu/>
         <EditProfileByPO/>
-        {role === "scrum_master" || role === "developer" ? <MenuScrum /> : <MenuProductOwner />}
+       
         
         </div>
              

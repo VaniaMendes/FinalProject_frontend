@@ -1,10 +1,10 @@
 
 import MainPage from '../components/MainPage';
-import MenuProductOwner from '../components/MenuProductOwner';
+
 import SideMenu from '../components/SideMenu';
 import Categories from '../components/CategoriesTable';
 import {userStore} from '../stores/UserStore';
-import MenuScrum from '../components/MenuScrum';
+
 
 
 
@@ -14,23 +14,11 @@ function CategoriesPage(){
 
   return (
     <div>
-      {(role === "scrum_master" || role==="developer") ? (
-        <>
-          <MenuScrum />
+     
           <MainPage/>
           <SideMenu/>
           <Categories/>
-         
-        </>
-      ) : (
-        <>
        
-          <MainPage/>
-          <SideMenu/>
-          <MenuProductOwner/>
-          <Categories/>
-        </>
-      )}
     </div>
   );
   }

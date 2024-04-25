@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MainPage from "../components/MainPage";
 import SideMenu from "../components/SideMenu";
-import MenuProductOwner from "../components/MenuProductOwner";
 import "../format/dashboard.css";
 import { getDashboard } from "../endpoints/users";
 import {
@@ -133,7 +132,7 @@ function Dashboard() {
       <IntlProvider locale={locale} messages={languages[locale]}>
       <MainPage />
       <SideMenu />
-      <MenuProductOwner />
+  
       <div className="dashboard">
         <div className="dashboard_container1">
         <text className = "title_dashboard"  x={250} y={20} textAnchor="middle" fontSize="20px"><FormattedMessage id="registerUsersByTime">
@@ -215,8 +214,9 @@ function Dashboard() {
               ))}
             </Pie>
             <Tooltip />
-            <Legend
+            <Legend className="legendsForPie"
                 layout="vertical"
+                
                 align="right"
                 verticalAlign="middle"
                 formatter={(value, entry, index) => {
@@ -263,7 +263,7 @@ function Dashboard() {
                       </FormattedMessage></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody className="categories_table">
     {data.mostFrequentCategories && Object.entries(data.mostFrequentCategories).map(([category, taskCount]) => (
         <tr key={category}>
           <td>{category}</td>

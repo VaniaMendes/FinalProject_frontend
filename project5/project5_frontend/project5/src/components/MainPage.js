@@ -4,7 +4,7 @@ import { IntlProvider, FormattedMessage } from "react-intl";
 import { userStore } from "../stores/UserStore";
 import { IoNotifications } from "react-icons/io5";
 import { notificationStore } from "../stores/NotificationStore";
-import { showNotificationsPainel } from "../stores/boardStore";
+import { showNotificationsPainel, showMenuForPhone } from "../stores/boardStore";
 import { getNotificationsUnRead } from "../endpoints/messages";
 import Notification from "./Notification";
 import Language from "./language";
@@ -15,6 +15,7 @@ import { NotificationManager } from "react-notifications";
 import {cleanBoardStore } from "../stores/boardStore";
 import { HiHome } from "react-icons/hi2";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
+import Menu from "./Menu";
 
 function HomePage() {
   //Obtem o token da store
@@ -100,7 +101,13 @@ function HomePage() {
     const handleSessionTimeOut = () => {
       setShowTimerSettings(false);
     }
-  
+
+    const [showMenu, setShowMenu] = useState(false);
+
+  const handleMenuToggle = () => {
+    setShowMenu(!showMenu);
+  }
+   
 
   return (
     <IntlProvider locale={locale} messages={languages[locale]}>
@@ -160,12 +167,14 @@ function HomePage() {
         <div id="aside_color"></div>
         <header>
           <h1 id="page-logo">
-            <img src={"/scrum_image.png"} id="scrum_img" alt="App logo" />
+            <img src={"/scrum_image.png"} id="scrum_img" alt="App logo" onClick={handleMenuToggle}/>
             &nbsp;AgileUp
+            
           </h1>
+          <div className="menuForPhone">{showMenu && <Menu/>}</div>
+      
         </header>
-
-  
+         
         <div className="footer">
           <div>
             <FormattedMessage id="poweredBy">
