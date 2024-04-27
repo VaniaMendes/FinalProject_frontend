@@ -10,16 +10,14 @@ import {userStore} from '../stores/UserStore';
 
 
 function UserProfile(){
+  const {role} = userStore();
 
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  if(role===null){
+    navigate('/authentication');
   
-  
-    const { getRole } = userStore();
-  const role = getRole();
-  const tokenUser = userStore((state) => state.token.token);
-
-            
+  }
     return(
        <div> 
         

@@ -12,14 +12,16 @@ import {useNavigate} from 'react-router-dom';
 
 function EditProfilePage(){
 
-  const tokenUser = localStorage.getItem("tokenUser");
     const { getRole } = userStore();
 
     const navigate = useNavigate();
     const role = getRole();
 
 
+  if(role===null){
+    navigate('/authentication');
   
+  }
             
     return(
        <div> 

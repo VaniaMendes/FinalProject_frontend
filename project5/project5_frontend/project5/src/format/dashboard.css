@@ -113,7 +113,13 @@
 .ashboard_container4{
   font-size: 10px !important;
 }
+.recharts-legend-wrapper{
+  position: fixed;
+  left: 15%!important;
+  top:80%!important;
+}
 
+/* Formatacao para telemovel*/
   @media screen and (max-width: 768px) {
 
     .dashboard {
@@ -121,30 +127,34 @@
         flex-direction: column;
         grid-template-columns: none ;
         grid-template-rows:none; /* Duas linhas, a primeira com 1 parte e a segunda com 2 partes */
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
-        height: 68%;
+        height: 65%;
         width: 97%;
         position: fixed;
-        top:20%;
+        top:24%;
         left: 1%;
         background-color: white;
         border-radius: 10px;
         z-index: 1;
         overflow: auto;
     }
-    .legendsForPie{
-       display: flex;
-       position: fixed;
-       flex-direction: column;
-       justify-content: center;
-       align-items: right;
-       margin-top: 10px;
-       margin-bottom: 10px;
-       margin-left: 10px;
-       margin-right: 10px;
- 
-    }
-
+    
  
   }
+
+
+  /*  Formatacao para tablet*/
+@media only screen and (min-width: 768px) and (max-width: 1026px) {
+  .dashboard{
+   height: 60%;
+   overflow: auto;
+   width: 80%;
+
+  
+}
+
+.recharts-wrapper{
+  left: 10%;
+}
+}

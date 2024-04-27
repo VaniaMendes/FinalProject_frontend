@@ -12,7 +12,6 @@ import ButtonsForScrum from "./buttonsForScrum";
 import { useNavigate } from "react-router-dom";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
-import MediaType from "./media";
 
 function UserTable() {
   //Este componente exibe a tabela de utilizadores ativos
@@ -21,9 +20,6 @@ function UserTable() {
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
 
-  //Obtem o tipo de media da store
-  const mediatype = userStore((state) => state.mediatype); 
-  MediaType();
 
 
   const {showModalEditUser, setShowModalEditUser} = showModal();

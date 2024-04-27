@@ -85,6 +85,7 @@ function Menu() {
   //Função para consultar apenas as tarefas do próprio utilizador
   const handleMyTaks = async (tokenUser) => {
     setShowUserTasks(true);
+    setFilterOn(false);
     navigate("/principalPage");
 
     //Vai buscar as tasks do user que está logado

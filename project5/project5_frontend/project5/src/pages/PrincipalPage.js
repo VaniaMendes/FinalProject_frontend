@@ -13,11 +13,14 @@ function PrincipalPage(){
 
     const { getRole } = userStore();
     const role = getRole();
-//Obtem o token da store
-const tokenUser = userStore((state) => state.token.token);
+
 const navigate = useNavigate();
 
 
+if(role===null){
+  navigate('/authentication');
+
+}
    
     return(
         <div>

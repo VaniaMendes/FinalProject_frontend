@@ -35,9 +35,15 @@ function Dashboard() {
 
    //Obtem a linguagem de exibição da página
    const locale = userStore((state) => state.locale);
-
-
    
+  const {role} = userStore();
+
+
+  if(role===null ){
+    navigate('/authentication');
+
+  
+  }
    useEffect(() => {
     
 
@@ -127,6 +133,8 @@ function Dashboard() {
 
   const COLORS = ["#0088FE", "#00C49F", "#FF8042"];
 
+  
+
   return (
     <div>
       <IntlProvider locale={locale} messages={languages[locale]}>
@@ -193,14 +201,14 @@ function Dashboard() {
 
         
         <div className="dashboard_container3">
-          <PieChart width={400} height={400}>
+          <PieChart width={350} height={350}>
           <text className = "title_dashboard" x={200} y={80} textAnchor="middle" fontSize="20px"><FormattedMessage id="tasksForState">
                         {(message) => <span>{message}</span>}
                       </FormattedMessage></text> {/* Título */}
             <Pie
               data={tasksByState}
               cx={200}
-              cy={200}
+              cy={120}
               labelLine={false}
               outerRadius={90}
               fill="#8884d8"
@@ -214,13 +222,11 @@ function Dashboard() {
               ))}
             </Pie>
             <Tooltip />
-            <Legend className="legendsForPie"
-                layout="vertical"
-                
-                align="right"
-                verticalAlign="middle"
+            <Legend 
+                layout="horizontal"
+
                 formatter={(value, entry, index) => {
-                    const status = ["Todo", "Doing", "Done"];
+                    const status = ["ToDo", "Doing", "Done"];
                     const taskCount = entry.payload.tasks; // Obtém o número de tarefas
                     return `${status[index]} (${taskCount})`; // Adiciona o número de tarefas entre parênteses ao lado do nome
                   }}

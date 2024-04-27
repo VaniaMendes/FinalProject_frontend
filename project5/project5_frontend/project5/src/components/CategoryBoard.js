@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { userStore } from "../stores/UserStore";
 import {
   showModal,
-  modeEditOn,
+  modeEditOn, updateCategoriesTable
 } from "../stores/boardStore";
 import { editCategory, getCategoryById } from "../endpoints/categories";
 import languages from "../translations";
@@ -27,6 +27,7 @@ function Categories() {
 
   // Obtém e configura o estado de modo de edição
   const { modeEdit, setModeEdit } = modeEditOn();
+  const { showCategoriesTable, setShowCategoriesTable } = updateCategoriesTable();
 
 
 
@@ -66,6 +67,7 @@ function Categories() {
 
         if (result === 200) {
           NotificationManager.success("Category successfully edited", "", 1000);
+          setShowCategoriesTable(!showCategoriesTable);
           closeModal();
         } else if (result === 422) {
           NotificationManager.warning("Title not available", "", 1000);
@@ -82,6 +84,7 @@ function Categories() {
         if (result === 200) {
           NotificationManager.success("Category successfully created", "", 800);
           closeModal();
+          setShowCategoriesTable(!showCategoriesTable);
         } else if (result === 422) {
           NotificationManager.warning("Title already exists", "", 800);
         } else {

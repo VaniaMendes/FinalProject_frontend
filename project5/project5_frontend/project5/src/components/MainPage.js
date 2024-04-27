@@ -4,29 +4,28 @@ import { IntlProvider, FormattedMessage } from "react-intl";
 import { userStore } from "../stores/UserStore";
 import { IoNotifications } from "react-icons/io5";
 import { notificationStore } from "../stores/NotificationStore";
-import { showNotificationsPainel, showMenuForPhone } from "../stores/boardStore";
+import { showNotificationsPainel } from "../stores/boardStore";
 import { getNotificationsUnRead } from "../endpoints/messages";
 import Notification from "./Notification";
 import Language from "./language";
 import { FaPowerOff } from "react-icons/fa";
-import {useNavigate} from 'react-router-dom';
-import {logout} from '../endpoints/users';
+import { useNavigate } from "react-router-dom";
+import { logout } from "../endpoints/users";
 import { NotificationManager } from "react-notifications";
-import {cleanBoardStore } from "../stores/boardStore";
+import { cleanBoardStore } from "../stores/boardStore";
 import { HiHome } from "react-icons/hi2";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
 import Menu from "./Menu";
+
 
 function HomePage() {
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
 
-
   const [timerValue, setTimerValue] = useState("");
 
-   const [showTimerSettings, setShowTimerSettings] = useState(false);
-  
+  const [showTimerSettings, setShowTimerSettings] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,11 +40,12 @@ function HomePage() {
   useEffect(() => {
     async function fetchData() {
       try {
-        //Quando cria o componente vai buscar a lista de mensagens não lidas do utilizador e coloca-as na store
-        const unreadNotifications = await getNotificationsUnRead(tokenUser);
-      
+        if (tokenUser) {
+          //Quando cria o componente vai buscar a lista de mensagens não lidas do utilizador e coloca-as na store
+          const unreadNotifications = await getNotificationsUnRead(tokenUser);
 
-        setNotifications(unreadNotifications);
+          setNotifications(unreadNotifications);
+        }
       } catch (error) {
         console.log("Error fetching user data:", error);
       }
@@ -60,26 +60,23 @@ function HomePage() {
 
   const handleViewNotifications = () => {
     setShowNotifications(true);
-   
-  }
+  };
 
-
-   //Função para efetuar o logout
-   const logoutClick = async (event) => {
+  //Função para efetuar o logout
+  const logoutClick = async (event) => {
     event.preventDefault();
     try {
       const result = await logout(tokenUser);
 
       if (result === true) {
-        // Limpa a store e o boardStore 
-      cleanBoardStore();
-      
-      userStore.getState().setToken("");
-      // Navega para a página de login após a limpeza
-      navigate("/login");
-      
+        // Limpa a store e o boardStore
+        cleanBoardStore();
 
-      NotificationManager.success("Logout successfully");
+        userStore.getState().setToken("");
+        // Navega para a página de login após a limpeza
+        navigate("/login");
+
+        NotificationManager.success("Logout successfully");
       } else {
         console.log("Erro ao buscar dados do usuário:", result.error);
       }
@@ -88,93 +85,107 @@ function HomePage() {
     }
   };
 
-    //Função para navegar para a página principal
-    const homeclick = () => {
+  //Função para navegar para a página principal
+  const homeclick = () => {
+    navigate("/principalPage");
+  };
 
-      navigate("/principalPage");
-    };
+  const toggleTimerSettings = () => {
+    setShowTimerSettings(true);
+  };
 
-    const toggleTimerSettings = () => {
-      setShowTimerSettings(true);
-    };
+  const handleSessionTimeOut = () => {
+    setShowTimerSettings(false);
+  };
 
-    const handleSessionTimeOut = () => {
-      setShowTimerSettings(false);
-    }
 
-    const [showMenu, setShowMenu] = useState(false);
-
-  const handleMenuToggle = () => {
-    setShowMenu(!showMenu);
-  }
-   
 
   return (
     <IntlProvider locale={locale} messages={languages[locale]}>
       <div id="login_body">
         <div id="body_color">
-          {tokenUser && ( 
-            <>
-          <div
-            className="notifications_button"
-            onClick={
-              handleViewNotifications
-            }
-          >
-            <IoNotifications />
+          <div className="buttonsTop">
+            {tokenUser && (
+              <>
+                <div
+                  className="notifications_button"
+                  onClick={handleViewNotifications}
+                >
+                  <IoNotifications />
+                </div>
+                <div className="home_button" onClick={homeclick}>
+                  <HiHome />
+                </div>
+
+                <div
+                  className="timer_button"
+                  title="Time Out"
+                  onClick={toggleTimerSettings}
+                >
+                  <MdOutlineAccessTimeFilled />
+                </div>
+                <div
+                  className="logout_buttoon"
+                  title="Logout"
+                  onClick={logoutClick}
+                >
+                  <FaPowerOff />
+                </div>
+                <div className="notification-icon">
+                  {notifications && notifications.length > 0 && (
+                    <div
+                      className="notification-badge"
+                      onClick={() => {
+                        handleOpenNotifications();
+                      }}
+                    >
+                      {notifications.length}
+                    </div>
+                  )}
+                </div>
+              </>
+            )}
           </div>
-          <div className = "home_button" onClick={homeclick}><HiHome/></div>
-          <div className="logout_buttoon" title= "Logout" onClick={logoutClick}>
-            <FaPowerOff />
-           
-          </div>
-          <div className="timer_button" title= "Time Out" onClick={toggleTimerSettings}><MdOutlineAccessTimeFilled/></div>
-          </>
-          )}
           <div className="location">
             <Language />
           </div>
-          
-          <div className="notification-icon">
-            {notifications && notifications.length > 0 && (
-              <div
-                className="notification-badge"
-                onClick={() => {
-                  handleOpenNotifications()
-                }}
-              >
-                {notifications.length}
-              </div>
-            )}
-          </div>
+
           {/* Html para o div para definir o sessiont time out*/}
           {showTimerSettings && (
-        <aside className="timer_settings">
-      
-          <div className="timer_settings_title">
-            <FormattedMessage id="timerSettings">
-              {(message) => <span>{message}</span>}
-            </FormattedMessage>
-         
-          <input type="number" min="0" placeholder="Time in minutes" value={timerValue} onChange={(e) =>setTimerValue(e.target.value)}></input>
-          <button type="button" onClick={handleSessionTimeOut}>OK</button>
-          </div>
-      
-        </aside>
-      )}
-   
+            <aside className="timer_settings">
+              <div className="timer_settings_title">
+                <FormattedMessage id="timerSettings">
+                  {(message) => <span>{message}</span>}
+                </FormattedMessage>
+
+                <input
+                  type="number"
+                  placeholder="min"
+                  value={timerValue}
+                  onChange={(e) => setTimerValue(e.target.value)}
+                ></input>
+                <button type="button" onClick={handleSessionTimeOut}>
+                  OK
+                </button>
+              </div>
+            </aside>
+          )}
         </div>
         <div id="aside_color"></div>
         <header>
           <h1 id="page-logo">
-            <img src={"/scrum_image.png"} id="scrum_img" alt="App logo" onClick={handleMenuToggle}/>
+            <img
+              src={"/scrum_image.png"}
+              id="scrum_img"
+              alt="App logo"
+           
+            />
             &nbsp;AgileUp
-            
           </h1>
-          <div className="menuForPhone">{showMenu && <Menu/>}</div>
+          
       
         </header>
-         
+
         <div className="footer">
           <div>
             <FormattedMessage id="poweredBy">

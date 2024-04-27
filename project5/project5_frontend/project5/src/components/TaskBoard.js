@@ -98,7 +98,7 @@ const task={
 
       
       }else{
-        NotificationManager.warning(result, "", 1000);}
+        NotificationManager.warning("Failed to updated Task", "", 1000);}
       
         //Se não estiver em modo de edição adicionar uma nova tarefa
     }else{

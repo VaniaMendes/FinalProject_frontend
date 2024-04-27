@@ -4,10 +4,6 @@ import { useState, useEffect } from "react";
 import "../format/ScrumBoard.css";
 import { getActiveTasks } from "../endpoints/tasks";
 import { userStore } from "../stores/UserStore";
-import { MdModeEditOutline } from "react-icons/md";
-import { MdDelete } from "react-icons/md";
-import { softDeleteTask } from "../endpoints/tasks";
-import { NotificationManager } from "react-notifications";
 import {
   showModalNewTask,
   showModal,
@@ -19,7 +15,7 @@ import { updateTaskState } from "../endpoints/tasks";
 import TaskDetails from "./TaskDetails";
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
-
+import Task from "./Task";
 
 
 function ScrumBoard() {
@@ -83,25 +79,6 @@ function ScrumBoard() {
   };
 
 
-   // Função para apagar temporariamente uma tarefa (passa o estado de ativo para inativo)
-   const handleDeleteTask = async (tokenUser, taskId) => {
-
-    try {
-      const result = await softDeleteTask(tokenUser, taskId);
-
-      if (result === 200) {
-        NotificationManager.success("Task deleted successfully", "", 800);
-  
-       
-      } else {
-        NotificationManager.warning("Error deleting task " + taskId.title);
-      }
-    } catch (error) {
-      console.error("Erro ao excluir a tarefa:", error);
-    }
-  };
-
-
   //Função para obter as tarefas ativas a serem mostradas no scrum_board
   useEffect(() => {
     const fetchData = async () => {
@@ -122,8 +99,8 @@ function ScrumBoard() {
           setListTasks(myTasks);
         } else {
           //Se não exibe todas as tarefas ativas da app
-          NotificationManager.warning("This user has no tasks");
-          setListTasks(myTasks);
+        
+          setListTasks(listTasks);
           return;
         }
       } else {
@@ -156,14 +133,14 @@ function ScrumBoard() {
       setListTasks(prevTasks => {
         // Se a tarefa que vier do backend tiver estado ativo false,entao a tarefa será removida da lista
         if (updatedTask.active===false) {
-          console.log("chegou ao ponto 1");
+          
           return prevTasks.filter(task => task.id !== updatedTask.id);  
        
         }
        
         // Verifica se a tarefa já existe
         const taskExists = prevTasks.some(task => task.id === updatedTask.id);
-        console.log("chegou ao ponto 2");
+   
   
         if (taskExists) {
           // Se a tarefa existir, substitua-a
@@ -176,19 +153,7 @@ function ScrumBoard() {
     };
   }, [listTasks, tokenUser]);
 
-  // Função para obter a cor com base na prioridade da tarefa
-  function getColorForPriority(priority) {
-    if (priority === 100) {
-      return "green";
-    } else if (priority === 200) {
-      return "yellow";
-    } else if (priority === 300) {
-      return "red";
-    } else {
-      return "grey";
-    }
-  }
-
+ 
  
   // Função para ordenar as tarefas
   const sortTasks = (tasks) => {
@@ -241,7 +206,7 @@ function ScrumBoard() {
   };
 
   return (
-    <div>
+    <div className = "scrumForPhone">
       {showTaskDetails && <TaskDetails />}
       <IntlProvider locale={locale} messages={languages[locale]}>
         <div className="scrum_section" id="scrum_section">
@@ -254,57 +219,16 @@ function ScrumBoard() {
               onDragOver={allowDrop}
             >
               {todoList.map((task) => (
-                <div
-                  className="task"
-                  key={task.id}
-                  draggable
-                  onDragStart={(event) => handleDragStart(event, task.id)}
-                  onDoubleClick={() => handleTaskDoubleClick(task.id)}
-                >
-                  <div
-                    className="priority-bar"
-                    style={{
-                      backgroundColor: getColorForPriority(task.priority),
-                    }}
-                  ></div>
-                  <div className="task-header">
-                    <div className="task-title">{task.title}</div>
-                    <div className="task-author">{task.author.username}</div>
-                    <div className="task-category">{task.category.title}</div>
-                  </div>
-
-                  <div className="task-details">
-                    {/* Lógica para apresentar o botoes para os diferentes tipos de utilizadores;
-                 - Se for developer só aparece o botao de editar nas suas proprias tarefas e 
-                 se for scrum ou product_owner aparecem todos os botoes em todas as tarefas*/}
-                    {role === "developer" && showUserTasks && (
-                      <div className="buttons_scrum">
-                        <button
-                          className="delete_btnS"
-                          onClick={() => handleEdit(task.id)}
-                        >
-                          <MdModeEditOutline />
-                        </button>
-                      </div>
-                    )}
-                    {(role === "scrum_master" || role === "product_owner") && (
-                      <div className="buttons_scrum">
-                        <button
-                          className="delete_btnS"
-                          onClick={() => handleEdit(task.id)}
-                        >
-                          <MdModeEditOutline />
-                        </button>
-                        <button
-                          className="task_btnS"
-                          onClick={() => handleDeleteTask(tokenUser, task.id)}
-                        >
-                          <MdDelete />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+               <Task
+               key={task.id}
+               task={task}
+               handleEdit={handleEdit}
+               role={role}
+               showUserTasks={showUserTasks}
+               tokenUser={tokenUser}
+               handleDragStart={handleDragStart}
+               handleTaskDoubleClick={handleTaskDoubleClick}
+             />
               ))}
             </section>
             <button id="btn_task" onClick={handleNewTaskClick}>
@@ -323,53 +247,16 @@ function ScrumBoard() {
             <div className="title">Doing</div>
             <section className="task_list" id="doing">
               {doingList.map((task) => (
-                <div
-                  className="task"
-                  key={task.id}
-                  draggable
-                  onDragStart={(event) => handleDragStart(event, task.id)}
-                  onDoubleClick={() => handleTaskDoubleClick(task.id)}
-                >
-                  <div
-                    className="priority-bar"
-                    style={{
-                      backgroundColor: getColorForPriority(task.priority),
-                    }}
-                  ></div>
-                  <div className="task-header">
-                    <div className="task-title">{task.title}</div>
-                    <div className="task-author">{task.author.username}</div>
-                    <div className="task-category">{task.category.title}</div>
-                  </div>
-                  <div className="task-details">
-                    {role === "developer" && showUserTasks && (
-                      <div className="buttons_scrum">
-                        <button
-                          className="delete_btnS"
-                          onClick={() => handleEdit(task.id)}
-                        >
-                          <MdModeEditOutline />
-                        </button>
-                      </div>
-                    )}
-                    {(role === "scrum_master" || role === "product_owner") && (
-                      <div className="buttons_scrum">
-                        <button
-                          className="delete_btnS"
-                          onClick={() => handleEdit(task.id)}
-                        >
-                          <MdModeEditOutline />
-                        </button>
-                        <button
-                          className="task_btnS"
-                          onClick={() => handleDeleteTask(tokenUser, task.id)}
-                        >
-                          <MdDelete />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <Task
+                key={task.id}
+                task={task}
+                handleEdit={handleEdit}
+                role={role}
+                showUserTasks={showUserTasks}
+                tokenUser={tokenUser}
+                handleDragStart={handleDragStart}
+                handleTaskDoubleClick={handleTaskDoubleClick}
+              />
               ))}
             </section>
           </div>
@@ -382,54 +269,16 @@ function ScrumBoard() {
             <div className="title">Done</div>
             <section className="task_list" id="done">
               {doneList.map((task) => (
-                <div
-                  className="task"
-                  key={task.id}
-                  draggable
-                  onDragStart={(event) => handleDragStart(event, task.id)}
-                  onDoubleClick={() => handleTaskDoubleClick(task.id)}
-                >
-                  <div
-                    className="priority-bar"
-                    style={{
-                      backgroundColor: getColorForPriority(task.priority),
-                    }}
-                  ></div>
-                  <div className="task-header">
-                    <div className="task-title">{task.title}</div>
-                    <div className="task-author">{task.author.username}</div>
-                    <div className="task-category">{task.category.title}</div>
-                  </div>
-
-                  <div className="task-details">
-                    {role === "developer" && showUserTasks && (
-                      <div className="buttons_scrum">
-                        <button
-                          className="delete_btnS"
-                          onClick={() => handleEdit(task.id)}
-                        >
-                          <MdModeEditOutline />
-                        </button>
-                      </div>
-                    )}
-                    {(role === "scrum_master" || role === "product_owner") && (
-                      <div className="buttons_scrum">
-                        <button
-                          className="delete_btnS"
-                          onClick={() => handleEdit(task.id)}
-                        >
-                          <MdModeEditOutline />
-                        </button>
-                        <button
-                          className="task_btnS"
-                          onClick={() => handleDeleteTask(tokenUser, task.id)}
-                        >
-                          <MdDelete />
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                 <Task
+                 key={task.id}
+                 task={task}
+                 handleEdit={handleEdit}
+                 role={role}
+                 showUserTasks={showUserTasks}
+                 tokenUser={tokenUser}
+                 handleDragStart={handleDragStart}
+                 handleTaskDoubleClick={handleTaskDoubleClick}
+               />
               ))}
             </section>
           </div>
@@ -441,11 +290,4 @@ function ScrumBoard() {
 
 export default ScrumBoard;
 
-/*  
- <Task 
-                  task={task}
-                   handleEdit={handleEdit}
-                  handleDeleteTask={handleDeleteTask}
-                  role={role}
-                  showUserTasks={showUserTasks} 
-                  tokenUser={tokenUser} />*/
+

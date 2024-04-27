@@ -32,14 +32,14 @@
 }
 
 /* Media query para dispositivos com largura máxima de 768px (tablets e dispositivos móveis em modo paisagem) */
-@media screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
   /* Oculta a coluna de número de telefone */
-  .table_container {
-    top: 54%;
+  .table_container, .scrumForPhone {
+    top: 56%;
     margin-bottom: -10px;
     font-size: 12px;
     max-height: 600px;
-    width: 80%;
+    width: 88%;
     margin-left: -20px;
   }
   .titleUser1, .titleUser2, .titleUser3, .titleUser4, .titleUser5, .titleUser{
@@ -57,7 +57,7 @@
 }
 .column{
   border: 3px solid black;
-  top: 100px !important;;
+  top: 100px !important;
   left:-10%;
 }
 }
@@ -213,3 +213,16 @@
 }
 
 
+/*  Formatacao para tablet*/
+
+@media only screen and (min-width: 768px) and (max-width: 1026px) {
+  .table_container {
+    top:35%;
+    margin-bottom: -10px;
+    font-size: 16px;
+    max-height: 800px;
+    width: 70%;
+    left:62%;
+  }
+
+}
