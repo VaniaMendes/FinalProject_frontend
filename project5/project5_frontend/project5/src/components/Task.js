@@ -11,7 +11,9 @@ function Task({
   tokenUser,
   handleDragStart,
   handleEdit,
-  handleTaskDoubleClick,
+  handleTaskDoubleClick
+
+  
 }) {
 
 
