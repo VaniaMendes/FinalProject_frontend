@@ -2191,6 +2191,14 @@ width: 219px;
   .menuPhone{
     display: none;
   }
+  .menuPO{
+    position: fixed !important;
+    top:8% !important;
+    z-index: -10;
+  }
+  #user_info{
+    position: fixed !important;
+  }
 #body_color{
   margin: 55px 0px 0px 220px;
 }
@@ -2232,6 +2240,7 @@ width: 219px;
 }
 .new-task-container{
   top: 40%!important;
+  left:30%!important;
 
 }
 .notification-badge{

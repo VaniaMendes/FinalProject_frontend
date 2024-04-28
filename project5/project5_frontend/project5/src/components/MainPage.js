@@ -132,6 +132,7 @@ function HomePage() {
               <>
                 <div
                   className="notifications_button"
+                  data-testid="notifications"
                   onClick={handleViewNotifications}
                 >
                   <IoNotifications />
@@ -142,6 +143,7 @@ function HomePage() {
 {role==="product_owner" &&( 
                 <div
                   className="timer_button"
+                  data-testid="timer-button"
                   title="Time Out"
                   onClick={toggleTimerSettings}
                 >
@@ -149,6 +151,7 @@ function HomePage() {
                 </div>)}
                 <div
                   className="logout_buttoon"
+                  data-testid="logout-button"
                   title="Logout"
                   onClick={logoutClick}
                 >

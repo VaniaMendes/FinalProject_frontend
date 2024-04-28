@@ -3,41 +3,35 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import HomePage from '../components/MainPage';
 
-// Teste para verificar se o botão de notificações está presente 
-test('renders notifications button', () => {
+test('renders notifications button', async() => {
   render(
     <MemoryRouter>
       <HomePage />
     </MemoryRouter>
   );
-  const notificationsButton = screen.getByTestId('notifications-button');
+  const notificationsButton = await screen.getByTestId('notifications');
   expect(notificationsButton).toBeInTheDocument();
   fireEvent.click(notificationsButton);
-
 });
 
-// Teste para verificar se o botão de logout está presente e tem acção
-test('renders logout button', () => {
+test('renders logout button', async () => {
   render(
     <MemoryRouter>
       <HomePage />
     </MemoryRouter>
   );
-  const logoutButton = screen.getByTestId('logout-button');
+  const logoutButton = await screen.getByTestId('logout-button');
   expect(logoutButton).toBeInTheDocument();
   fireEvent.click(logoutButton);
 });
 
-
-// Teste para verificar se o botão de definir timeout  está presente e tem acção
-test('renders session timeout button', () => {
+test('renders timer settings button', async () => {
   render(
     <MemoryRouter>
       <HomePage />
     </MemoryRouter>
   );
-  const timeoutButton = screen.getByTestId('timeout-button');
-  expect(timeoutButton).toBeInTheDocument();
-  fireEvent.click(timeoutButton);
-
+  const timerButton = await screen.getByTestId('timer-button');
+  expect(timerButton).toBeInTheDocument();
+  fireEvent.click(timerButton);
 });
