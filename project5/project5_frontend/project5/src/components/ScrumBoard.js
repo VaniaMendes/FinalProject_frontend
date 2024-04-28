@@ -101,7 +101,7 @@ function ScrumBoard() {
           //Se não exibe todas as tarefas ativas da app
         
           setListTasks(listTasks);
-          return;
+          
         }
       } else {
         //Senão exibe todas as tarefas ativas da app

@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 
 function ButtonsForScrum({username}){
 
-  //
+  //Componente que renderiza o botao na tabela de users caso o utilizador seja developer ou scrum_master
 
   const navigate = useNavigate();
 

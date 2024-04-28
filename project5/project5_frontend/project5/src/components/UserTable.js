@@ -22,7 +22,7 @@ function UserTable() {
 
 
 
-  const {showModalEditUser, setShowModalEditUser} = showModal();
+  const { setShowModalEditUser} = showModal();
 
    //Obtem a linguagem de exibição da página
    const locale = userStore((state) => state.locale);
@@ -31,10 +31,10 @@ function UserTable() {
   const [users, setUsers] = useState([]);
 
   //Guarda o estado do prefix a pesquisar para filtrar a lista por nome
-  const [prefix, setPrefix] = useState("");
+  const [ setPrefix] = useState("");
 
   // Estado para armazenar a última lista de usuários encontrada
-const [lastUsers, setLastUsers] = useState([]);
+const [setLastUsers] = useState([]);
 
 
 

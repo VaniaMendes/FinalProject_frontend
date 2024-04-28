@@ -5,7 +5,7 @@ import { getAllCategories } from "../endpoints/categories";
 import {addTask, getTask, updateTask} from '../endpoints/tasks';
 import { NotificationManager } from "react-notifications";
 import '../format/tables.css'
-import {showModalNewTask, updateTasksList, modeEditTask} from '../stores/boardStore';
+import {showModalNewTask, modeEditTask} from '../stores/boardStore';
 import languages from "../translations";
 import { IntlProvider, FormattedMessage } from "react-intl";
 
@@ -77,7 +77,7 @@ const task={
       
     };  
     fetchData();
-  }, [tokenUser, taskIdForEdit]);
+  }, [tokenUser, taskIdForEdit, editTask]);
 
 
   //Função para lidar com o envio do formulário

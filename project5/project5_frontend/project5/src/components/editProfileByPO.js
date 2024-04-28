@@ -44,7 +44,7 @@ function EditProfileByPO(){
     const [userEdit, setUserEdit] = useState(null);
 
   //Estado para controlar a visibilidade do modal de edição de user
-  const { showModalEditUser, setShowModalEditUser } = showModal();
+  const {  setShowModalEditUser } = showModal();
 
 
     //Efeito para ir buscar os dados do user a ser editado

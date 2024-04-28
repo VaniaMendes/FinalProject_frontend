@@ -26,7 +26,7 @@ function Register(){
   //Efeito para renderizar a pagina
   useEffect(() => {
     setShowNewUserModal(true);
-  }, [showNewUserModal]);
+  }, [setShowNewUserModal, showNewUserModal]);
 
 
     return( 

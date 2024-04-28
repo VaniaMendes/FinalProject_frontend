@@ -40,9 +40,9 @@ function ButtonsForProfile(){
             {showTaskChart && <MyTasksChart/>}
             {showMessageChat && <Chat/>}
             <div className="icon_profile">
-           <button className = "icon_profile_button" title="Tasks" onClick={handleShowChart}><FaChartPie/></button>
+           <button className = "icon_profile_button"  onClick={handleShowChart}><FaChartPie title="Tasks"/></button>
            {username !== undefined  &&  (
-           <button className = "icon_profile_button" title="Chat" onClick={handleChat}><IoChatbubbleEllipses/></button>)}
+           <button className = "icon_profile_button" title="Chat" onClick={handleChat}><IoChatbubbleEllipses title="Chat"/></button>)}
            </div>
         </div>
     )

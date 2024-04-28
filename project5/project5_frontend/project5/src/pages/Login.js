@@ -27,7 +27,6 @@ function Login(){
 
     
   //Estados para controlar a exibição do modal de newUser
-  const showNewUserModal = showModal(state => state.showNewUserModal);
   const setShowNewUserModal = showModal(state => state.setShowNewUserModal);
 
 

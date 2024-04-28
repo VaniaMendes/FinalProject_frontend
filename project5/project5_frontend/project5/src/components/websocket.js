@@ -29,7 +29,7 @@ function WebSocketClient() {
     return () => {
       websocket.close();
     };
-  }, [addNotification]);
+  }, [addNotification, tokenUser]);
 
   return websocket;
 }

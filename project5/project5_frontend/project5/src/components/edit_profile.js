@@ -21,9 +21,6 @@ function EditProfile(){
   const locale = userStore((state) => state.locale);
 
 
-    // Obtém a função para obter o papel do user
-    const {  getRole } = userStore();
-    const role = getRole();
     // Estado para armazenar informações do user que fez o login
     const [userLogged, setUserLogged] = useState(null);
 

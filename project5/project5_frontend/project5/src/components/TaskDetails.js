@@ -45,7 +45,7 @@ function TaskDetails(){
           }
          
         fetchData();
-      }, [tokenUser]);
+      }, [taskIdForEdit, tokenUser]);
 
       //Função para fechar o modal
       const handleClose = () => {

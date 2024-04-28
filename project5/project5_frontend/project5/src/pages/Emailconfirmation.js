@@ -34,7 +34,7 @@ function EmailConfirmation(){
         };
         fetchUser();
         
-    }, [location.search]);
+    }, [location.search, queryParams.token]);
 
 
 const handleConfirmation = async () =>{

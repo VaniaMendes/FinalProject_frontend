@@ -15,13 +15,15 @@ import { NotificationManager } from "react-notifications";
 import { cleanBoardStore } from "../stores/boardStore";
 import { HiHome } from "react-icons/hi2";
 import { MdOutlineAccessTimeFilled } from "react-icons/md";
-import Menu from "./Menu";
+import {setSessionTimeout } from'../endpoints/users';
 
 
 function HomePage() {
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);
   const tokenUser = tokenObject.token;
+
+  const { role } = userStore();
 
   const [timerValue, setTimerValue] = useState("");
 
@@ -51,7 +53,7 @@ function HomePage() {
       }
     }
     fetchData();
-  }, [tokenUser]);
+  }, [setNotifications, tokenUser]);
 
   const handleOpenNotifications = () => {
     clearNotifications();
@@ -91,13 +93,34 @@ function HomePage() {
   };
 
   const toggleTimerSettings = () => {
-    setShowTimerSettings(true);
+    setShowTimerSettings(!showTimerSettings);
   };
 
-  const handleSessionTimeOut = () => {
-    setShowTimerSettings(false);
+  const handleSessionTimeOut = async () => {
+    const timeout = parseInt(timerValue);
+  
+    if (timeout > 0) {
+      try {
+        const result = await setSessionTimeout(tokenUser, timeout);
+        
+        if (result) {
+          NotificationManager.success("Time out set successfully");
+          setShowTimerSettings(false);
+        } else {
+          NotificationManager.error("Failed to set time out");
+          setShowTimerSettings(false);
+        }
+      } catch (error) {
+        console.error("Error setting session time out:", error);
+        NotificationManager.error("An error occurred while setting session time out");
+        setShowTimerSettings(false);
+      }
+    } else {
+      NotificationManager.error("Time out must be greater than 0");
+      setShowTimerSettings(false);
+    }
   };
-
+  
 
 
   return (
@@ -116,14 +139,14 @@ function HomePage() {
                 <div className="home_button" onClick={homeclick}>
                   <HiHome />
                 </div>
-
+{role==="product_owner" &&( 
                 <div
                   className="timer_button"
                   title="Time Out"
                   onClick={toggleTimerSettings}
                 >
                   <MdOutlineAccessTimeFilled />
-                </div>
+                </div>)}
                 <div
                   className="logout_buttoon"
                   title="Logout"

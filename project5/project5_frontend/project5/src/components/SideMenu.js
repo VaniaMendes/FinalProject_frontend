@@ -11,7 +11,7 @@ import { TiThMenu } from "react-icons/ti";
 
 function SideMenu() {
   //Obtem o tipo de utilizador da store
-  const { role, setRole } = userStore();
+  const { setRole } = userStore();
 
   //Obtem o token da store
   const tokenObject = userStore((state) => state.token);

@@ -90,7 +90,9 @@
   "EnterURofyourimage": "Entrez l'URL de votre image",
   "notification": " Vous avez reçu un nouveau message de ",
   "scrumBoard": " Tableau Scrum",
-  "timerSettings": " Paramètres de minuterie"
+  "timerSettings": " Paramètres de minuterie",
+  "authenticationRequired": "Authentification Requise",
+  "youNeedtoautenticatetoacessthispage": "Vous devez vous authentifier pour accéder à cette page"
 
   }
   

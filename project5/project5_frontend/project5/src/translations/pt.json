@@ -94,7 +94,8 @@
   "notification": "Recebeu uma nova mensagem de  ",
   "scrumBoard": " Quadro Scrum",
   "categoryDeletedSuceffuly": "Categoria apagada com sucesso",
-  "timerSettings": " Define o tempo de sessão"
+  "timerSettings": " Define o tempo de sessão",
+  "authenticationRequired": " Necessário Autenticação"
 
 
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import HomePage from '../components/MainPage';
 import SideMenu from '../components/SideMenu';
 import SearchFields from '../components/SearchFields';

@@ -479,4 +479,29 @@ export async function getDashboard(tokenUser){
 }}
 
 
+export async function setSessionTimeout(tokenUser, timeout) {
+  try {
+    const response = await fetch(
+      `http://localhost:8080/project_backend/rest/users/updateSessionTimeout?sessionTimeout=${timeout}`,
+      {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        token: tokenUser
+      },
+
+    });
+
+    if (response.ok) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+}
+
 
